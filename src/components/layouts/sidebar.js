@@ -76,7 +76,7 @@ function Sidebar() {
                         <strong>Copyright</strong> © 2023 All Rights Reserved
                     </p>
                     <p className="fs-14">
-                        Made with <span className="heart"></span> by Four Idiots
+                        Made with <span className="heart"></span> by Five Chickens
                     </p>
                 </div>
             </div>
