@@ -334,8 +334,8 @@ function Profile() {
                                             <input
                                                 type="date"
                                                 className="form-control input-default custom-input-height"
-                                                // value={format(new Date(editedInfo.birthday), "yyyy-MM-dd") || ""}
-                                                // onChange={(e) => setEditedInfo({ ...editedInfo, birthday: e.target.value })}
+                                                value={format(new Date(editedInfo.birthday), "yyyy-MM-dd") || ""}
+                                                onChange={(e) => setEditedInfo({ ...editedInfo, birthday: e.target.value })}
                                             />
                                         ) : (
                                             (info.birthday && format(new Date(info.birthday), "dd/MM/yyyy")) || "Unavailable"

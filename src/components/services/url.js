@@ -1,7 +1,7 @@
 const url = {
     BASE_URL: "https://localhost:7270/api",
     MENU: {
-        LIST: "/menu",
+        LIST: "/Menu",
     },
 
     MOVIE: {
@@ -25,12 +25,12 @@ const url = {
     },
 
     AUTH: {
-        LOGIN: "/AUTH/login",
-        FORGOT_PASSWORD: "/AUTH/forgot-password",
-        PROFILE: "/AUTH/profile",
-        UPDATE_PROFILE: "/AUTH/update-profile",
-        CHANGE_PASSWORD: "/AUTH/change-password",
-        RESET_PASSWORD: "AUTH/reset-password",
+        LOGIN: "/Auth/login",
+        FORGOT_PASSWORD: "/Auth/forgot-password",
+        PROFILE: "/Auth/profile",
+        UPDATE_PROFILE: "/Auth/update-profile",
+        CHANGE_PASSWORD: "/Auth/change-password",
+        RESET_PASSWORD: "/Auth/reset-password",
     },
 
 };

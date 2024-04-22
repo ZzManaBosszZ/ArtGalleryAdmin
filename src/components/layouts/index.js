@@ -7,7 +7,7 @@ import Sidebar from "./sidebar";
 
 function Layout({ children }) {
     return (
-        <div id="main-wrapper">
+        <div id="main-wrapper" data-theme="theme_2">
             <Animation />
             <NavHeader />
             <ChatBox />
