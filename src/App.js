@@ -51,7 +51,8 @@ function App() {
                 {/* Start Gallery */}
                 <Route path="/gallery-list" element={<GalleryList></GalleryList>}></Route>
                 {/* <Route path="/gallery-list" element={<ProtectedRoute element={<GalleryList />} />} /> */}
-                <Route path="/gallery-create" element={<ProtectedRoute element={<GalleryCreate />} />} />
+                <Route path="/gallery-create" element={<GalleryCreate />} ></Route>
+                {/* <Route path="/gallery-create" element={<ProtectedRoute element={<GalleryCreate />} />} /> */}
                 <Route path="/gallery-edit/:id" element={<ProtectedRoute element={<GalleryEdit />} />} />
                 <Route path="/gallery-delete-at" element={<ProtectedRoute element={<GalleryDeleteAt />} />} />
                 {/* End Genre */}
@@ -69,7 +70,8 @@ function App() {
                 <Route path="/login" element={<Login></Login>} ></Route>
                 <Route path="/forgot-password" element={<ProtectedLoginRoute element={<ForgotPassword />} />} />
                 <Route path="/reset-password/:resetToken" element={<ProtectedLoginRoute element={<ResetPassword />} />} />
-                <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />
+                <Route path="/profile"  element={<Profile />} />
+                {/* <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} /> */}
                 {/* End Auth */}
 
                 {/* Start Other page */}
