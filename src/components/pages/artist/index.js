@@ -165,7 +165,7 @@ function ArtistsList() {
             ) : (
                 <>
                     <Helmet>
-                        <title>Artists List | R Admin</title>
+                        <title>Artists List | Art Admin</title>
                     </Helmet>
                     {loading ? <Loading /> : ""}
                     <Layout>

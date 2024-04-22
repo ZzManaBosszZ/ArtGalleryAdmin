@@ -157,7 +157,7 @@ function ArtWorkCreate() {
                         autoClose: 3000,
                     });
                     setTimeout(() => {
-                        navigate(`/artworks-list`); //chuyển đến trang artworks-list
+                        navigate(`/artwork-list`); //chuyển đến trang artwork-list
                     }, 3000);
                 } else {
                 }
@@ -240,7 +240,7 @@ function ArtWorkCreate() {
             ) : (
                 <>
                     <Helmet>
-                        <title>Movie Create | R Admin</title>
+                        <title>Movie Create | Art Admin</title>
                     </Helmet>
                     <Layout>
                         <Breadcrumb title="Movie Create" />

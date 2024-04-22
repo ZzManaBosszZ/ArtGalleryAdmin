@@ -62,7 +62,7 @@ function ArtistCreate() {
                         autoClose: 3000,
                     });
                     setTimeout(() => {
-                        navigate(`/artists-list`); //chuyển đến trang artists-list
+                        navigate(`/artist-list`); //chuyển đến trang artist-list
                     }, 3000);
                 } else {
                 }
@@ -125,7 +125,7 @@ function ArtistCreate() {
             ) : (
                 <>
                     <Helmet>
-                        <title>Artist Create | R Admin</title>
+                        <title>Artist Create | Art Admin</title>
                     </Helmet>
                     <Layout>
                         <Breadcrumb title="Artist Create" />

@@ -80,7 +80,7 @@ function ArtistEdit() {
                         autoClose: 3000,
                     });
                     setTimeout(() => {
-                        navigate(`/artists-list`); //chuyển đến trang artists-list
+                        navigate(`/artist-list`); //chuyển đến trang artist-list
                     }, 3000);
                 } else {
                 }
@@ -122,7 +122,7 @@ function ArtistEdit() {
             ) : (
                 <>
                     <Helmet>
-                        <title>Artist Edit | R Admin</title>
+                        <title>Artist Edit | Art Admin</title>
                     </Helmet>
                     {loading ? <Loading /> : ""}
                     <Layout>

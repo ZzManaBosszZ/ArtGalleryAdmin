@@ -118,7 +118,7 @@ function ArtWorkEdit() {
                         autoClose: 3000,
                     });
                     setTimeout(() => {
-                        navigate(`/artworks-list`); //chuyển đến trang artworks-list
+                        navigate(`/artwork-list`); //chuyển đến trang artwork-list
                     }, 3000);
                 } else {
                 }
@@ -167,7 +167,7 @@ function ArtWorkEdit() {
             ) : (
                 <>
                     <Helmet>
-                        <title>ArtWork Edit | R Admin</title>
+                        <title>ArtWork Edit | Art Admin</title>
                     </Helmet>
                     {loading ? <Loading /> : ""}
                     <Layout>

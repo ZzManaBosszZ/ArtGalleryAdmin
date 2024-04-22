@@ -49,7 +49,7 @@ function ArtistDeleteAt() {
                     autoClose: 3000,
                 });
                 setTimeout(() => {
-                    navigate(`/artists-list`); //chuyển đến trang artists-list
+                    navigate(`/artist-list`); //chuyển đến trang artist-list
                 }, 3000);
             } else {
             }
@@ -106,7 +106,7 @@ function ArtistDeleteAt() {
             ) : (
                 <>
                     <Helmet>
-                        <title>Artist Delete At | R Admin</title>
+                        <title>Artist Delete At | Art Admin</title>
                     </Helmet>
                     {loading ? <Loading /> : ""}
                     <Layout>

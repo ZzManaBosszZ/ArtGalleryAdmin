@@ -49,7 +49,7 @@ function ArtWorkDeleteAt() {
                     autoClose: 3000,
                 });
                 setTimeout(() => {
-                    navigate(`/artworks-list`); //chuyển đến trang artworks-list
+                    navigate(`/artwork-list`); //chuyển đến trang artwork-list
                 }, 3000);
             } else {
             }
@@ -105,7 +105,7 @@ function ArtWorkDeleteAt() {
             ) : (
                 <>
                     <Helmet>
-                        <title>ArtWork Delete At | R Admin</title>
+                        <title>ArtWork Delete At | Art Admin</title>
                     </Helmet>
 
                     <Layout>
