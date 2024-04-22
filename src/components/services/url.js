@@ -4,24 +4,24 @@ const url = {
         LIST: "/Menu",
     },
 
-    MOVIE: {
-        LIST: "/movie",
-        DETAIL: "/movie/{}",
-        CREATE: "/movie/create",
-        UPDATE: "/movie/edit",
-        TRASH: "/movie/trash-can",
-        DELETE: "/movie/delete",
-        RESTORE: "/movie/restore/{}",
+    ARTWORK: {
+        LIST: "/Artworks",
+        DETAIL: "/Artworks/{}",
+        CREATE: "/Artworks/create",
+        UPDATE: "/Artworks/edit",
+        // TRASH: "/Artworks/trash-can",
+        DELETE: "/Artworks/delete",
+        // RESTORE: "/Artworks/restore/{}",
     },
 
-    GALLERY: {
-        LIST: "/gallery/get-all",
-        DETAIL: "/gallery/get-by-id/{}",
-        CREATE: "/gallery/create",
-        UPDATE: "/gallery/edit",
-        TRASH: "/gallery/trash-can",
-        DELETE: "/gallery/delete",
-        RESTORE: "/gallery/restore/{}",
+    ARTIST: {
+        LIST: "/Artists",
+        DETAIL: "/Artists/{}",
+        CREATE: "/Artists/create",
+        UPDATE: "/Artists/edit",
+        // TRASH: "/Artists/trash-can",
+        DELETE: "/Artists/delete",
+        // RESTORE: "/Artists/restore/{}",
     },
 
     AUTH: {

@@ -9,8 +9,8 @@ import { useNavigate } from "react-router-dom";
 import NotFound from "../../pages/other/not-found";
 import { useEffect } from "react";
 
-function GalleryCreate() {
-    const [formGallery, setFormGallery] = useState({
+function ArtistCreate() {
+    const [formArtist, setFormArtist] = useState({
         productName: "",
         description: "",
         imagePath: null,
@@ -24,18 +24,18 @@ function GalleryCreate() {
     const validateForm = () => {
         let valid = true;
         const newErrors = {};
-        if (formGallery.productName === "") {
-            newErrors.productName = "Please enter name gallery";
+        if (formArtist.productName === "") {
+            newErrors.productName = "Please enter name artist";
             valid = false;
-        } else if (formGallery.productName.length < 3) {
+        } else if (formArtist.productName.length < 3) {
             newErrors.productName = "Enter at least 3 characters";
             valid = false;
-        } else if (formGallery.productName.length > 255) {
+        } else if (formArtist.productName.length > 255) {
             newErrors.productName = "Enter up to 255 characters";
             valid = false;
         }
-        if (formGallery.imagePath === null) {
-            newErrors.imagePath = "Please choose gallery photo";
+        if (formArtist.imagePath === null) {
+            newErrors.imagePath = "Please choose artist photo";
             valid = false;
         }
 
@@ -43,7 +43,7 @@ function GalleryCreate() {
         return valid;
     };
 
-    //xử lý tạo gallery
+    //xử lý tạo Artist
     const handleSubmit = async (e) => {
         e.preventDefault();
         const isFormValid = validateForm();
@@ -52,22 +52,22 @@ function GalleryCreate() {
             const userToken = localStorage.getItem("access_token");
             api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
             try {
-                const response = await api.post(url.GALLERY.CREATE, formGallery, {
+                const response = await api.post(url.ARTIST.CREATE, formArtist, {
                     headers: { "Content-Type": "multipart/form-data" },
                 });
                 if (response.status === 201) {
                     // console.log(response.data);
-                    toast.success("Create Gallery Successffuly.", {
+                    toast.success("Create Artist Successffuly.", {
                         position: toast.POSITION.TOP_RIGHT,
                         autoClose: 3000,
                     });
                     setTimeout(() => {
-                        navigate(`/gallery-list`); //chuyển đến trang gallery-list
+                        navigate(`/artists-list`); //chuyển đến trang artists-list
                     }, 3000);
                 } else {
                 }
             } catch (error) {
-                toast.error("Unable to create gallery, please try again", {
+                toast.error("Unable to create artist, please try again", {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 3000,
                 });
@@ -78,12 +78,12 @@ function GalleryCreate() {
     };
 
     //xử lý tải file ảnh
-    const handleFileGalleryChange = (e, fieldName) => {
+    const handleFileArtistChange = (e, fieldName) => {
         const { files } = e.target;
         const selectedImage = files.length > 0 ? URL.createObjectURL(files[0]) : null;
 
-        setFormGallery({
-            ...formGallery,
+        setFormArtist({
+            ...formArtist,
             [fieldName]: fieldName === "imagePath" ? (files.length > 0 ? files[0] : null) : null,
             image_preview: selectedImage,
         });
@@ -91,10 +91,10 @@ function GalleryCreate() {
     const handleChange = (e) => {
         const { name } = e.target;
         if (name === "imagePath") {
-            handleFileGalleryChange(e, name);
+            handleFileArtistChange(e, name);
         } else {
             const { value } = e.target;
-            setFormGallery({ ...formGallery, [name]: value });
+            setFormArtist({ ...formArtist, [name]: value });
         }
     };
 
@@ -125,15 +125,15 @@ function GalleryCreate() {
             ) : (
                 <>
                     <Helmet>
-                        <title>Gallery Create | R Admin</title>
+                        <title>Artist Create | R Admin</title>
                     </Helmet>
                     <Layout>
-                        <Breadcrumb title="Gallery Create" />
+                        <Breadcrumb title="Artist Create" />
                         <div className="row">
                             <div className="col-xl-12 col-xxl-12">
                                 <div className="card">
                                     <div className="card-header">
-                                        <h4 className="card-title">Gallery Create</h4>
+                                        <h4 className="card-title">Artist Create</h4>
                                     </div>
                                     <div className="card-body">
                                         <form onSubmit={handleSubmit}>
@@ -141,9 +141,9 @@ function GalleryCreate() {
                                                 <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
                                                         <label className="text-label form-label">
-                                                            Gallery Name <span className="text-danger">*</span>
+                                                            Artist Name <span className="text-danger">*</span>
                                                         </label>
-                                                        <input type="text" name="productName" onChange={handleChange} className="form-control" placeholder="Please enter name gallery" autoFocus />
+                                                        <input type="text" name="productName" onChange={handleChange} className="form-control" placeholder="Please enter name artist" autoFocus />
                                                         {errors.productName && <div className="text-danger">{errors.productName}</div>}
                                                     </div>
                                                 </div>
@@ -168,9 +168,9 @@ function GalleryCreate() {
 
                                                 <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
-                                                        <label className="text-label form-label">Preview gallery photo</label>
-                                                        {formGallery.image_preview && (
-                                                            <img src={formGallery.image_preview} alt="Gallery Preview" style={{ width: "100%", height: "300px", objectFit: "cover" }} />
+                                                        <label className="text-label form-label">Preview artist photo</label>
+                                                        {formArtist.image_preview && (
+                                                            <img src={formArtist.image_preview} alt="Artist Preview" style={{ width: "100%", height: "300px", objectFit: "cover" }} />
                                                         )}
                                                     </div>
                                                 </div>
@@ -193,4 +193,4 @@ function GalleryCreate() {
     );
 }
 
-export default GalleryCreate;
+export default ArtistCreate;
