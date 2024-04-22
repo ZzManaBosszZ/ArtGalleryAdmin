@@ -9,7 +9,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../../layouts/loading";
 import NotFound from "../../pages/other/not-found";
 
-function GalleryEdit() {
+function ArtistEdit() {
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         setLoading(true);
@@ -21,7 +21,7 @@ function GalleryEdit() {
     const [userRole, setUserRole] = useState(null);
     const [error, setError] = useState(null);
     const { id } = useParams();
-    const [galleryData, setGalleryData] = useState({});
+    const [artistData, setArtistData] = useState({});
     const [imagePreview, setImagePreview] = useState("");
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
@@ -30,38 +30,38 @@ function GalleryEdit() {
     const validateForm = () => {
         let valid = true;
         const newErrors = {};
-        if (galleryData.productName === "") {
-            newErrors.productName = "Please enter name gallery";
+        if (artistData.productName === "") {
+            newErrors.productName = "Please enter name artist";
             valid = false;
-        } else if (galleryData.productName.length < 3) {
+        } else if (artistData.productName.length < 3) {
             newErrors.productName = "Enter at least 3 characters";
             valid = false;
-        } else if (galleryData.productName.length > 255) {
+        } else if (artistData.productName.length > 255) {
             newErrors.productName = "Enter up to 255 characters";
             valid = false;
         }
-        if (galleryData.imagePath === null) {
-            newErrors.imagePath = "Please choose gallery photo";
+        if (artistData.imagePath === null) {
+            newErrors.imagePath = "Please choose artist photo";
             valid = false;
         }
         setErrors(newErrors);
         return valid;
     };
 
-    //hien thi thong tin gallery
+    //hien thi thong tin artist
     useEffect(() => {
         const userToken = localStorage.getItem("access_token");
         api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
-        api.get(`${url.GALLERY.DETAIL.replace("{}", id)}`)
+        api.get(`${url.ARTIST.DETAIL.replace("{}", id)}`)
             .then((response) => {
-                setGalleryData(response.data);
+                setArtistData(response.data);
             })
             .catch((error) => {
                 // console.error("Error fetching promotion details:", error);
             });
     }, [id]);
 
-    //xử lý update gallery
+    //xử lý update artist
     const handleSubmit = async (e) => {
         e.preventDefault();
         const isFormValid = validateForm();
@@ -70,22 +70,22 @@ function GalleryEdit() {
             const userToken = localStorage.getItem("access_token");
             api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
             try {
-                const response = await api.put(url.GALLERY.UPDATE, galleryData, {
+                const response = await api.put(url.ARTIST.UPDATE, artistData, {
                     headers: { "Content-Type": "multipart/form-data" },
                 });
                 if (response.status === 200) {
                     // console.log(response.data);
-                    toast.success("Update Gallery Successffuly.", {
+                    toast.success("Update Artist Successffuly.", {
                         position: toast.POSITION.TOP_RIGHT,
                         autoClose: 3000,
                     });
                     setTimeout(() => {
-                        navigate(`/gallery-list`); //chuyển đến trang gallery-list
+                        navigate(`/artists-list`); //chuyển đến trang artists-list
                     }, 3000);
                 } else {
                 }
             } catch (error) {
-                toast.error("Unable to update gallery, please try again", {
+                toast.error("Unable to update artist, please try again", {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 3000,
                 });
@@ -122,16 +122,16 @@ function GalleryEdit() {
             ) : (
                 <>
                     <Helmet>
-                        <title>Gallery Edit | R Admin</title>
+                        <title>Artist Edit | R Admin</title>
                     </Helmet>
                     {loading ? <Loading /> : ""}
                     <Layout>
-                        <Breadcrumb title="Gallery Edit" />
+                        <Breadcrumb title="Artist Edit" />
                         <div className="row">
                             <div className="col-xl-12 col-xxl-12">
                                 <div className="card">
                                     <div className="card-header">
-                                        <h4 className="card-title">Gallery Edit</h4>
+                                        <h4 className="card-title">Artist Edit</h4>
                                     </div>
                                     <div className="card-body">
                                         <form onSubmit={handleSubmit}>
@@ -139,14 +139,14 @@ function GalleryEdit() {
                                                 <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
                                                         <label className="text-label form-label">
-                                                            Gallery Name <span className="text-danger">*</span>
+                                                        Artist Name <span className="text-danger">*</span>
                                                         </label>
                                                         <input
                                                             type="text"
-                                                            value={galleryData.productName}
+                                                            value={artistData.productName}
                                                             onChange={(e) =>
-                                                                setGalleryData({
-                                                                    ...galleryData,
+                                                                setArtistData({
+                                                                    ...artistData,
                                                                     productName: e.target.value,
                                                                 })
                                                             }
@@ -164,10 +164,10 @@ function GalleryEdit() {
                                                         </label>
                                                         <input
                                                             type="text"
-                                                            value={galleryData.description}
+                                                            value={artistData.description}
                                                             onChange={(e) =>
-                                                                setGalleryData({
-                                                                    ...galleryData,
+                                                                setArtistData({
+                                                                    ...artistData,
                                                                     description: e.target.value,
                                                                 })
                                                             }
@@ -190,8 +190,8 @@ function GalleryEdit() {
                                                                     setImagePreview(URL.createObjectURL(file));
 
                                                                     // Tiếp tục xử lý
-                                                                    setGalleryData({
-                                                                        ...galleryData,
+                                                                    setArtistData({
+                                                                        ...artistData,
                                                                         imagePath: file,
                                                                     });
                                                                 } else {
@@ -207,11 +207,11 @@ function GalleryEdit() {
 
                                                 <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
-                                                        <label className="text-label form-label">Preview gallery photos</label>
+                                                        <label className="text-label form-label">Preview artist photos</label>
                                                         <img
                                                             id="imgPreview"
-                                                            src={imagePreview || galleryData.imagePath}
-                                                            alt="Gallery Preview"
+                                                            src={imagePreview || artistData.imagePath}
+                                                            alt="Artist Preview"
                                                             style={{ width: "100%", height: "300px", objectFit: "cover" }}
                                                             onError={(e) => console.error("Image Preview Error:", e)}
                                                         />{" "}
@@ -236,4 +236,4 @@ function GalleryEdit() {
     );
 }
 
-export default GalleryEdit;
+export default ArtistEdit;
