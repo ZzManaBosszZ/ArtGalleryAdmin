@@ -108,7 +108,7 @@ function Login() {
     return (
         <>
             <Helmet>
-                <title>Login | R Admin</title>
+                <title>Login | Art Admin</title>
             </Helmet>
             {loading ? <Loading /> : ""}
             <div className="vh-100">
@@ -123,7 +123,7 @@ function Login() {
                                             <div>
                                                 <div className="text-center my-5">
                                                     <div className="logo">
-                                                        <img src="" alt="" />
+                                                        <img src="assets/images/logo/logo.png" alt="" />
                                                     </div>
                                                 </div>
                                                 <img src="assets/images/log.png" className="education-img" alt="" />

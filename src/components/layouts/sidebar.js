@@ -73,7 +73,7 @@ function Sidebar() {
 
                 <div className="copyright">
                     <p className="fs-14">
-                        <strong>Copyright</strong> © 2023 All Rights Reserved
+                        <strong>Copyright</strong> © 2024 All Rights Reserved
                     </p>
                     <p className="fs-14">
                         Made with <span className="heart"></span> by Five Chickens
