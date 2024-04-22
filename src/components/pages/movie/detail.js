@@ -12,7 +12,7 @@ import Swal from "sweetalert2";
 import Loading from "../../layouts/loading";
 import NotFound from "../../pages/other/not-found";
 
-function MovieDetail() {
+function ArtWorkDetail() {
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         setLoading(true);
@@ -24,7 +24,7 @@ function MovieDetail() {
     const [userRole, setUserRole] = useState(null);
     const [error, setError] = useState(null);
     const { id } = useParams();
-    const [movieDetail, setMovieDetail] = useState({ genres: [], languages: [] });
+    const [ArtWorkDetail, setArtWorkDetail] = useState({ genres: [], languages: [] });
 
     //hien thi thong tin chi tiet movie
     useEffect(() => {
@@ -32,14 +32,14 @@ function MovieDetail() {
         api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
         api.get(`${url.MOVIE.DETAIL.replace("{}", id)}`)
             .then((response) => {
-                setMovieDetail(response.data);
+                setArtWorkDetail(response.data);
             })
             .catch((error) => {
                 // console.error("Error fetching promotion details:", error);
             });
     }, [id]);
 
-    const releaseDate = movieDetail.release_date;
+    const releaseDate = ArtWorkDetail.release_date;
     const formattedDate = releaseDate ? format(new Date(releaseDate), "yyyy-MM-dd") : "N/A";
 
     // kiểm tra role
@@ -68,11 +68,11 @@ function MovieDetail() {
             ) : (
                 <>
                     <Helmet>
-                        <title>Movie Detail | R Admin</title>
+                        <title>ArtWork Detail | Art Admin</title>
                     </Helmet>
                     {loading ? <Loading /> : ""}
                     <Layout>
-                        <Breadcrumb title="Movie Detail" />
+                        <Breadcrumb title="ArtWork Detail" />
 
                         <div className="row">
                             <div className="col-xl-4">
@@ -82,31 +82,31 @@ function MovieDetail() {
                                             <div className="card-body">
                                                 <div className="profile-blog">
                                                     <h4 className="d-inline">Title Movie :</h4>
-                                                    <p className="mb-0">{movieDetail.title}</p>
+                                                    <p className="mb-0">{ArtWorkDetail.title}</p>
 
                                                     <div style={{ paddingTop: "20px" }}>
                                                         <h4 className="d-inline">Actor :</h4>
-                                                        <p className="mb-0">{movieDetail.actor}</p>
+                                                        <p className="mb-0">{ArtWorkDetail.actor}</p>
                                                     </div>
 
                                                     <div style={{ paddingTop: "20px" }}>
                                                         <h4 className="d-inline">Director :</h4>
-                                                        <p className="mb-0">{movieDetail.director}</p>
+                                                        <p className="mb-0">{ArtWorkDetail.director}</p>
                                                     </div>
 
                                                     <div style={{ paddingTop: "20px" }}>
                                                         <h4 className="d-inline">Duration :</h4>
-                                                        <p className="mb-0">{movieDetail.duration} minutes</p>
+                                                        <p className="mb-0">{ArtWorkDetail.duration} minutes</p>
                                                     </div>
 
                                                     <div style={{ paddingTop: "20px" }}>
                                                         <h4 className="d-inline">Number Of Favorites :</h4>
-                                                        <p className="mb-0">{movieDetail.favoriteCount}</p>
+                                                        <p className="mb-0">{ArtWorkDetail.favoriteCount}</p>
                                                     </div>
 
                                                     <div style={{ paddingTop: "20px" }}>
                                                         <h4 className="d-inline">Number Of Tickets Sold :</h4>
-                                                        <p className="mb-0">{movieDetail.totalTicket}</p>
+                                                        <p className="mb-0">{ArtWorkDetail.totalTicket}</p>
                                                     </div>
 
                                                     <div style={{ paddingTop: "20px" }}>
@@ -117,7 +117,7 @@ function MovieDetail() {
                                                     <div style={{ paddingTop: "20px" }}>
                                                         <h4 className="d-inline">Genres Of Movie :</h4>
                                                         <p className="mb-0">
-                                                            {movieDetail.genres.map((genre) => (
+                                                            {ArtWorkDetail.genres.map((genre) => (
                                                                 <span key={genre.id} className="badge light badge-dark">
                                                                     {genre.name}
                                                                 </span>
@@ -128,7 +128,7 @@ function MovieDetail() {
                                                     <div style={{ paddingTop: "20px" }}>
                                                         <h4 className="d-inline">Languages Of Movie :</h4>
                                                         <p className="mb-0">
-                                                            {movieDetail.languages.map((language) => (
+                                                            {ArtWorkDetail.languages.map((language) => (
                                                                 <span key={language.id} className="badge light badge-dark">
                                                                     {language.name}
                                                                 </span>
@@ -145,13 +145,13 @@ function MovieDetail() {
                                 <div className="card">
                                     <div className="card-body">
                                         <h4 className="d-inline">Description Movie :</h4>
-                                        <div className="post-details">{movieDetail.describe}</div>
+                                        <div className="post-details">{ArtWorkDetail.describe}</div>
 
                                         <div className="row" style={{ marginTop: "20px" }}>
                                             <div className="col-xl-12">
                                                 <h4 className="d-inline">Trailer Movie :</h4>
                                                 <div className="post-details">
-                                                    <ReactPlayer url={movieDetail.trailer} controls width="100%" height="250px" />
+                                                    <ReactPlayer url={ArtWorkDetail.trailer} controls width="100%" height="250px" />
                                                 </div>
                                             </div>
                                         </div>
@@ -160,13 +160,13 @@ function MovieDetail() {
                                             <div className="col-xl-6">
                                                 <h4 className="d-inline">Image Movie :</h4>
                                                 <div className="post-details">
-                                                    <img src={movieDetail.movie_image} alt="image image" style={{ height: "180px", objectFit: "cover" }} className="img-fluid mt-4 mb-4 w-100" />
+                                                    <img src={ArtWorkDetail.movie_image} alt="image image" style={{ height: "180px", objectFit: "cover" }} className="img-fluid mt-4 mb-4 w-100" />
                                                 </div>
                                             </div>
                                             <div className="col-xl-6">
                                                 <h4 className="d-inline">Cover Image :</h4>
                                                 <div className="post-details">
-                                                    <img src={movieDetail.cover_image} alt="image image" style={{ height: "180px", objectFit: "cover" }} className="img-fluid mt-4 mb-4 w-100" />
+                                                    <img src={ArtWorkDetail.cover_image} alt="image image" style={{ height: "180px", objectFit: "cover" }} className="img-fluid mt-4 mb-4 w-100" />
                                                 </div>
                                             </div>
                                         </div>
@@ -180,4 +180,4 @@ function MovieDetail() {
         </>
     );
 }
-export default MovieDetail;
+export default ArtWorkDetail;
