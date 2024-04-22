@@ -26,11 +26,11 @@ function ArtWorkDetail() {
     const { id } = useParams();
     const [ArtWorkDetail, setArtWorkDetail] = useState({ genres: [], languages: [] });
 
-    //hien thi thong tin chi tiet movie
+    //hien thi thong tin chi tiet artwork
     useEffect(() => {
         const userToken = localStorage.getItem("access_token");
         api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
-        api.get(`${url.MOVIE.DETAIL.replace("{}", id)}`)
+        api.get(`${url.ARTWORK.DETAIL.replace("{}", id)}`)
             .then((response) => {
                 setArtWorkDetail(response.data);
             })
@@ -81,7 +81,7 @@ function ArtWorkDetail() {
                                         <div className="card">
                                             <div className="card-body">
                                                 <div className="profile-blog">
-                                                    <h4 className="d-inline">Title Movie :</h4>
+                                                    <h4 className="d-inline">Title ArtWork :</h4>
                                                     <p className="mb-0">{ArtWorkDetail.title}</p>
 
                                                     <div style={{ paddingTop: "20px" }}>
@@ -158,7 +158,7 @@ function ArtWorkDetail() {
 
                                         <div className="row" style={{ marginTop: "20px" }}>
                                             <div className="col-xl-6">
-                                                <h4 className="d-inline">Image Movie :</h4>
+                                                <h4 className="d-inline">Image ArtWork :</h4>
                                                 <div className="post-details">
                                                     <img src={ArtWorkDetail.movie_image} alt="image image" style={{ height: "180px", objectFit: "cover" }} className="img-fluid mt-4 mb-4 w-100" />
                                                 </div>

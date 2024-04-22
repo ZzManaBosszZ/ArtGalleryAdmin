@@ -12,7 +12,7 @@ import { format } from "date-fns";
 import Loading from "../../layouts/loading";
 import NotFound from "../../pages/other/not-found";
 
-function MovieEdit() {
+function ArtWorkEdit() {
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         setLoading(true);
@@ -24,8 +24,8 @@ function MovieEdit() {
     const [userRole, setUserRole] = useState(null);
     const [error, setError] = useState(null);
     const { id } = useParams();
-    const [movieData, setMovieData] = useState({});
-    const [movieImgePreview, setMovieImagePreview] = useState("");
+    const [artworkData, setArtWorkData] = useState({});
+    const [artworkImgePreview, setArtWorkImagePreview] = useState("");
     const [coverImgePreview, setCoverImagePreview] = useState("");
     const [errors, setErrors] = useState({});
     const [nameExistsError, setNameExistsError] = useState("");
@@ -38,43 +38,43 @@ function MovieEdit() {
     const validateForm = () => {
         let valid = true;
         const newErrors = {};
-        if (movieData.title === "") {
-            newErrors.title = "Please enter name movie";
+        if (artworkData.title === "") {
+            newErrors.title = "Please enter name ArtWork";
             valid = false;
-        } else if (movieData.title.length < 3) {
+        } else if (artworkData.title.length < 3) {
             newErrors.title = "Enter at least 3 characters";
             valid = false;
-        } else if (movieData.title.length > 255) {
+        } else if (artworkData.title.length > 255) {
             newErrors.title = "Enter up to 255 characters";
             valid = false;
         }
-        if (movieData.actor === "") {
+        if (artworkData.actor === "") {
             newErrors.actor = "Please enter actor";
             valid = false;
         }
-        if (movieData.movie_image === null) {
-            newErrors.movie_image = "Please choose movie photo";
+        if (artworkData.movie_image === null) {
+            newErrors.movie_image = "Please choose ArtWork photo";
             valid = false;
         }
-        if (movieData.cover_image === null) {
-            newErrors.cover_image = "Please choose movie cover photo";
+        if (artworkData.cover_image === null) {
+            newErrors.cover_image = "Please choose ArtWork cover photo";
             valid = false;
         }
-        if (movieData.director === "") {
+        if (artworkData.director === "") {
             newErrors.director = "Please enter director";
             valid = false;
         }
-        if (movieData.duration === "") {
+        if (artworkData.duration === "") {
             newErrors.duration = "Please enter duration";
             valid = false;
         } else {
-            const durationValue = parseFloat(movieData.duration);
+            const durationValue = parseFloat(artworkData.duration);
             if (isNaN(durationValue) || durationValue < 60 || durationValue > 200) {
                 newErrors.duration = "Please enter a valid duration between 60 and 200 Minute";
                 valid = false;
             }
         }
-        if (movieData.release_date === "") {
+        if (artworkData.release_date === "") {
             newErrors.release_date = "Please enter release_date";
             valid = false;
         }
@@ -82,25 +82,25 @@ function MovieEdit() {
         return valid;
     };
 
-    //hien thi thong tin movie
+    //hien thi thong tin ArtWork
     useEffect(() => {
         const userToken = localStorage.getItem("access_token");
         api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
-        api.get(`${url.MOVIE.DETAIL.replace("{}", id)}`)
+        api.get(`${url.ARTWORK.DETAIL.replace("{}", id)}`)
             .then((response) => {
-                const initialMovieData = {
+                const initialArtWorkData = {
                     ...response.data,
                     movie_image: response.data.movie_image,
                     release_date: format(new Date(response.data.release_date), "yyyy-MM-dd"),
                 };
-                setMovieData(initialMovieData);
+                setArtWorkData(initialArtWorkData);
             })
             .catch((error) => {
-                console.error("Error fetching movie details:", error);
+                console.error("Error fetching ArtWork details:", error);
             });
     }, [id]);
 
-    //xử lý update phim
+    //xử lý update ArtWork
     const handleSubmit = async (e) => {
         e.preventDefault();
         const isFormValid = validateForm();
@@ -108,29 +108,29 @@ function MovieEdit() {
             const userToken = localStorage.getItem("access_token");
             api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
             try {
-                const response = await api.put(url.MOVIE.UPDATE, movieData, {
+                const response = await api.put(url.ARTWORK.UPDATE, artworkData, {
                     headers: { "Content-Type": "multipart/form-data" },
                 });
                 if (response && response.data) {
                     // console.log(response.data);
-                    toast.success("Update Movie Successffuly.", {
+                    toast.success("Update ArtWork Successffuly.", {
                         position: toast.POSITION.TOP_RIGHT,
                         autoClose: 3000,
                     });
                     setTimeout(() => {
-                        navigate(`/movie-list`); //chuyển đến trang movie-list
+                        navigate(`/artworks-list`); //chuyển đến trang artworks-list
                     }, 3000);
                 } else {
                 }
             } catch (error) {
-                if (error.response.status === 400 && error.response.data.message === "Movie already exists") {
-                    setNameExistsError("The name of this movie already exists");
-                    toast.error("The name of this movie already exists", {
+                if (error.response.status === 400 && error.response.data.message === "ArtWork already exists") {
+                    setNameExistsError("The name of this ArtWork already exists");
+                    toast.error("The name of this ArtWork already exists", {
                         position: toast.POSITION.TOP_RIGHT,
                         autoClose: 3000,
                     });
                 } else {
-                    toast.error("Unable to update movie, please try again", {
+                    toast.error("Unable to update ArtWork, please try again", {
                         position: toast.POSITION.TOP_RIGHT,
                         autoClose: 3000,
                     });
@@ -167,16 +167,16 @@ function MovieEdit() {
             ) : (
                 <>
                     <Helmet>
-                        <title>Movie Edit | R Admin</title>
+                        <title>ArtWork Edit | R Admin</title>
                     </Helmet>
                     {loading ? <Loading /> : ""}
                     <Layout>
-                        <Breadcrumb title="Movie Edit" />
+                        <Breadcrumb title="ArtWork Edit" />
                         <div className="row">
                             <div className="col-xl-12 col-xxl-12">
                                 <div className="card">
                                     <div className="card-header">
-                                        <h4 className="card-title">Movie Edit</h4>
+                                        <h4 className="card-title">ArtWork Edit</h4>
                                     </div>
                                     <div className="card-body">
                                         <form onSubmit={handleSubmit}>
@@ -184,14 +184,14 @@ function MovieEdit() {
                                                 <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
                                                         <label className="text-label form-label">
-                                                            Movie Name <span className="text-danger">*</span>
+                                                        ArtWork Name <span className="text-danger">*</span>
                                                         </label>
                                                         <input
                                                             type="text"
-                                                            value={movieData.title}
+                                                            value={artworkData.title}
                                                             onChange={(e) =>
-                                                                setMovieData({
-                                                                    ...movieData,
+                                                                setArtWorkData({
+                                                                    ...artworkData,
                                                                     title: e.target.value,
                                                                 })
                                                             }
@@ -206,10 +206,10 @@ function MovieEdit() {
                                                     <div className="mb-3">
                                                         <label className="text-label form-label">Description</label>
                                                         <textarea
-                                                            value={movieData.describe}
+                                                            value={artworkData.describe}
                                                             onChange={(e) =>
-                                                                setMovieData({
-                                                                    ...movieData,
+                                                                setArtWorkData({
+                                                                    ...artworkData,
                                                                     describe: e.target.value,
                                                                 })
                                                             }
@@ -225,10 +225,10 @@ function MovieEdit() {
                                                         </label>
                                                         <input
                                                             type="text"
-                                                            value={movieData.actor}
+                                                            value={artworkData.actor}
                                                             onChange={(e) =>
-                                                                setMovieData({
-                                                                    ...movieData,
+                                                                setArtWorkData({
+                                                                    ...artworkData,
                                                                     actor: e.target.value,
                                                                 })
                                                             }
@@ -245,10 +245,10 @@ function MovieEdit() {
                                                         </label>
                                                         <input
                                                             type="text"
-                                                            value={movieData.director}
+                                                            value={artworkData.director}
                                                             onChange={(e) =>
-                                                                setMovieData({
-                                                                    ...movieData,
+                                                                setArtWorkData({
+                                                                    ...artworkData,
                                                                     director: e.target.value,
                                                                 })
                                                             }
@@ -265,10 +265,10 @@ function MovieEdit() {
                                                         </label>
                                                         <input
                                                             type="date"
-                                                            value={movieData.release_date}
+                                                            value={artworkData.release_date}
                                                             onChange={(e) =>
-                                                                setMovieData({
-                                                                    ...movieData,
+                                                                setArtWorkData({
+                                                                    ...artworkData,
                                                                     release_date: e.target.value,
                                                                 })
                                                             }
@@ -285,10 +285,10 @@ function MovieEdit() {
                                                         </label>
                                                         <input
                                                             type="number"
-                                                            value={movieData.duration}
+                                                            value={artworkData.duration}
                                                             onChange={(e) =>
-                                                                setMovieData({
-                                                                    ...movieData,
+                                                                setArtWorkData({
+                                                                    ...artworkData,
                                                                     duration: e.target.value,
                                                                 })
                                                             }
@@ -301,7 +301,7 @@ function MovieEdit() {
                                                 <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
                                                         <label className="text-label form-label">
-                                                            Movie photos <span className="text-danger">*</span>
+                                                            ArtWorks photos <span className="text-danger">*</span>
                                                         </label>
                                                         <input
                                                             type="file"
@@ -309,11 +309,11 @@ function MovieEdit() {
                                                                 const file = e.target.files[0];
                                                                 if (file && /\.(jpg|png|jpeg)$/.test(file.name)) {
                                                                     // Update image preview state
-                                                                    setMovieImagePreview(URL.createObjectURL(file));
+                                                                    setArtWorkImagePreview(URL.createObjectURL(file));
 
                                                                     // Tiếp tục xử lý
-                                                                    setMovieData({
-                                                                        ...movieData,
+                                                                    setArtWorkData({
+                                                                        ...artworkData,
                                                                         movie_image: file,
                                                                     });
                                                                 } else {
@@ -341,8 +341,8 @@ function MovieEdit() {
                                                                     setCoverImagePreview(URL.createObjectURL(file));
 
                                                                     // Tiếp tục xử lý
-                                                                    setMovieData({
-                                                                        ...movieData,
+                                                                    setArtWorkData({
+                                                                        ...artworkData,
                                                                         cover_image: file,
                                                                     });
                                                                 } else {
@@ -363,10 +363,10 @@ function MovieEdit() {
                                                             type="text"
                                                             name="trailer"
                                                             className="form-control"
-                                                            value={movieData.trailer}
+                                                            value={artworkData.trailer}
                                                             onChange={(e) => {
                                                                 setVideoUrl(e.target.value);
-                                                                setMovieData({ ...movieData, trailer: e.target.value });
+                                                                setArtWorkData({ ...artworkData, trailer: e.target.value });
                                                             }}
                                                         />
                                                     </div>
@@ -374,10 +374,10 @@ function MovieEdit() {
 
                                                 <div className="col-lg-2 mb-2">
                                                     <div className="mb-3">
-                                                        <label className="text-label form-label">Preview movie photos</label>
+                                                        <label className="text-label form-label">Preview ArtWorks photos</label>
                                                         <img
                                                             id="imgPreview"
-                                                            src={movieImgePreview || movieData.movie_image}
+                                                            src={artworkImgePreview || artworkData.movie_image}
                                                             alt="Product Preview"
                                                             style={{ width: "100%", height: "200px", objectFit: "cover" }}
                                                             onError={(e) => console.error("Image Preview Error:", e)}
@@ -387,10 +387,10 @@ function MovieEdit() {
 
                                                 <div className="col-lg-2 mb-2">
                                                     <div className="mb-3">
-                                                        <label className="text-label form-label">Preview movie cover photo</label>
+                                                        <label className="text-label form-label">Preview ArtWork cover photo</label>
                                                         <img
                                                             id="imgPreview"
-                                                            src={coverImgePreview || movieData.cover_image}
+                                                            src={coverImgePreview || artworkData.cover_image}
                                                             alt="Product Preview"
                                                             style={{ width: "100%", height: "200px", objectFit: "cover" }}
                                                             onError={(e) => console.error("Image Preview Error:", e)}
@@ -401,13 +401,13 @@ function MovieEdit() {
                                                 <div className="col-lg-2 mb-2">
                                                     <div className="mb-3">
                                                         <label className="text-label form-label">Preview Trailer</label>
-                                                        {movieData.trailer && <ReactPlayer url={movieData.trailer} width="100%" height="200px" controls />}
+                                                        {artworkData.trailer && <ReactPlayer url={artworkData.trailer} width="100%" height="200px" controls />}
                                                     </div>
                                                 </div>
 
                                                 <div className="text-end">
                                                     <button type="submit" className="btn btn-default">
-                                                        Update Movie
+                                                        Update ArtWork
                                                     </button>
                                                 </div>
                                             </div>
@@ -423,4 +423,4 @@ function MovieEdit() {
     );
 }
 
-export default MovieEdit;
+export default ArtWorkEdit;

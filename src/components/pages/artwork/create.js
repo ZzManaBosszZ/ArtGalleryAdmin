@@ -10,8 +10,8 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import NotFound from "../../pages/other/not-found";
 
-function MovieCreate() {
-    const [formMovie, setFormMovie] = useState({
+function ArtWorkCreate() {
+    const [formArtWork, setFormArtWork] = useState({
         title: "",
         actor: "",
         movie_image: null,
@@ -47,37 +47,37 @@ function MovieCreate() {
         }),
     };
     //hiển thị select langueage
-    useEffect(() => {
-        const fetchLanguages = async () => {
-            const userToken = localStorage.getItem("access_token");
-            api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
-            try {
-                const response = await api.get(url.LANGUAGE.LIST);
-                const languageData = response.data.map((language) => ({
-                    value: language.id,
-                    label: language.name,
-                }));
-                setLanguages(languageData);
-            } catch (error) {}
-        };
-        fetchLanguages();
-    }, []);
+    // useEffect(() => {
+    //     const fetchLanguages = async () => {
+    //         const userToken = localStorage.getItem("access_token");
+    //         api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+    //         try {
+    //             const response = await api.get(url.LANGUAGE.LIST);
+    //             const languageData = response.data.map((language) => ({
+    //                 value: language.id,
+    //                 label: language.name,
+    //             }));
+    //             setLanguages(languageData);
+    //         } catch (error) {}
+    //     };
+    //     fetchLanguages();
+    // }, []);
     //hien thi select genre
-    useEffect(() => {
-        const fetchGenres = async () => {
-            const userToken = localStorage.getItem("access_token");
-            api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
-            try {
-                const response = await api.get(url.GENRE.LIST);
-                const genreData = response.data.map((genre) => ({
-                    value: genre.id,
-                    label: genre.name,
-                }));
-                setGenres(genreData);
-            } catch (error) {}
-        };
-        fetchGenres();
-    }, []);
+    // useEffect(() => {
+    //     const fetchGenres = async () => {
+    //         const userToken = localStorage.getItem("access_token");
+    //         api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+    //         try {
+    //             const response = await api.get(url.GENRE.LIST);
+    //             const genreData = response.data.map((genre) => ({
+    //                 value: genre.id,
+    //                 label: genre.name,
+    //             }));
+    //             setGenres(genreData);
+    //         } catch (error) {}
+    //     };
+    //     fetchGenres();
+    // }, []);
 
     //hiển thị video trailer
     const [videoUrl, setVideoUrl] = useState("");
@@ -86,51 +86,51 @@ function MovieCreate() {
     const validateForm = () => {
         let valid = true;
         const newErrors = {};
-        if (formMovie.title === "") {
+        if (formArtWork.title === "") {
             newErrors.title = "Please enter name movie";
             valid = false;
-        } else if (formMovie.title.length < 3) {
+        } else if (formArtWork.title.length < 3) {
             newErrors.title = "Enter at least 3 characters";
             valid = false;
-        } else if (formMovie.title.length > 255) {
+        } else if (formArtWork.title.length > 255) {
             newErrors.title = "Enter up to 255 characters";
             valid = false;
         }
-        if (formMovie.actor === "") {
+        if (formArtWork.actor === "") {
             newErrors.actor = "Please enter actor";
             valid = false;
         }
-        if (formMovie.movie_image === null) {
+        if (formArtWork.movie_image === null) {
             newErrors.movie_image = "Please choose movie photo";
             valid = false;
         }
-        if (formMovie.cover_image === null) {
+        if (formArtWork.cover_image === null) {
             newErrors.cover_image = "Please choose movie cover photo";
             valid = false;
         }
-        if (formMovie.director === "") {
+        if (formArtWork.director === "") {
             newErrors.director = "Please enter director";
             valid = false;
         }
-        if (formMovie.duration === "") {
+        if (formArtWork.duration === "") {
             newErrors.duration = "Please enter duration";
             valid = false;
         } else {
-            const durationValue = parseFloat(formMovie.duration);
+            const durationValue = parseFloat(formArtWork.duration);
             if (isNaN(durationValue) || durationValue < 60 || durationValue > 200) {
                 newErrors.duration = "Please enter a valid duration between 60 and 200 Minute";
                 valid = false;
             }
         }
-        if (formMovie.release_date === "") {
+        if (formArtWork.release_date === "") {
             newErrors.release_date = "Please enter release date";
             valid = false;
         }
-        if (formMovie.genreIds === "") {
+        if (formArtWork.genreIds === "") {
             newErrors.genreIds = "Please choose genre";
             valid = false;
         }
-        if (formMovie.languageIds === "") {
+        if (formArtWork.languageIds === "") {
             newErrors.languageIds = "Please choose language";
             valid = false;
         }
@@ -138,7 +138,7 @@ function MovieCreate() {
         return valid;
     };
 
-    //xử lý tạo phim
+    //xử lý tạo artwork
     const handleSubmit = async (e) => {
         e.preventDefault();
         const isFormValid = validateForm();
@@ -147,29 +147,29 @@ function MovieCreate() {
             const userToken = localStorage.getItem("access_token");
             api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
             try {
-                const response = await api.post(url.MOVIE.CREATE, formMovie, {
+                const response = await api.post(url.ARTWORK.CREATE, formArtWork, {
                     headers: { "Content-Type": "multipart/form-data" },
                 });
                 if (response && response.data) {
                     // console.log(response.data);
-                    toast.success("Create Movie Successffuly.", {
+                    toast.success("Create ArtWork Successffuly.", {
                         position: toast.POSITION.TOP_RIGHT,
                         autoClose: 3000,
                     });
                     setTimeout(() => {
-                        navigate(`/movie-list`); //chuyển đến trang movie-list
+                        navigate(`/artworks-list`); //chuyển đến trang artworks-list
                     }, 3000);
                 } else {
                 }
             } catch (error) {
-                if (error.response.status === 400 && error.response.data.message === "Movie already exists") {
-                    setNameExistsError("The name of this movie already exists");
-                    toast.error("The name of this movie already exists", {
+                if (error.response.status === 400 && error.response.data.message === "ArtWork already exists") {
+                    setNameExistsError("The name of this ArtWork already exists");
+                    toast.error("The name of this ArtWork already exists", {
                         position: toast.POSITION.TOP_RIGHT,
                         autoClose: 3000,
                     });
                 } else {
-                    toast.error("Unable to create movie, please try again", {
+                    toast.error("Unable to create ArtWork, please try again", {
                         position: toast.POSITION.TOP_RIGHT,
                         autoClose: 3000,
                     });
@@ -181,12 +181,12 @@ function MovieCreate() {
     };
 
     //xử lý tải file ảnh
-    const handleFileMovieChange = (e, fieldName) => {
+    const handleFileArtWorkChange = (e, fieldName) => {
         const { files } = e.target;
         const selectedImage = files.length > 0 ? URL.createObjectURL(files[0]) : null;
 
-        setFormMovie({
-            ...formMovie,
+        setFormArtWork({
+            ...formArtWork,
             [fieldName]: fieldName === "movie_image" ? (files.length > 0 ? files[0] : null) : null,
             movie_image_preview: selectedImage,
         });
@@ -195,8 +195,8 @@ function MovieCreate() {
         const { files } = e.target;
         const selectedImage = files.length > 0 ? URL.createObjectURL(files[0]) : null;
 
-        setFormMovie({
-            ...formMovie,
+        setFormArtWork({
+            ...formArtWork,
             [fieldName]: fieldName === "cover_image" ? (files.length > 0 ? files[0] : null) : null,
             movie_cover_image_preview: selectedImage,
         });
@@ -204,12 +204,12 @@ function MovieCreate() {
     const handleChange = (e) => {
         const { name } = e.target;
         if (name === "movie_image") {
-            handleFileMovieChange(e, name);
+            handleFileArtWorkChange(e, name);
         } else if (name === "cover_image") {
             handleFileCoverChange(e, name);
         } else {
             const { value } = e.target;
-            setFormMovie({ ...formMovie, [name]: value });
+            setFormArtWork({ ...formArtWork, [name]: value });
         }
         setNameExistsError("");
     };
@@ -298,12 +298,12 @@ function MovieCreate() {
                                                         </label>
                                                         <Select
                                                             name="languageIds"
-                                                            value={languages.filter((option) => formMovie.languageIds.includes(option.value))}
+                                                            value={languages.filter((option) => formArtWork.languageIds.includes(option.value))}
                                                             isMulti
                                                             closeMenuOnSelect={false}
                                                             styles={customStyles}
                                                             onChange={(selectedOption) => {
-                                                                setFormMovie({ ...formMovie, languageIds: selectedOption.map((option) => option.value) });
+                                                                setFormArtWork({ ...formArtWork, languageIds: selectedOption.map((option) => option.value) });
                                                             }}
                                                             options={languages}
                                                             placeholder="Select Languages"
@@ -319,12 +319,12 @@ function MovieCreate() {
                                                         </label>
                                                         <Select
                                                             name="genreIds"
-                                                            value={genres.filter((option) => formMovie.genreIds.includes(option.value))}
+                                                            value={genres.filter((option) => formArtWork.genreIds.includes(option.value))}
                                                             isMulti
                                                             closeMenuOnSelect={false}
                                                             styles={customStyles}
                                                             onChange={(selectedOption) => {
-                                                                setFormMovie({ ...formMovie, genreIds: selectedOption.map((option) => option.value) });
+                                                                setFormArtWork({ ...formArtWork, genreIds: selectedOption.map((option) => option.value) });
                                                             }}
                                                             options={genres}
                                                             placeholder="Select Genres"
@@ -384,7 +384,7 @@ function MovieCreate() {
                                                             value={videoUrl}
                                                             onChange={(e) => {
                                                                 setVideoUrl(e.target.value);
-                                                                setFormMovie({ ...formMovie, trailer: e.target.value });
+                                                                setFormArtWork({ ...formArtWork, trailer: e.target.value });
                                                             }}
                                                         />
                                                     </div>
@@ -393,8 +393,8 @@ function MovieCreate() {
                                                 <div className="col-lg-2 mb-2">
                                                     <div className="mb-3">
                                                         <label className="text-label form-label">Preview movie photos</label>
-                                                        {formMovie.movie_image_preview && (
-                                                            <img src={formMovie.movie_image_preview} alt="Movie Preview" style={{ width: "100%", height: "200px", objectFit: "cover" }} />
+                                                        {formArtWork.movie_image_preview && (
+                                                            <img src={formArtWork.movie_image_preview} alt="Movie Preview" style={{ width: "100%", height: "200px", objectFit: "cover" }} />
                                                         )}
                                                     </div>
                                                 </div>
@@ -402,8 +402,8 @@ function MovieCreate() {
                                                 <div className="col-lg-2 mb-2">
                                                     <div className="mb-3">
                                                         <label className="text-label form-label">Preview movie cover photo</label>
-                                                        {formMovie.movie_cover_image_preview && (
-                                                            <img src={formMovie.movie_cover_image_preview} alt="Movie Preview" style={{ width: "100%", height: "200px", objectFit: "cover" }} />
+                                                        {formArtWork.movie_cover_image_preview && (
+                                                            <img src={formArtWork.movie_cover_image_preview} alt="Movie Preview" style={{ width: "100%", height: "200px", objectFit: "cover" }} />
                                                         )}
                                                     </div>
                                                 </div>
@@ -433,4 +433,4 @@ function MovieCreate() {
     );
 }
 
-export default MovieCreate;
+export default ArtWorkCreate;

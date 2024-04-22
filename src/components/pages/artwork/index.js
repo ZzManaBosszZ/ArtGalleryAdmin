@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import Loading from "../../layouts/loading";
 import NotFound from "../other/not-found";
-function MovieList() {
+function ArtWorkList() {
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         setLoading(true);
@@ -21,32 +21,32 @@ function MovieList() {
 
     const [userRole, setUserRole] = useState(null);
     const [error, setError] = useState(null);
-    const [movies, setMovies] = useState([]);
+    const [artworks, setArtWorks] = useState([]);
     const [isDeleteVisible, setDeleteVisible] = useState(false);
     const [tbodyCheckboxes, setTbodyCheckboxes] = useState([]);
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectAll, setSelectAll] = useState(false);
 
-    //hiển thị danh sách movie
+    //hiển thị danh sách artwork
     useEffect(() => {
-        const loadMovies = async () => {
+        const loadArtWorks = async () => {
             const userToken = localStorage.getItem("access_token");
             api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
             try {
-                const response = await api.get(url.MOVIE.LIST);
+                const response = await api.get(url.ARTWORK.LIST);
                 const filteredBookings = selectedDate
                     ? response.data.filter((item) => format(new Date(item.release_date), "yyyy-MM-dd") === format(new Date(selectedDate), "yyyy-MM-dd"))
                     : response.data;
-                setMovies(filteredBookings);
+                setArtWorks(filteredBookings);
                 setTbodyCheckboxes(Array.from({ length: response.data.length }).fill(false));
             } catch (error) {}
         };
-        loadMovies();
+        loadArtWorks();
     }, [selectedDate]);
 
     //xử lý check tất cả và hiển thị thùng rác
     const handleSelectAll = () => {
-        const updatedCheckboxes = !selectAll ? Array.from({ length: movies.length }).fill(true) : Array.from({ length: movies.length }).fill(false);
+        const updatedCheckboxes = !selectAll ? Array.from({ length: artworks.length }).fill(true) : Array.from({ length: artworks.length }).fill(false);
         setTbodyCheckboxes(updatedCheckboxes);
         setSelectAll(!selectAll);
         const checkboxes = document.querySelectorAll('#orders input[type="checkbox"]');
@@ -68,20 +68,20 @@ function MovieList() {
         setDeleteVisible(isDeleteVisible);
     };
 
-    //xử lý xoá movie
-    const handleDeleteMovie = async () => {
-        const selectedMovieIds = [];
+    //xử lý xoá artwork
+    const handleDeleteArtWork = async () => {
+        const selectedArtWorkIds = [];
 
-        // lấy id của các movie đã được chọn
-        movies.forEach((item, index) => {
+        // lấy id của các artwork đã được chọn
+        artworks.forEach((item, index) => {
             if (selectAll || tbodyCheckboxes[index]) {
-                selectedMovieIds.push(item.id);
+                selectedArtWorkIds.push(item.id);
             }
         });
 
         const isConfirmed = await Swal.fire({
             title: "Are you sure?",
-            text: "You want to delete selected movies?",
+            text: "You want to delete selected ArtWorks?",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -92,14 +92,14 @@ function MovieList() {
             const userToken = localStorage.getItem("access_token");
             api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
             try {
-                const deleteResponse = await api.delete(url.MOVIE.DELETE, {
-                    data: selectedMovieIds,
+                const deleteResponse = await api.delete(url.ARTWORK.DELETE, {
+                    data: selectedArtWorkIds,
                 });
                 if (deleteResponse.status === 200) {
-                    setMovies((prevMovies) => prevMovies.filter((movie) => !selectedMovieIds.includes(movie.id)));
-                    setTbodyCheckboxes((prevCheckboxes) => prevCheckboxes.filter((_, index) => !selectedMovieIds.includes(movies[index].id)));
+                    setArtWorks((prevArtWorks) => prevArtWorks.filter((artwork) => !selectedArtWorkIds.includes(artwork.id)));
+                    setTbodyCheckboxes((prevCheckboxes) => prevCheckboxes.filter((_, index) => !selectedArtWorkIds.includes(artworks[index].id)));
                     setDeleteVisible(false);
-                    toast.success("Delete Movie Successfully.", {
+                    toast.success("Delete ArtWork Successfully.", {
                         position: toast.POSITION.TOP_RIGHT,
                         autoClose: 3000,
                     });
@@ -107,18 +107,18 @@ function MovieList() {
                 } else {
                 }
             } catch (error) {
-                toast.error("Cannot Delete Movie!", {
+                toast.error("Cannot Delete ArtWork!", {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 3000,
                 });
-                console.error("Failed to delete movie:", error);
+                console.error("Failed to delete ArtWork:", error);
             }
         }
     };
 
     //paginate
     const [currentPage, setCurrentPage] = useState(1);
-    const moviesPerPage = 10;
+    const artworksPerPage = 10;
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
@@ -128,10 +128,10 @@ function MovieList() {
     const handleNextPage = () => {
         setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
     };
-    const totalPages = Math.ceil(movies.length / moviesPerPage);
-    const indexOfLastMovie = currentPage * moviesPerPage;
-    const indexOfFirstMovie = indexOfLastMovie - moviesPerPage;
-    const currentMovies = movies.slice(indexOfFirstMovie, indexOfLastMovie);
+    const totalPages = Math.ceil(artworks.length / artworksPerPage);
+    const indexOfLastArtWork = currentPage * artworksPerPage;
+    const indexOfFirstArtWork = indexOfLastArtWork - artworksPerPage;
+    const currentArtWorks = artworks.slice(indexOfFirstArtWork, indexOfLastArtWork);
 
     //search, filter
     const [searchTitle, setSearchTitle] = useState("");
@@ -142,7 +142,7 @@ function MovieList() {
     const handleSearchDirectorChange = (e) => {
         setSearchDirector(e.target.value);
     };
-    const filteredMovies = currentMovies.filter((item) => {
+    const filteredArtWorks = currentArtWorks.filter((item) => {
         const titleMatch = item.title.toLowerCase().includes(searchTitle.toLowerCase());
         const directorMatch = item.director.toLowerCase().includes(searchDirector.toLowerCase());
         return titleMatch && directorMatch;
@@ -174,18 +174,18 @@ function MovieList() {
             ) : (
                 <>
                     <Helmet>
-                        <title>Movie List | R Admin</title>
+                        <title>ArtWork List | Art Admin</title>
                     </Helmet>
                     {loading ? <Loading /> : ""}
                     <Layout>
-                        <Breadcrumb title="Movie List" />
+                        <Breadcrumb title="ArtWork List" />
 
                         <div className="row page-titles">
                             <div className="col-lg-4">
-                                <input type="text" className="form-control input-rounded" placeholder="Search title movie . . ." value={searchTitle} onChange={handleSearchTitleChange} />
+                                <input type="text" className="form-control input-rounded" placeholder="Search title ArtWork . . ." value={searchTitle} onChange={handleSearchTitleChange} />
                             </div>
                             <div className="col-lg-4">
-                                <input type="text" className="form-control input-rounded" placeholder="Search director movie . . ." value={searchDirector} onChange={handleSearchDirectorChange} />
+                                <input type="text" className="form-control input-rounded" placeholder="Search director ArtWork . . ." value={searchDirector} onChange={handleSearchDirectorChange} />
                             </div>
                             <div className="col-lg-4">
                                 <input type="date" className="form-control input-rounded" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} />
@@ -195,14 +195,14 @@ function MovieList() {
                         <div className="card-header">
                             <div className="col-lg-6"></div>
                             <div className="col-lg-1 text-end">
-                                <NavLink onClick={handleDeleteMovie}>
+                                <NavLink onClick={handleDeleteArtWork}>
                                     <button type="button" className={`btn btn-danger ${isDeleteVisible ? "" : "d-none"}`}>
                                         <i className="fa fa-trash"></i>
                                     </button>
                                 </NavLink>
                             </div>
                             <div className="col-lg-2 text-end">
-                                <NavLink to="/movie-delete-at">
+                                <NavLink to="/artwork-delete-at">
                                     <button type="button" className="btn btn-rounded btn-warning">
                                         <span className="btn-icon-start text-warning">
                                             <i className="fa fa-trash"></i>
@@ -212,12 +212,12 @@ function MovieList() {
                                 </NavLink>
                             </div>
                             <div className="col-lg-3 text-end">
-                                <NavLink to="/movie-create">
+                                <NavLink to="/artwork-create">
                                     <button type="button" className="btn btn-rounded btn-info">
                                         <span className="btn-icon-start text-info">
                                             <i className="fa fa-plus color-info"></i>
                                         </span>
-                                        Create New Movie
+                                        Create New ArtWork
                                     </button>
                                 </NavLink>
                             </div>
@@ -245,7 +245,7 @@ function MovieList() {
                                                 <strong>Thumbnail</strong>
                                             </th>
                                             <th>
-                                                <strong>Movie Name</strong>
+                                                <strong>ArtWork Name</strong>
                                             </th>
                                             <th>
                                                 <strong>Director</strong>
@@ -265,7 +265,7 @@ function MovieList() {
                                         </tr>
                                     </thead>
                                     <tbody id="orders">
-                                        {filteredMovies.map((item, index) => {
+                                        {filteredArtWorks.map((item, index) => {
                                             return (
                                                 <tr>
                                                     <td>
@@ -292,10 +292,10 @@ function MovieList() {
                                                     </td>
                                                     <td>
                                                         <div className="d-flex">
-                                                            <Link to={`/movie-detail/${item.id}`} className="btn btn-success shadow btn-xs sharp me-1">
+                                                            <Link to={`/artwork-detail/${item.id}`} className="btn btn-success shadow btn-xs sharp me-1">
                                                                 <i className="fa fa-eye"></i>
                                                             </Link>
-                                                            <Link to={`/movie-edit/${item.id}`} className="btn btn-primary shadow btn-xs sharp me-1">
+                                                            <Link to={`/artwork-edit/${item.id}`} className="btn btn-primary shadow btn-xs sharp me-1">
                                                                 <i className="fas fa-pencil-alt"></i>
                                                             </Link>
                                                         </div>
@@ -343,4 +343,4 @@ function MovieList() {
     );
 }
 
-export default MovieList;
+export default ArtWorkList;
