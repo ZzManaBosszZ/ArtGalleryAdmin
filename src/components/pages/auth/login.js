@@ -126,7 +126,7 @@ function Login() {
                                                         <img src="assets/images/logo/logo.png" alt="" />
                                                     </div>
                                                 </div>
-                                                <img src="assets/images/log.png" className="education-img" alt="" />
+                                                <img src="assets/images/login.png" className="education-img" alt="" />
                                             </div>
                                         </div>
                                         <div className="col-xl-6 col-md-6">

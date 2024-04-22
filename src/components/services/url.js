@@ -25,12 +25,12 @@ const url = {
     },
 
     AUTH: {
-        LOGIN: "/auth/login",
-        FORGOT_PASSWORD: "/auth/forgot-password",
-        PROFILE: "/auth/profile",
-        UPDATE_PROFILE: "/auth/update-profile",
-        CHANGE_PASSWORD: "/auth/change-password",
-        RESET_PASSWORD: "auth/reset-password",
+        LOGIN: "/AUTH/login",
+        FORGOT_PASSWORD: "/AUTH/forgot-password",
+        PROFILE: "/AUTH/profile",
+        UPDATE_PROFILE: "/AUTH/update-profile",
+        CHANGE_PASSWORD: "/AUTH/change-password",
+        RESET_PASSWORD: "AUTH/reset-password",
     },
 
 };
