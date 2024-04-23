@@ -6,6 +6,7 @@ import url from "../../services/url";
 import api from "../../services/api";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 import Loading from "../../layouts/loading";
 import NotFound from "../../pages/other/not-found";
 
@@ -30,18 +31,18 @@ function ArtistEdit() {
     const validateForm = () => {
         let valid = true;
         const newErrors = {};
-        if (artistData.productName === "") {
-            newErrors.productName = "Please enter name artist";
+        if (artistData.name === "") {
+            newErrors.name = "Please enter name artist";
             valid = false;
-        } else if (artistData.productName.length < 3) {
-            newErrors.productName = "Enter at least 3 characters";
+        } else if (artistData.name.length < 3) {
+            newErrors.name = "Enter at least 3 characters";
             valid = false;
-        } else if (artistData.productName.length > 255) {
-            newErrors.productName = "Enter up to 255 characters";
+        } else if (artistData.name.length > 255) {
+            newErrors.name = "Enter up to 255 characters";
             valid = false;
         }
-        if (artistData.imagePath === null) {
-            newErrors.imagePath = "Please choose artist photo";
+        if (artistData.image === null) {
+            newErrors.image = "Please choose artist photo";
             valid = false;
         }
         setErrors(newErrors);
@@ -73,11 +74,13 @@ function ArtistEdit() {
                 const response = await api.put(url.ARTIST.UPDATE, artistData, {
                     headers: { "Content-Type": "multipart/form-data" },
                 });
-                if (response.status === 200) {
+                if (response.status === 200) { 
                     // console.log(response.data);
-                    toast.success("Update Artist Successffuly.", {
-                        position: toast.POSITION.TOP_RIGHT,
-                        autoClose: 3000,
+                    Swal.fire({
+                        text: "Update Artist Successffuly.",
+                        icon: "success",
+                        confirmButtonColor: "#3085d6",
+                        confirmButtonText: "Done",
                     });
                     setTimeout(() => {
                         navigate(`/artist-list`); //chuyển đến trang artist-list
@@ -143,17 +146,17 @@ function ArtistEdit() {
                                                         </label>
                                                         <input
                                                             type="text"
-                                                            value={artistData.productName}
+                                                            value={artistData.name}
                                                             onChange={(e) =>
                                                                 setArtistData({
                                                                     ...artistData,
-                                                                    productName: e.target.value,
+                                                                    name: e.target.value,
                                                                 })
                                                             }
                                                             className="form-control"
                                                             autoFocus
                                                         />
-                                                        {errors.productName && <div className="text-danger">{errors.productName}</div>}
+                                                        {errors.name && <div className="text-danger">{errors.name}</div>}
                                                     </div>
                                                 </div>
 
@@ -192,7 +195,7 @@ function ArtistEdit() {
                                                                     // Tiếp tục xử lý
                                                                     setArtistData({
                                                                         ...artistData,
-                                                                        imagePath: file,
+                                                                        image: file,
                                                                     });
                                                                 } else {
                                                                     console.error("Unsupported file format or no file selected");
@@ -201,7 +204,7 @@ function ArtistEdit() {
                                                             className="form-control"
                                                             accept=".jpg, .png, .jpeg"
                                                         />
-                                                        {errors.imagePath && <div className="text-danger">{errors.imagePath}</div>}
+                                                        {errors.image && <div className="text-danger">{errors.image}</div>}
                                                     </div>
                                                 </div>
 
@@ -210,7 +213,7 @@ function ArtistEdit() {
                                                         <label className="text-label form-label">Preview artist photos</label>
                                                         <img
                                                             id="imgPreview"
-                                                            src={imagePreview || artistData.imagePath}
+                                                            src={imagePreview || artistData.image}
                                                             alt="Artist Preview"
                                                             style={{ width: "100%", height: "300px", objectFit: "cover" }}
                                                             onError={(e) => console.error("Image Preview Error:", e)}

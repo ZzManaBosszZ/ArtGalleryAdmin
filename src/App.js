@@ -49,21 +49,30 @@ function App() {
                 {/* End Dashboard */}
 
 
-                {/* Start Gallery */}
+                {/* Start Artist */}
 
                 <Route path="/artist-list" element={<ProtectedRoute element={<ArtistsList />} />} />
                 <Route path="/artist-create" element={<ProtectedRoute element={<ArtistCreate />} />} />
                 <Route path="/artist-edit/:id" element={<ProtectedRoute element={<ArtistEdit />} />} />
                 <Route path="/artist-delete-at" element={<ProtectedRoute element={<ArtistDeleteAt />} />} />
-                {/* End Genre */}
+                {/* End Artist */}
 
-                {/* Start Movie */}
+                {/* Start ArtWork */}
                 <Route path="/artwork-list" element={<ProtectedRoute element={<ArtWorkList />} />} />
                 <Route path="/artwork-detail/:id" element={<ProtectedRoute element={<ArtWorkDetail />} />} />
                 <Route path="/artwork-create" element={<ProtectedRoute element={<ArtWorkCreate />} />} />
                 <Route path="/artwork-edit/:id" element={<ProtectedRoute element={<ArtWorkEdit />} />} />
                 <Route path="/artwork-delete-at" element={<ProtectedRoute element={<ArtWorkDeleteAt />} />} />
-                {/* End Movie */}
+                {/* End ArtWork */}
+
+                {/* Start Orders */}
+
+                {/* End Orders */}
+
+
+                {/* Start Dashboard */}
+
+                {/* End Dashboard */}
 
                 {/* Start Auth */}
                 <Route path="/login" element={<ProtectedLoginRoute element={<Login />} />} />

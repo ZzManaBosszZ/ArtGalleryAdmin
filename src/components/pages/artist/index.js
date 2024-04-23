@@ -251,7 +251,7 @@ function ArtistsList() {
                                                         </div>{" "}
                                                     </td>
                                                     <td>
-                                                        <img src={item.imagePath} className="rounded-lg me-2 movie-thumb" alt="" />
+                                                        <img src={item.image} className="rounded-lg me-2 movie-thumb" alt="" />
                                                     </td>
                                                     
                                                     <td>{item.name}</td>
