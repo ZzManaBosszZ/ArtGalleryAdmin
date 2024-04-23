@@ -6,7 +6,8 @@ import api from "../../services/api";
 import url from "../../services/url";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Loading from "../../layouts/loading";
 import NotFound from "../other/not-found";
 
@@ -95,16 +96,20 @@ function ArtistsList() {
                     setArtists((prevArtists) => prevArtists.filter((artist) => !selectedArtistIds.includes(artist.id)));
                     setTbodyCheckboxes((prevCheckboxes) => prevCheckboxes.filter((_, index) => !selectedArtistIds.includes(artists[index].id)));
                     setDeleteVisible(false);
-                    toast.success("Delete Artist Successfully.", {
-                        position: toast.POSITION.TOP_RIGHT,
-                        autoClose: 3000,
+                    Swal.fire({
+                        text: "Success delete Artist",
+                        icon: "success",
+                        confirmButtonColor: "#3085d6",
+                        confirmButtonText: "Done",
                     });
                 } else {
                 }
             } catch (error) {
-                toast.error("Cannot Delete Artist!", {
-                    position: toast.POSITION.TOP_RIGHT,
-                    autoClose: 3000,
+                Swal.fire({
+                    text: "Unable to  delete Artist",
+                    icon: "warning",
+                    confirmButtonColor: "#3085d6",
+                    confirmButtonText: "Done",
                 });
                 console.error("Failed to delete Artist:", error);
             }
@@ -176,14 +181,13 @@ function ArtistsList() {
                                 <input type="text" className="form-control input-rounded" placeholder="Search name artist . . ." value={searchName} onChange={handleSearchNameChange} />
                             </div>
                             <div className="col-lg-1 text-end">
-                                <NavLink >
-                                {/* <NavLink onClick={handleDeleteArtist}> */}
+                                <NavLink onClick={handleDeleteArtist}>
                                     <button type="button" className={`btn btn-danger ${isDeleteVisible ? "" : "d-none"}`}>
                                         <i className="fa fa-trash"></i>
                                     </button>
                                 </NavLink>
                             </div>
-                            {/* <div className="col-lg-3 text-center">
+                            <div className="col-lg-3 text-center">
                                 <NavLink to="/artist-delete-at">
                                     <button type="button" className="btn btn-rounded btn-warning">
                                         <span className="btn-icon-start text-warning">
@@ -192,7 +196,7 @@ function ArtistsList() {
                                         Deleted List
                                     </button>
                                 </NavLink>
-                            </div> */}
+                            </div>
                             <div className="col-lg-3">
                                 <NavLink to="/artist-create">
                                     <button type="button" className="btn btn-rounded btn-info">
@@ -243,14 +247,16 @@ function ArtistsList() {
                                                 <tr>
                                                     <td>
                                                         <div className="form-check custom-checkbox checkbox-primary">
-                                                            {/* <input type="checkbox" className="form-check-input" onChange={() => handleTbodyCheckboxChange(index)} checked={tbodyCheckboxes[index]} /> */}
+                                                            <input type="checkbox" className="form-check-input" onChange={() => handleTbodyCheckboxChange(index)} checked={tbodyCheckboxes[index]} />
                                                         </div>{" "}
                                                     </td>
                                                     <td>
                                                         <img src={item.imagePath} className="rounded-lg me-2 movie-thumb" alt="" />
                                                     </td>
-                                                    <td>{item.productName}</td>
-                                                    <td>{item.description}</td>
+                                                    
+                                                    <td>{item.name}</td>
+
+                                                    <td>{item.biography}</td>
                                                     <td>
                                                         <div className="d-flex">
                                                             <Link to={`/artist-edit/${item.id}`} className="btn btn-primary shadow btn-xs sharp me-1">
