@@ -188,14 +188,14 @@ function ArtistsList() {
                                 </NavLink>
                             </div>
                             <div className="col-lg-3 text-center">
-                                <NavLink to="/artist-delete-at">
+                                {/* <NavLink to="/artist-delete-at">
                                     <button type="button" className="btn btn-rounded btn-warning">
                                         <span className="btn-icon-start text-warning">
                                             <i className="fa fa-trash"></i>
                                         </span>
                                         Deleted List
                                     </button>
-                                </NavLink>
+                                </NavLink> */}
                             </div>
                             <div className="col-lg-3">
                                 <NavLink to="/artist-create">
