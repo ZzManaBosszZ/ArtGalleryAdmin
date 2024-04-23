@@ -41,8 +41,8 @@ function ArtistEdit() {
             newErrors.name = "Enter up to 255 characters";
             valid = false;
         }
-        if (artistData.image === null) {
-            newErrors.image = "Please choose artist photo";
+        if (artistData.imagePath === null) {
+            newErrors.imagePath = "Please choose artist photo";
             valid = false;
         }
         setErrors(newErrors);
@@ -194,7 +194,7 @@ function ArtistEdit() {
                                                                     // Tiếp tục xử lý
                                                                     setArtistData({
                                                                         ...artistData,
-                                                                        image: file,
+                                                                        imagePath: file,
                                                                     });
                                                                 } else {
                                                                     console.error("Unsupported file format or no file selected");
@@ -203,7 +203,7 @@ function ArtistEdit() {
                                                             className="form-control"
                                                             accept=".jpg, .png, .jpeg"
                                                         />
-                                                        {errors.image && <div className="text-danger">{errors.image}</div>}
+                                                        {errors.imagePath && <div className="text-danger">{errors.imagePath}</div>}
                                                     </div>
                                                 </div>
 
@@ -212,7 +212,7 @@ function ArtistEdit() {
                                                         <label className="text-label form-label">Preview artist photos</label>
                                                         <img
                                                             id="imgPreview"
-                                                            src={imagePreview || artistData.image}
+                                                            src={imagePreview || artistData.imagePath}
                                                             alt="Artist Preview"
                                                             style={{ width: "100%", height: "300px", objectFit: "cover" }}
                                                             onError={(e) => console.error("Image Preview Error:", e)}
