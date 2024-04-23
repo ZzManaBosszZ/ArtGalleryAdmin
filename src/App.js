@@ -15,6 +15,8 @@ import ArtistsList from "./components/pages/artist";
 import ArtistCreate from "./components/pages/artist/create";
 import ArtistEdit from "./components/pages/artist/edit";
 import ArtistDeleteAt from "./components/pages/artist/delete-at";
+import Dashboard from "./components/pages/dashboard";
+import ClientList from "./components/pages/client";
 
 function App() {
     const ProtectedRoute = ({ element }) => {
@@ -45,12 +47,10 @@ function App() {
             <Router>
             <Routes>
                 {/* Start Dashboard */}
-
+                <Route path="/" element={<ProtectedRoute element={<Dashboard />} />} />
                 {/* End Dashboard */}
 
-
                 {/* Start Artist */}
-
                 <Route path="/artist-list" element={<ProtectedRoute element={<ArtistsList />} />} />
                 <Route path="/artist-create" element={<ProtectedRoute element={<ArtistCreate />} />} />
                 <Route path="/artist-edit/:id" element={<ProtectedRoute element={<ArtistEdit />} />} />
@@ -70,9 +70,9 @@ function App() {
                 {/* End Orders */}
 
 
-                {/* Start Dashboard */}
-
-                {/* End Dashboard */}
+                {/* Start Client */}
+                <Route path="/client-list" element={<ProtectedRoute element={<ClientList />} />} />
+                {/* End Client */}
 
                 {/* Start Auth */}
                 <Route path="/login" element={<ProtectedLoginRoute element={<Login />} />} />
