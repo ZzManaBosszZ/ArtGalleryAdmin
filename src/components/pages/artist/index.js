@@ -228,7 +228,7 @@ function ArtistsList() {
                                                 </div>
                                             </th>
                                             <th>
-                                                <strong>Thumbnail</strong>
+                                                <strong>Image</strong>
                                             </th>
                                             <th>
                                                 <strong>Artist Name</strong>
