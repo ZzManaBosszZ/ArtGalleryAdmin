@@ -163,15 +163,15 @@ function ArtistEdit() {
                                                 <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
                                                         <label className="text-label form-label">
-                                                            Description <span className="text-danger">*</span>
+                                                            Biography <span className="text-danger">*</span>
                                                         </label>
                                                         <input
                                                             type="text"
-                                                            value={artistData.description}
+                                                            value={artistData.biography}
                                                             onChange={(e) =>
                                                                 setArtistData({
                                                                     ...artistData,
-                                                                    description: e.target.value,
+                                                                    biography: e.target.value,
                                                                 })
                                                             }
                                                             className="form-control"
