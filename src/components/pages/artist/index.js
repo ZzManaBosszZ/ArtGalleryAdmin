@@ -134,7 +134,7 @@ function ArtistsList() {
         setSearchName(e.target.value);
     };
     const filteredArtists = currentArtists.filter((item) => {
-        const nameMatch = item.productName.toLowerCase().includes(searchName.toLowerCase());
+        const nameMatch = item.name.toLowerCase().includes(searchName.toLowerCase());
         return nameMatch;
     });
 
@@ -216,8 +216,8 @@ function ArtistsList() {
                                                         type="checkbox"
                                                         className="form-check-input"
                                                         onChange={() => {
-                                                            // handleSelectAll();
-                                                            // handleCheckboxChange();
+                                                            handleSelectAll();
+                                                            handleCheckboxChange();
                                                         }}
                                                         checked={selectAll}
                                                     />
