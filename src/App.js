@@ -17,6 +17,8 @@ import ArtistEdit from "./components/pages/artist/edit";
 import ArtistDeleteAt from "./components/pages/artist/delete-at";
 import Dashboard from "./components/pages/dashboard";
 import ClientList from "./components/pages/client";
+import OfferList from "./components/pages/artworkoffer";
+import OfferDetail from "./components/pages/artworkoffer/detail";
 
 function App() {
     const ProtectedRoute = ({ element }) => {
@@ -65,10 +67,10 @@ function App() {
                 <Route path="/artwork-delete-at" element={<ProtectedRoute element={<ArtWorkDeleteAt />} />} />
                 {/* End ArtWork */}
 
-                {/* Start Orders */}
-
-                {/* End Orders */}
-
+                {/* Start Offers */}
+                <Route path="/offer-list" element={<ProtectedRoute element={<OfferList />} />} />
+                <Route path="/offer-detail/:id" element={<ProtectedRoute element={<OfferDetail />} />} />
+                {/* End Offers */}
 
                 {/* Start Client */}
                 <Route path="/client-list" element={<ProtectedRoute element={<ClientList />} />} />
@@ -78,8 +80,7 @@ function App() {
                 <Route path="/login" element={<ProtectedLoginRoute element={<Login />} />} />
                 <Route path="/forgot-password" element={<ProtectedLoginRoute element={<ForgotPassword />} />} />
                 <Route path="/reset-password/:resetToken" element={<ProtectedLoginRoute element={<ResetPassword />} />} />
-                <Route path="/profile"  element={<Profile />} />
-                {/* <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} /> */}
+                <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />
                 {/* End Auth */}
 
                 {/* Start Other page */}
