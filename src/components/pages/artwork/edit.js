@@ -114,7 +114,7 @@ function ArtWorkEdit() {
                 if (response && response.data) {
                     // console.log(response.data);
                     toast.success("Update ArtWork Successffuly.", {
-                        position: toast.POSITION.TOP_RIGHT,
+                        // position: toast.POSITION.TOP_RIGHT,
                         autoClose: 3000,
                     });
                     setTimeout(() => {
@@ -126,12 +126,12 @@ function ArtWorkEdit() {
                 if (error.response.status === 400 && error.response.data.message === "ArtWork already exists") {
                     setNameExistsError("The name of this ArtWork already exists");
                     toast.error("The name of this ArtWork already exists", {
-                        position: toast.POSITION.TOP_RIGHT,
+                        // position: toast.POSITION.TOP_RIGHT,
                         autoClose: 3000,
                     });
                 } else {
                     toast.error("Unable to update ArtWork, please try again", {
-                        position: toast.POSITION.TOP_RIGHT,
+                        // position: toast.POSITION.TOP_RIGHT,
                         autoClose: 3000,
                     });
                 }

@@ -89,9 +89,10 @@ function ArtistEdit() {
                 }
             } catch (error) {
                 toast.error("Unable to update artist, please try again", {
-                    position: toast.POSITION.TOP_RIGHT,
+                    // position: toast.POSITION.TOP_RIGHT,
                     autoClose: 3000,
                 });
+
             }
         }
     };

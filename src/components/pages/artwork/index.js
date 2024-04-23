@@ -100,7 +100,7 @@ function ArtWorkList() {
                     setTbodyCheckboxes((prevCheckboxes) => prevCheckboxes.filter((_, index) => !selectedArtWorkIds.includes(artworks[index].id)));
                     setDeleteVisible(false);
                     toast.success("Delete ArtWork Successfully.", {
-                        position: toast.POSITION.TOP_RIGHT,
+                        // position: toast.POSITION.TOP_RIGHT,
                         autoClose: 3000,
                     });
                     // console.log("data:", deleteResponse.data);
@@ -108,7 +108,7 @@ function ArtWorkList() {
                 }
             } catch (error) {
                 toast.error("Cannot Delete ArtWork!", {
-                    position: toast.POSITION.TOP_RIGHT,
+                    // position: toast.POSITION.TOP_RIGHT,
                     autoClose: 3000,
                 });
                 console.error("Failed to delete ArtWork:", error);

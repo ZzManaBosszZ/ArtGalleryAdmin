@@ -58,7 +58,7 @@ function ArtistCreate() {
                 if (response.status === 201) {
                     // console.log(response.data);
                     toast.success("Create Artist Successffuly.", {
-                        position: toast.POSITION.TOP_RIGHT,
+                        // position: toast.POSITION.TOP_RIGHT,
                         autoClose: 3000,
                     });
                     setTimeout(() => {
@@ -68,7 +68,7 @@ function ArtistCreate() {
                 }
             } catch (error) {
                 toast.error("Unable to create artist, please try again", {
-                    position: toast.POSITION.TOP_RIGHT,
+                    // position: toast.POSITION.TOP_RIGHT,
                     autoClose: 3000,
                 });
                 // console.error("Error creating test:", error);

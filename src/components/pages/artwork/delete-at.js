@@ -45,7 +45,7 @@ function ArtWorkDeleteAt() {
             if (restoreResponse.status === 200) {
                 setArtWorks((prevArtWorks) => prevArtWorks.filter((artwork) => artwork.id !== id));
                 toast.success("Restore ArtWorks Successfully.", {
-                    position: toast.POSITION.TOP_RIGHT,
+                    // position: toast.POSITION.TOP_RIGHT,
                     autoClose: 3000,
                 });
                 setTimeout(() => {
@@ -55,7 +55,7 @@ function ArtWorkDeleteAt() {
             }
         } catch (error) {
             toast.error("Failed to restore ArtWork!", {
-                position: toast.POSITION.TOP_RIGHT,
+                // position: toast.POSITION.TOP_RIGHT,
                 autoClose: 3000,
             });
             console.error("Failed to restore ArtWork:", error);

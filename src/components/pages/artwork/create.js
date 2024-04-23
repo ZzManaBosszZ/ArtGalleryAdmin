@@ -153,7 +153,7 @@ function ArtWorkCreate() {
                 if (response && response.data) {
                     // console.log(response.data);
                     toast.success("Create ArtWork Successffuly.", {
-                        position: toast.POSITION.TOP_RIGHT,
+                        // position: toast.POSITION.TOP_RIGHT,
                         autoClose: 3000,
                     });
                     setTimeout(() => {
@@ -165,7 +165,7 @@ function ArtWorkCreate() {
                 if (error.response.status === 400 && error.response.data.message === "ArtWork already exists") {
                     setNameExistsError("The name of this ArtWork already exists");
                     toast.error("The name of this ArtWork already exists", {
-                        position: toast.POSITION.TOP_RIGHT,
+                        // position: toast.POSITION.TOP_RIGHT,
                         autoClose: 3000,
                     });
                 } else {
