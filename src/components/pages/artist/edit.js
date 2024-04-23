@@ -92,8 +92,6 @@ function ArtistEdit() {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 3000,
                 });
-                // console.error("Error creating test:", error);
-                // console.error("Response data:", error.response.data);
             }
         }
     };
