@@ -24,6 +24,10 @@ const url = {
         // RESTORE: "/Artists/restore/{}",
     },
 
+    SCHOOLOFART: {
+        LIST: "/SchoolOfArts",
+    },
+
     AUTH: {
         LOGIN: "/Auth/login",
         FORGOT_PASSWORD: "/Auth/forgot-password",

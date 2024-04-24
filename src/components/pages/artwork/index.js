@@ -242,7 +242,7 @@ function ArtWorkList() {
                                                 </div>
                                             </th>
                                             <th>
-                                                <strong>Thumbnail</strong>
+                                                <strong>Image</strong>
                                             </th>
                                             <th>
                                                 <strong>ArtWork Name</strong>
@@ -274,16 +274,16 @@ function ArtWorkList() {
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <img src={item.movie_image} className="rounded-lg me-2 movie-thumb" alt="" />
+                                                        <img src={item.artWorkImage} className="rounded-lg me-2 movie-thumb" alt="" />
                                                     </td>
-                                                    <td>{item.title}</td>
+                                                    <td>{item.name}</td>
                                                     <td>
                                                         <div className="d-flex align-items-center">
-                                                            <span className="w-space-no">{item.director}</span>
+                                                            <span className="w-space-no">{item.medium}</span>
                                                         </div>
                                                     </td>
-                                                    <td>{format(new Date(item.release_date), "yyyy-MM-dd")}</td>
-                                                    <td>{item.duration} (Minutes)</td>
+                                                    <td>{format(new Date(item.material), "yyyy-MM-dd")}</td>
+                                                    <td>{item.price} ($)</td>
                                                     <td>
                                                         <span key={item.genres[0].id} className="badge light badge-dark">
                                                             {item.genres[0].name}

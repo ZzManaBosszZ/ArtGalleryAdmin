@@ -2,36 +2,54 @@ import { Helmet } from "react-helmet";
 import Layout from "../../layouts";
 import Breadcrumb from "../../layouts/breadcrumb";
 import { useState } from "react";
+import Select from "react-select";
 import url from "../../services/url";
 import api from "../../services/api";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import NotFound from "../../pages/other/not-found";
+import Swal from "sweetalert2";
 import { useEffect } from "react";
 
 function ArtistCreate() {
     const [formArtist, setFormArtist] = useState({
-        productName: "",
-        description: "",
+        name: "",
+        biography: "",
         imagePath: null,
+        // artworkIds: [],
+        // schoolOfArtIds: [],
     });
     const [userRole, setUserRole] = useState(null);
     const [error, setError] = useState(null);
     const [errors, setErrors] = useState({});
+    const [artworks, setArtWork] = useState([]);
+    const [schoolOfArt, setSchoolOfArt] = useState([]);
     const navigate = useNavigate();
+
+    const customStyles = {
+        control: (provided, state) => ({
+            ...provided,
+            backgroundColor: "#5336BC",
+        }),
+        option: (provided, state) => ({
+            ...provided,
+            // backgroundColor: "#5336BC",
+            color: "#333333",
+        }),
+    };
 
     //validate
     const validateForm = () => {
         let valid = true;
         const newErrors = {};
-        if (formArtist.productName === "") {
-            newErrors.productName = "Please enter name artist";
+        if (formArtist.name === "") {
+            newErrors.name = "Please enter name artist";
             valid = false;
-        } else if (formArtist.productName.length < 3) {
-            newErrors.productName = "Enter at least 3 characters";
+        } else if (formArtist.name.length < 3) {
+            newErrors.name = "Enter at least 3 characters";
             valid = false;
-        } else if (formArtist.productName.length > 255) {
-            newErrors.productName = "Enter up to 255 characters";
+        } else if (formArtist.name.length > 255) {
+            newErrors.name = "Enter up to 255 characters";
             valid = false;
         }
         if (formArtist.imagePath === null) {
@@ -42,6 +60,41 @@ function ArtistCreate() {
         setErrors(newErrors);
         return valid;
     };
+
+    //hien thi select artwork
+    // useEffect(() => {
+    //     const fetchArtWorks = async () => {
+    //         const userToken = localStorage.getItem("access_token");
+    //         api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+    //         try {
+    //             const response = await api.get(url.ARTWORK.LIST);
+    //             const artworkData = response.data.map((artwork) => ({
+    //                 value: artwork.id,
+    //                 label: artwork.name,
+    //             }));
+    //             setArtWork(artworkData);
+    //         } catch (error) {}
+    //     };
+    //     fetchArtWorks();
+    // }, []);
+
+    //hien thi select schoolOfArt
+    // useEffect(() => {
+    //     const fetchSchoolOfArt = async () => {
+    //         const userToken = localStorage.getItem("access_token");
+    //         api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+    //         try {
+    //             const response = await api.get(url.SCHOOLOFART.LIST);
+    //             const schoolOfArtData = response.data.map((schoolOfArt) => ({
+    //                 value: schoolOfArt.id,
+    //                 label: schoolOfArt.name,
+    //             }));
+    //             fetchSchoolOfArt(schoolOfArtData);
+    //         } catch (error) {}
+    //     };
+    //     fetchSchoolOfArt();
+    // }, []);
+
 
     //xử lý tạo Artist
     const handleSubmit = async (e) => {
@@ -56,10 +109,12 @@ function ArtistCreate() {
                     headers: { "Content-Type": "multipart/form-data" },
                 });
                 if (response.status === 201) {
-                    // console.log(response.data);
-                    toast.success("Create Artist Successffuly.", {
-                        // position: toast.POSITION.TOP_RIGHT,
-                        autoClose: 3000,
+                    // console.log(response.data);                  
+                    Swal.fire({
+                        text: "Create Artist Successffuly.",
+                        icon: "success",
+                        confirmButtonColor: "#3085d6",
+                        confirmButtonText: "Done",
                     });
                     setTimeout(() => {
                         navigate(`/artist-list`); //chuyển đến trang artist-list
@@ -143,23 +198,23 @@ function ArtistCreate() {
                                                         <label className="text-label form-label">
                                                             Artist Name <span className="text-danger">*</span>
                                                         </label>
-                                                        <input type="text" name="productName" onChange={handleChange} className="form-control" placeholder="Please enter name artist" autoFocus />
-                                                        {errors.productName && <div className="text-danger">{errors.productName}</div>}
+                                                        <input type="text" name="name" onChange={handleChange} className="form-control" placeholder="Please enter name artist" autoFocus />
+                                                        {errors.name && <div className="text-danger">{errors.name}</div>}
                                                     </div>
                                                 </div>
 
                                                 <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
-                                                        <label className="text-label form-label">Description</label>
-                                                        <input type="text" name="description" onChange={handleChange} className="form-control" placeholder="Please enter description" />
-                                                        {errors.description && <div className="text-danger">{errors.description}</div>}
+                                                        <label className="text-label form-label">Biography</label>
+                                                        <input type="text" name="biography" onChange={handleChange} className="form-control" placeholder="Please enter description" />
+                                                        {errors.biography && <div className="text-danger">{errors.biography}</div>}
                                                     </div>
                                                 </div>
-
+                                                
                                                 <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
                                                         <label className="text-label form-label">
-                                                            Thumbnail <span className="text-danger">*</span>
+                                                            Image <span className="text-danger">*</span>
                                                         </label>
                                                         <input type="file" name="imagePath" onChange={handleChange} className="form-control" accept=".jpg, .png, .etc" />
                                                         {errors.imagePath && <div className="text-danger">{errors.imagePath}</div>}
