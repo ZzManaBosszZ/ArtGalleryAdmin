@@ -24,7 +24,7 @@ function ArtWorkDetail() {
     const [userRole, setUserRole] = useState(null);
     const [error, setError] = useState(null);
     const { id } = useParams();
-    const [ArtWorkDetail, setArtWorkDetail] = useState({ genres: [], languages: [] });
+    const [ArtWorkDetail, setArtWorkDetail] = useState({ artWorkSchoolOfArts: [], schoolOfArt: []});
 
     //hien thi thong tin chi tiet artwork
     useEffect(() => {
@@ -81,56 +81,76 @@ function ArtWorkDetail() {
                                         <div className="card">
                                             <div className="card-body">
                                                 <div className="profile-blog">
-                                                    <h4 className="d-inline">Title ArtWork :</h4>
-                                                    <p className="mb-0">{ArtWorkDetail.title}</p>
+                                                    <h4 className="d-inline"> ArtWork Name :</h4>
+                                                    <p className="mb-0">{ArtWorkDetail.name}</p>
 
                                                     <div style={{ paddingTop: "20px" }}>
-                                                        <h4 className="d-inline">Actor :</h4>
+                                                        <h4 className="d-inline">Artist :</h4>
                                                         <p className="mb-0">{ArtWorkDetail.actor}</p>
                                                     </div>
 
                                                     <div style={{ paddingTop: "20px" }}>
-                                                        <h4 className="d-inline">Director :</h4>
-                                                        <p className="mb-0">{ArtWorkDetail.director}</p>
+                                                        <h4 className="d-inline">Medium :</h4>
+                                                        <p className="mb-0">{ArtWorkDetail.medium}</p>
                                                     </div>
 
                                                     <div style={{ paddingTop: "20px" }}>
-                                                        <h4 className="d-inline">Duration :</h4>
-                                                        <p className="mb-0">{ArtWorkDetail.duration} minutes</p>
+                                                        <h4 className="d-inline">Materials :</h4>
+                                                        <p className="mb-0">{ArtWorkDetail.materials} minutes</p>
+                                                    </div>
+
+                                                    <div style={{ paddingTop: "20px" }}>
+                                                        <h4 className="d-inline">Size</h4>
+                                                        <p className="mb-0">{ArtWorkDetail.size}</p>
+                                                    </div>
+
+                                                    <div style={{ paddingTop: "20px" }}>
+                                                        <h4 className="d-inline">Condition</h4>
+                                                        <p className="mb-0">{ArtWorkDetail.condition}</p>
+                                                    </div>
+
+                                                    <div style={{ paddingTop: "20px" }}>
+                                                        <h4 className="d-inline">Signature</h4>
+                                                        <p className="mb-0">{ArtWorkDetail.signature}</p>
+                                                    </div>
+
+                                                    <div style={{ paddingTop: "20px" }}>
+                                                        <h4 className="d-inline">Rarity</h4>
+                                                        <p className="mb-0">{ArtWorkDetail.rarity}</p>
+                                                    </div>
+
+                                                    <div style={{ paddingTop: "20px" }}>
+                                                        <h4 className="d-inline">CertificateOfAuthenticity</h4>
+                                                        <p className="mb-0">{ArtWorkDetail.certificateOfAuthenticity}</p>
+                                                    </div>
+
+                                                    <div style={{ paddingTop: "20px" }}>
+                                                        <h4 className="d-inline">Frame</h4>
+                                                        <p className="mb-0">{ArtWorkDetail.frame}</p>
+                                                    </div>
+
+                                                    <div style={{ paddingTop: "20px" }}>
+                                                        <h4 className="d-inline">Series</h4>
+                                                        <p className="mb-0">{ArtWorkDetail.series}</p>
+                                                    </div>
+
+                                                    <div style={{ paddingTop: "20px" }}>
+                                                        <h4 className="d-inline">Price</h4>
+                                                        <p className="mb-0">{ArtWorkDetail.price}</p>
                                                     </div>
 
                                                     <div style={{ paddingTop: "20px" }}>
                                                         <h4 className="d-inline">Number Of Favorites :</h4>
                                                         <p className="mb-0">{ArtWorkDetail.favoriteCount}</p>
                                                     </div>
-
+                                  
                                                     <div style={{ paddingTop: "20px" }}>
-                                                        <h4 className="d-inline">Number Of Tickets Sold :</h4>
-                                                        <p className="mb-0">{ArtWorkDetail.totalTicket}</p>
-                                                    </div>
-
-                                                    <div style={{ paddingTop: "20px" }}>
-                                                        <h4 className="d-inline">Release Date :</h4>
-                                                        <p className="mb-0">{formattedDate}</p>
-                                                    </div>
-
-                                                    <div style={{ paddingTop: "20px" }}>
-                                                        <h4 className="d-inline">Genres Of Movie :</h4>
+                                                        <h4 className="d-inline">School Of Art  :</h4>
                                                         <p className="mb-0">
-                                                            {ArtWorkDetail.genres.map((genre) => (
-                                                                <span key={genre.id} className="badge light badge-dark">
-                                                                    {genre.name}
-                                                                </span>
-                                                            ))}
-                                                        </p>
-                                                    </div>
-
-                                                    <div style={{ paddingTop: "20px" }}>
-                                                        <h4 className="d-inline">Languages Of Movie :</h4>
-                                                        <p className="mb-0">
-                                                            {ArtWorkDetail.languages.map((language) => (
-                                                                <span key={language.id} className="badge light badge-dark">
-                                                                    {language.name}
+                                                            {ArtWorkDetail.artWorkSchoolOfArts.map((schoolOfArt) => (
+                                                                <span key={schoolOfArt.id} className="badge light badge-dark">
+                                                                    {schoolOfArt.name}
+                                                                    {schoolOfArt.artWorkId}
                                                                 </span>
                                                             ))}
                                                         </p>
@@ -144,19 +164,20 @@ function ArtWorkDetail() {
                             <div className="col-xl-8">
                                 <div className="card">
                                     <div className="card-body">
-                                        <h4 className="d-inline">Description Movie :</h4>
+                                        <h4 className="d-inline">Description ArtWork :</h4>
                                         <div className="post-details">{ArtWorkDetail.describe}</div>
 
                                         <div className="row" style={{ marginTop: "20px" }}>
                                             <div className="col-xl-12">
-                                                <h4 className="d-inline">Trailer Movie :</h4>
+                                                <h4 className="d-inline">ArtWork Image :</h4>
                                                 <div className="post-details">
-                                                    <ReactPlayer url={ArtWorkDetail.trailer} controls width="100%" height="250px" />
+                                                    {/* <ReactPlayer url={ArtWorkDetail.artWorkImage} controls width="100%" height="250px" /> */}
+                                                    <img src={ArtWorkDetail.artWorkImage} alt="image image" style={{ height: "250px", objectFit: "cover" }} className="img-fluid mt-4 mb-4 w-100" />
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div className="row" style={{ marginTop: "20px" }}>
+                                        {/* <div className="row" style={{ marginTop: "20px" }}>
                                             <div className="col-xl-6">
                                                 <h4 className="d-inline">Image ArtWork :</h4>
                                                 <div className="post-details">
@@ -169,7 +190,7 @@ function ArtWorkDetail() {
                                                     <img src={ArtWorkDetail.cover_image} alt="image image" style={{ height: "180px", objectFit: "cover" }} className="img-fluid mt-4 mb-4 w-100" />
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
                             </div>

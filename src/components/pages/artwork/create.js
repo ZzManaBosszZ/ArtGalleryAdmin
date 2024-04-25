@@ -12,30 +12,30 @@ import NotFound from "../../pages/other/not-found";
 
 function ArtWorkCreate() {
     const [formArtWork, setFormArtWork] = useState({
-        title: "",
-        actor: "",
-        movie_image: null,
-        cover_image: null,
-        describe: "",
-        director: "",
-        duration: "",
-        trailer: "",
-        release_date: "",
-        genreIds: [],
-        languageIds: [],
-        movie_image_preview: null,
-        movie_cover_image_preview: null,
+        name: "",
+        medium: "",
+        artWorkImage: null,
+        materials: "",
+        size: "",
+        condition: "",
+        signature: "",
+        rarity: "",
+        certificateOfAuthenticity: "",
+        frame: "",
+        series: "",
+        price: 0,
+        schoolOfArtIds: [],
+        artWorkImage_preview: null,
     });
     const [userRole, setUserRole] = useState(null);
     const [error, setError] = useState(null);
     const [errors, setErrors] = useState({});
     const [nameExistsError, setNameExistsError] = useState("");
-    const [languages, setLanguages] = useState([]);
-    const [genres, setGenres] = useState([]);
+    const [schoolOfArt, setschoolOfArts] = useState([]);
     const navigate = useNavigate();
 
     //css background Select React
-    const customStyles = {
+    const customStyle = {
         control: (provided, state) => ({
             ...provided,
             backgroundColor: "#5336BC",
@@ -46,92 +46,82 @@ function ArtWorkCreate() {
             color: "#333333",
         }),
     };
-    //hiển thị select langueage
-    // useEffect(() => {
-    //     const fetchLanguages = async () => {
-    //         const userToken = localStorage.getItem("access_token");
-    //         api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
-    //         try {
-    //             const response = await api.get(url.LANGUAGE.LIST);
-    //             const languageData = response.data.map((language) => ({
-    //                 value: language.id,
-    //                 label: language.name,
-    //             }));
-    //             setLanguages(languageData);
-    //         } catch (error) {}
-    //     };
-    //     fetchLanguages();
-    // }, []);
-    //hien thi select genre
-    // useEffect(() => {
-    //     const fetchGenres = async () => {
-    //         const userToken = localStorage.getItem("access_token");
-    //         api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
-    //         try {
-    //             const response = await api.get(url.GENRE.LIST);
-    //             const genreData = response.data.map((genre) => ({
-    //                 value: genre.id,
-    //                 label: genre.name,
-    //             }));
-    //             setGenres(genreData);
-    //         } catch (error) {}
-    //     };
-    //     fetchGenres();
-    // }, []);
 
-    //hiển thị video trailer
-    const [videoUrl, setVideoUrl] = useState("");
+    const customStyles = {
+        // Thêm các thuộc tính CSS tùy chỉnh tại đây
+        
+        color: 'black',
+        // và các thuộc tính khác nếu cần
+    };
+    //hiển thị select school of art 
+    useEffect(() => {
+        const fetchLanguages = async () => {
+            const userToken = localStorage.getItem("access_token");
+            api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+            try {
+                const response = await api.get(url.ART.LIST);
+                const languageData = response.data.map((schoolOfArt) => ({
+                    value: schoolOfArt.id,
+                    label: schoolOfArt.name,
+                }));
+                setschoolOfArts(languageData);
+            } catch (error) { }
+        };
+        fetchLanguages();
+    }, []);
 
     //validate
     const validateForm = () => {
         let valid = true;
         const newErrors = {};
-        if (formArtWork.title === "") {
-            newErrors.title = "Please enter name movie";
+        if (formArtWork.name === "") {
+            newErrors.name = "Please enter name artwork";
             valid = false;
-        } else if (formArtWork.title.length < 3) {
-            newErrors.title = "Enter at least 3 characters";
+        } else if (formArtWork.name.length < 3) {
+            newErrors.name = "Enter at least 3 characters";
             valid = false;
-        } else if (formArtWork.title.length > 255) {
-            newErrors.title = "Enter up to 255 characters";
-            valid = false;
-        }
-        if (formArtWork.actor === "") {
-            newErrors.actor = "Please enter actor";
+        } else if (formArtWork.name.length > 255) {
+            newErrors.name = "Enter up to 255 characters";
             valid = false;
         }
-        if (formArtWork.movie_image === null) {
-            newErrors.movie_image = "Please choose movie photo";
+        if (formArtWork.medium === "") {
+            newErrors.medium = "Please enter medium";
             valid = false;
         }
-        if (formArtWork.cover_image === null) {
-            newErrors.cover_image = "Please choose movie cover photo";
+        if (formArtWork.artWorkImage === null) {
+            newErrors.artWorkImage = "Please choose photo";
             valid = false;
         }
-        if (formArtWork.director === "") {
-            newErrors.director = "Please enter director";
+        if (formArtWork.materials === "") {
+            newErrors.materials = "Please enter materials";
             valid = false;
         }
-        if (formArtWork.duration === "") {
-            newErrors.duration = "Please enter duration";
-            valid = false;
-        } else {
-            const durationValue = parseFloat(formArtWork.duration);
-            if (isNaN(durationValue) || durationValue < 60 || durationValue > 200) {
-                newErrors.duration = "Please enter a valid duration between 60 and 200 Minute";
-                valid = false;
-            }
-        }
-        if (formArtWork.release_date === "") {
-            newErrors.release_date = "Please enter release date";
+        if (formArtWork.size === "") {
+            newErrors.size = "Please enter size";
             valid = false;
         }
-        if (formArtWork.genreIds === "") {
-            newErrors.genreIds = "Please choose genre";
+        if (formArtWork.condition === "") {
+            newErrors.condition = "Please enter condition";
             valid = false;
         }
-        if (formArtWork.languageIds === "") {
-            newErrors.languageIds = "Please choose language";
+        if (formArtWork.signature === "") {
+            newErrors.signature = "Please choose signature";
+            valid = false;
+        }
+        if (formArtWork.rarity === "") {
+            newErrors.rarity = "Please choose rarity";
+            valid = false;
+        }
+        if (formArtWork.certificateOfAuthenticity === "") {
+            newErrors.certificateOfAuthenticity = "Please choose Certificate";
+            valid = false;
+        }
+        if (formArtWork.frame === "") {
+            newErrors.frame = "Please choose Frame";
+            valid = false;
+        }
+        if (formArtWork.price === 0) {
+            newErrors.price = "Please choose Price";
             valid = false;
         }
         setErrors(newErrors);
@@ -248,7 +238,7 @@ function ArtWorkCreate() {
                             <div className="col-xl-12 col-xxl-12">
                                 <div className="card">
                                     <div className="card-header">
-                                        <h4 className="card-title">Movie Create</h4>
+                                        <h4 className="card-title">ArtWork Create</h4>
                                     </div>
                                     <div className="card-body">
                                         <form onSubmit={handleSubmit}>
@@ -256,100 +246,188 @@ function ArtWorkCreate() {
                                                 <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
                                                         <label className="text-label form-label">
-                                                            Movie Name <span className="text-danger">*</span>
+                                                            ArtWork Name <span className="text-danger">*</span>
                                                         </label>
                                                         <input type="text" name="title" onChange={handleChange} className="form-control" placeholder="Please enter movie name" autoFocus />
-                                                        {errors.title && <div className="text-danger">{errors.title}</div>}
+                                                        {errors.name && <div className="text-danger">{errors.name}</div>}
                                                         {nameExistsError && <div className="text-danger">{nameExistsError}</div>}
                                                     </div>
                                                 </div>
 
                                                 <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
-                                                        <label className="text-label form-label">Description</label>
-                                                        <textarea name="describe" onChange={handleChange} className="form-control"></textarea>
+                                                        <label className="text-label form-label">Medium</label>
+                                                        <select
+                                                            class="form-control"
+                                                            id="medium"
+                                                            name="medium"
+                                                            styles={customStyles}
+                                                            value={formArtWork.medium}
+                                                            onChange={handleChange}
+                                                        >
+                                                            <option value="">Select Medium</option>
+                                                            <option value="A">A</option>
+                                                            <option value="B">B</option>
+                                                            <option value="C">C</option>
+                                                            <option value="D">D</option>
+                                                        </select>
+                                                        {errors.medium && <div className="text-danger">{errors.medium}</div>}
                                                     </div>
                                                 </div>
 
                                                 <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
                                                         <label className="text-label form-label">
-                                                            Actor <span className="text-danger">*</span>
+                                                        Materials <span className="text-danger">*</span>
                                                         </label>
-                                                        <input type="text" name="actor" onChange={handleChange} className="form-control" placeholder="Please enter actor name" />
-                                                        {errors.actor && <div className="text-danger">{errors.actor}</div>}
+                                                        <input type="text" name="materials" onChange={handleChange} className="form-control" placeholder="Please enter Materials" />
+                                                        {errors.materials && <div className="text-danger">{errors.materials}</div>}
                                                     </div>
                                                 </div>
 
                                                 <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
                                                         <label className="text-label form-label">
-                                                            Director <span className="text-danger">*</span>
+                                                            Size <span className="text-danger">*</span>
                                                         </label>
-                                                        <input type="text" name="director" onChange={handleChange} className="form-control" placeholder="Please enter director name" />
-                                                        {errors.director && <div className="text-danger">{errors.director}</div>}
+                                                        <input type="text" name="size" onChange={handleChange} className="form-control" placeholder="Please enter Size" />
+                                                        {errors.size && <div className="text-danger">{errors.size}</div>}
+                                                    </div>
+                                                </div>
+
+                                                <div className="col-lg-6 mb-2">
+                                                    <div className="mb-3">
+                                                        <label className="text-label form-label">Condition</label>
+                                                        <select
+                                                            class="form-control"
+                                                            id="condition"
+                                                            styles={customStyles}
+                                                            name="condition"
+                                                            value={formArtWork.condition}
+                                                            onChange={handleChange}
+                                                        >
+                                                            <option value="">Select Condition</option>
+                                                            <option value="A">A</option>
+                                                            <option value="B">B</option>
+                                                            <option value="C">C</option>
+                                                            <option value="D">D</option>
+                                                        </select>
+                                                        {errors.condition && <div className="text-danger">{errors.condition}</div>}
+                                                    </div>
+                                                </div>
+
+                                                <div className="col-lg-6 mb-2">
+                                                    <div className="mb-3">
+                                                        <label className="text-label form-label">Signature</label>
+                                                        <select
+                                                            class="form-control"
+                                                            id="signature"
+                                                            styles={customStyles}
+                                                            name="signature"
+                                                            value={formArtWork.signature}
+                                                            onChange={handleChange}
+                                                        >
+                                                            <option value="">Select Signature</option>
+                                                            <option value="A">A</option>
+                                                            <option value="B">B</option>
+                                                            <option value="C">C</option>
+                                                            <option value="D">D</option>
+                                                        </select>
+                                                        {errors.signature && <div className="text-danger">{errors.signature}</div>}
+                                                    </div>
+                                                </div>
+
+                                                <div className="col-lg-6 mb-2">
+                                                    <div className="mb-3">
+                                                        <label className="text-label form-label">Rarity</label>
+                                                        <select
+                                                            class="form-control"
+                                                            id="rarity"
+                                                            styles={customStyles}
+                                                            name="rarity"
+                                                            value={formArtWork.rarity}
+                                                            onChange={handleChange}
+                                                        >
+                                                            <option value="">Select Rarity</option>
+                                                            <option value="A">A</option>
+                                                            <option value="B">B</option>
+                                                            <option value="C">C</option>
+                                                            <option value="D">D</option>
+                                                        </select>
+                                                        {errors.rarity && <div className="text-danger">{errors.rarity}</div>}
+                                                    </div>
+                                                </div>
+
+                                                <div className="col-lg-6 mb-2">
+                                                    <div className="mb-3">
+                                                        <label className="text-label form-label">Certificate Of Authenticity</label>
+                                                        <select
+                                                            class="form-control"
+                                                            styles={customStyles}
+                                                            id="certificateOfAuthenticity"
+                                                            name="certificateOfAuthenticity"
+                                                            value={formArtWork.certificateOfAuthenticity}
+                                                            onChange={handleChange}
+                                                        >
+                                                            <option value="">Select Certificate</option>
+                                                            <option value="A">A</option>
+                                                            <option value="B">B</option>
+                                                            <option value="C">C</option>
+                                                            <option value="D">D</option>
+                                                        </select>
+                                                        {errors.certificateOfAuthenticity && <div className="text-danger">{errors.certificateOfAuthenticity}</div>}
+                                                    </div>
+                                                </div>
+
+                                                <div className="col-lg-6 mb-2">
+                                                    <div className="mb-3">
+                                                        <label className="text-label form-label">Frame</label>
+                                                        <select
+                                                            class="form-control"
+                                                            id="frame"
+                                                            name="frame"
+                                                            styles={customStyles}
+                                                            value={formArtWork.frame}
+                                                            onChange={handleChange}
+                                                        >
+                                                            <option value="">Select Frame</option>  
+                                                            <option value="A">A</option>
+                                                            <option value="B">B</option>
+                                                            <option value="C">C</option>
+                                                            <option value="D">D</option>
+                                                        </select>
+                                                        {errors.frame && <div className="text-danger">{errors.frame}</div>}
                                                     </div>
                                                 </div>
 
                                                 <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
                                                         <label className="text-label form-label">
-                                                            Languages <span className="text-danger">*</span>
+                                                            School of Art <span className="text-danger">*</span>
                                                         </label>
                                                         <Select
-                                                            name="languageIds"
-                                                            value={languages.filter((option) => formArtWork.languageIds.includes(option.value))}
+                                                            name="schoolOfArtIds"
+                                                            value={schoolOfArt.filter((option) => formArtWork.schoolOfArtIds.includes(option.value))}
                                                             isMulti
                                                             closeMenuOnSelect={false}
-                                                            styles={customStyles}
+                                                            styles={customStyle}
                                                             onChange={(selectedOption) => {
-                                                                setFormArtWork({ ...formArtWork, languageIds: selectedOption.map((option) => option.value) });
+                                                                setFormArtWork({ ...formArtWork, schoolOfArtIds: selectedOption.map((option) => option.value) });
                                                             }}
-                                                            options={languages}
-                                                            placeholder="Select Languages"
+                                                            options={schoolOfArt}
+                                                            placeholder="Select School Of Art"
                                                         />
-                                                        {errors.languageIds && <div className="text-danger">{errors.languageIds}</div>}
+                                                        {errors.schoolOfArtIds && <div className="text-danger">{errors.schoolOfArtIds}</div>}
                                                     </div>
                                                 </div>
 
                                                 <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
                                                         <label className="text-label form-label">
-                                                            Movie Genre <span className="text-danger">*</span>
+                                                            ArtWork Price <span className="text-danger">*</span>
                                                         </label>
-                                                        <Select
-                                                            name="genreIds"
-                                                            value={genres.filter((option) => formArtWork.genreIds.includes(option.value))}
-                                                            isMulti
-                                                            closeMenuOnSelect={false}
-                                                            styles={customStyles}
-                                                            onChange={(selectedOption) => {
-                                                                setFormArtWork({ ...formArtWork, genreIds: selectedOption.map((option) => option.value) });
-                                                            }}
-                                                            options={genres}
-                                                            placeholder="Select Genres"
-                                                        />
-                                                        {errors.genreIds && <div className="text-danger">{errors.genreIds}</div>}
-                                                    </div>
-                                                </div>
-
-                                                <div className="col-lg-6 mb-2">
-                                                    <div className="mb-3">
-                                                        <label className="text-label form-label">
-                                                            Release date <span className="text-danger">*</span>
-                                                        </label>
-                                                        <input type="date" name="release_date" onChange={handleChange} className="form-control" placeholder="example@gmail.com" />
-                                                        {errors.release_date && <div className="text-danger">{errors.release_date}</div>}
-                                                    </div>
-                                                </div>
-
-                                                <div className="col-lg-6 mb-2">
-                                                    <div className="mb-3">
-                                                        <label className="text-label form-label">
-                                                            Movie duration (Minute) <span className="text-danger">*</span>
-                                                        </label>
-                                                        <input type="number" name="duration" onChange={handleChange} className="form-control" placeholder="Please enter duration" />
-                                                        {errors.duration && <div className="text-danger">{errors.duration}</div>}
+                                                        <input type="text" name="title" onChange={handleChange} className="form-control" placeholder="Please enter movie name" autoFocus />
+                                                        {errors.price && <div className="text-danger">{errors.price}</div>}
                                                     </div>
                                                 </div>
 
@@ -361,34 +439,7 @@ function ArtWorkCreate() {
                                                         <input type="file" name="movie_image" onChange={handleChange} className="form-control" accept=".jpg, .png, .etc" />
                                                         {errors.movie_image && <div className="text-danger">{errors.movie_image}</div>}
                                                     </div>
-                                                </div>
-
-                                                <div className="col-lg-6 mb-2">
-                                                    <div className="mb-3">
-                                                        <label className="text-label form-label">
-                                                            Movie cover photo <span className="text-danger">*</span>
-                                                        </label>
-                                                        <input type="file" name="cover_image" onChange={handleChange} className="form-control" accept=".jpg, .png, .etc" />
-                                                        {errors.cover_image && <div className="text-danger">{errors.cover_image}</div>}
-                                                    </div>
-                                                </div>
-
-                                                <div className="col-lg-6 mb-2">
-                                                    <div className="mb-3">
-                                                        <label className="text-label form-label">Video Trailer</label>
-                                                        <input
-                                                            type="text"
-                                                            name="trailer"
-                                                            className="form-control"
-                                                            placeholder="Please enter YouTube video URL"
-                                                            value={videoUrl}
-                                                            onChange={(e) => {
-                                                                setVideoUrl(e.target.value);
-                                                                setFormArtWork({ ...formArtWork, trailer: e.target.value });
-                                                            }}
-                                                        />
-                                                    </div>
-                                                </div>
+                                                </div>                                        
 
                                                 <div className="col-lg-2 mb-2">
                                                     <div className="mb-3">
@@ -398,23 +449,6 @@ function ArtWorkCreate() {
                                                         )}
                                                     </div>
                                                 </div>
-
-                                                <div className="col-lg-2 mb-2">
-                                                    <div className="mb-3">
-                                                        <label className="text-label form-label">Preview movie cover photo</label>
-                                                        {formArtWork.movie_cover_image_preview && (
-                                                            <img src={formArtWork.movie_cover_image_preview} alt="Movie Preview" style={{ width: "100%", height: "200px", objectFit: "cover" }} />
-                                                        )}
-                                                    </div>
-                                                </div>
-
-                                                <div className="col-lg-2 mb-2">
-                                                    <div className="mb-3">
-                                                        <label className="text-label form-label">Preview Trailer</label>
-                                                        {videoUrl && <ReactPlayer url={videoUrl} width="100%" height="200px" controls />}
-                                                    </div>
-                                                </div>
-
                                                 <div className="text-end">
                                                     <button type="submit" className="btn btn-default">
                                                         Create Movie

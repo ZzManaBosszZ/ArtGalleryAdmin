@@ -34,15 +34,16 @@ function ArtWorkList() {
             api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
             try {
                 const response = await api.get(url.ARTWORK.LIST);
-                const filteredArtWorks = selectedDate
-                    ? response.data.filter((item) => format(new Date(item.release_date), "yyyy-MM-dd") === format(new Date(selectedDate), "yyyy-MM-dd"))
-                    : response.data;
-                setArtWorks(filteredArtWorks);
+                // const filteredArtWorks = selectedDate
+                //     ? response.data.filter((item) => 
+                //     format(new Date(item.release_date), "yyyy-MM-dd") === format(new Date(selectedDate), "yyyy-MM-dd"))
+                //     : response.data;
+                setArtWorks(response.data);
                 setTbodyCheckboxes(Array.from({ length: response.data.length }).fill(false));
             } catch (error) {}
         };
         loadArtWorks();
-    }, [selectedDate]);
+    }, []);
 
     //xử lý check tất cả và hiển thị thùng rác
     const handleSelectAll = () => {
@@ -144,7 +145,7 @@ function ArtWorkList() {
     };
     const filteredArtWorks = currentArtWorks.filter((item) => {
         const nameMatch = item.name.toLowerCase().includes(searchName.toLowerCase());
-        const schoolOfArtMatch = item.director.toLowerCase().includes(searchSchoolOfArt.toLowerCase());
+        const schoolOfArtMatch = item.name.toLowerCase().includes(searchSchoolOfArt.toLowerCase());
         return nameMatch && schoolOfArtMatch;
     });
 
@@ -248,16 +249,16 @@ function ArtWorkList() {
                                                 <strong>ArtWork Name</strong>
                                             </th>
                                             <th>
-                                                <strong>Director</strong>
+                                                <strong>Artist</strong>
                                             </th>
                                             <th>
-                                                <strong>Release Date</strong>
+                                                <strong>Medium</strong>
                                             </th>
                                             <th>
-                                                <strong>Movie Duration</strong>
+                                                <strong>Material</strong>
                                             </th>
                                             <th>
-                                                <strong>Genres</strong>
+                                                <strong>Price</strong>
                                             </th>
                                             <th>
                                                 <strong>Action</strong>
@@ -279,17 +280,14 @@ function ArtWorkList() {
                                                     <td>{item.name}</td>
                                                     <td>
                                                         <div className="d-flex align-items-center">
-                                                            <span className="w-space-no">{item.medium}</span>
+                                                            <span className="w-space-no">{item.schoolOfArts[0].name}</span>
                                                         </div>
                                                     </td>
-                                                    <td>{format(new Date(item.material), "yyyy-MM-dd")}</td>
+                                                    {/* <td>{format(new Date(item.material), "yyyy-MM-dd")}</td> */}
+                                                    <td>{item.medium}</td>
+                                                    <td>{item.materials} </td>
                                                     <td>{item.price} ($)</td>
-                                                    <td>
-                                                        <span key={item.genres[0].id} className="badge light badge-dark">
-                                                            {item.genres[0].name}
-                                                        </span>
-                                                        {item.genres.length > 1 && <span className="badge light badge-dark">+{item.genres.length - 1}</span>}
-                                                    </td>
+                                                    
                                                     <td>
                                                         <div className="d-flex">
                                                             <Link to={`/artwork-detail/${item.id}`} className="btn btn-success shadow btn-xs sharp me-1">
