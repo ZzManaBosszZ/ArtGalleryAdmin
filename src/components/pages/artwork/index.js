@@ -34,10 +34,10 @@ function ArtWorkList() {
             api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
             try {
                 const response = await api.get(url.ARTWORK.LIST);
-                const filteredBookings = selectedDate
+                const filteredArtWorks = selectedDate
                     ? response.data.filter((item) => format(new Date(item.release_date), "yyyy-MM-dd") === format(new Date(selectedDate), "yyyy-MM-dd"))
                     : response.data;
-                setArtWorks(filteredBookings);
+                setArtWorks(filteredArtWorks);
                 setTbodyCheckboxes(Array.from({ length: response.data.length }).fill(false));
             } catch (error) {}
         };
@@ -134,18 +134,18 @@ function ArtWorkList() {
     const currentArtWorks = artworks.slice(indexOfFirstArtWork, indexOfLastArtWork);
 
     //search, filter
-    const [searchTitle, setSearchTitle] = useState("");
-    const [searchDirector, setSearchDirector] = useState("");
-    const handleSearchTitleChange = (e) => {
-        setSearchTitle(e.target.value);
+    const [searchName, setSearchName] = useState("");
+    const [searchSchoolOfArt, setSearchSchoolOfArt] = useState("");
+    const handleSearchNameChange = (e) => {
+        setSearchName(e.target.value);
     };
-    const handleSearchDirectorChange = (e) => {
-        setSearchDirector(e.target.value);
+    const handleSearchSchoolOfArtChange = (e) => {
+        setSearchSchoolOfArt(e.target.value);
     };
     const filteredArtWorks = currentArtWorks.filter((item) => {
-        const titleMatch = item.title.toLowerCase().includes(searchTitle.toLowerCase());
-        const directorMatch = item.director.toLowerCase().includes(searchDirector.toLowerCase());
-        return titleMatch && directorMatch;
+        const nameMatch = item.name.toLowerCase().includes(searchName.toLowerCase());
+        const schoolOfArtMatch = item.director.toLowerCase().includes(searchSchoolOfArt.toLowerCase());
+        return nameMatch && schoolOfArtMatch;
     });
 
     // kiểm tra role
@@ -182,13 +182,13 @@ function ArtWorkList() {
 
                         <div className="row page-titles">
                             <div className="col-lg-4">
-                                <input type="text" className="form-control input-rounded" placeholder="Search title ArtWork . . ." value={searchTitle} onChange={handleSearchTitleChange} />
+                                <input type="text" className="form-control input-rounded" placeholder="Search title ArtWork . . ." value={searchName} onChange={handleSearchNameChange} />
                             </div>
                             <div className="col-lg-4">
-                                <input type="text" className="form-control input-rounded" placeholder="Search director ArtWork . . ." value={searchDirector} onChange={handleSearchDirectorChange} />
+                                <input type="text" className="form-control input-rounded" placeholder="Search director ArtWork . . ." value={searchSchoolOfArt} onChange={handleSearchSchoolOfArtChange} />
                             </div>
                             <div className="col-lg-4">
-                                <input type="date" className="form-control input-rounded" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} />
+                                {/* <input type="date" className="form-control input-rounded" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} /> */}
                             </div>
                         </div>
 

@@ -24,7 +24,7 @@ const url = {
         // RESTORE: "/Artists/restore/{}",
     },
 
-    SCHOOLOFART: {
+    ART: {
         LIST: "/SchoolOfArts",
     },
 

@@ -16,8 +16,8 @@ function ArtistCreate() {
         name: "",
         biography: "",
         imagePath: null,
-        // artworkIds: [],
-        // schoolOfArtIds: [],
+        artworkIds: [],
+        schoolOfArtIds: [],
     });
     const [userRole, setUserRole] = useState(null);
     const [error, setError] = useState(null);
@@ -37,6 +37,40 @@ function ArtistCreate() {
             color: "#333333",
         }),
     };
+
+    //hien thi select artwork
+    useEffect(() => {
+        const fetchArtWorks = async () => {
+            const userToken = localStorage.getItem("access_token");
+            api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+            try {
+                const response = await api.get(url.ARTWORK.LIST);
+                const artworkData = response.data.map((artwork) => ({
+                    value: artwork.id,
+                    label: artwork.name,
+                }));
+                setArtWork(artworkData);
+            } catch (error) {}
+        };
+        fetchArtWorks();
+    }, []);
+
+    //hien thi select schoolOfArt
+    useEffect(() => {
+        const fetchSchoolOfArt = async () => {
+            const userToken = localStorage.getItem("access_token");
+            api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+            try {
+                const response = await api.get(url.ART.LIST);
+                const schoolOfArtData = response.data.map((schoolOfArt) => ({
+                    value: schoolOfArt.id,
+                    label: schoolOfArt.name,
+                }));
+                setSchoolOfArt(schoolOfArtData);
+            } catch (error) {}
+        };
+        fetchSchoolOfArt();
+    }, []);
 
     //validate
     const validateForm = () => {
@@ -60,41 +94,6 @@ function ArtistCreate() {
         setErrors(newErrors);
         return valid;
     };
-
-    //hien thi select artwork
-    // useEffect(() => {
-    //     const fetchArtWorks = async () => {
-    //         const userToken = localStorage.getItem("access_token");
-    //         api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
-    //         try {
-    //             const response = await api.get(url.ARTWORK.LIST);
-    //             const artworkData = response.data.map((artwork) => ({
-    //                 value: artwork.id,
-    //                 label: artwork.name,
-    //             }));
-    //             setArtWork(artworkData);
-    //         } catch (error) {}
-    //     };
-    //     fetchArtWorks();
-    // }, []);
-
-    //hien thi select schoolOfArt
-    // useEffect(() => {
-    //     const fetchSchoolOfArt = async () => {
-    //         const userToken = localStorage.getItem("access_token");
-    //         api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
-    //         try {
-    //             const response = await api.get(url.SCHOOLOFART.LIST);
-    //             const schoolOfArtData = response.data.map((schoolOfArt) => ({
-    //                 value: schoolOfArt.id,
-    //                 label: schoolOfArt.name,
-    //             }));
-    //             fetchSchoolOfArt(schoolOfArtData);
-    //         } catch (error) {}
-    //     };
-    //     fetchSchoolOfArt();
-    // }, []);
-
 
     //xử lý tạo Artist
     const handleSubmit = async (e) => {
@@ -207,6 +206,44 @@ function ArtistCreate() {
                                                     <div className="mb-3">
                                                         <label className="text-label form-label">Biography</label>
                                                         <input type="text" name="biography" onChange={handleChange} className="form-control" placeholder="Please enter description" />
+                                                        {errors.biography && <div className="text-danger">{errors.biography}</div>}
+                                                    </div>
+                                                </div>
+
+                                                <div className="col-lg-6 mb-2">
+                                                    <div className="mb-3">
+                                                        <label className="text-label form-label">ArtWork</label>
+                                                        <Select
+                                                            name="artworkIds"
+                                                            value={artworks.filter((option) => formArtist.artworkIds.includes(option.value))}
+                                                            isMulti
+                                                            closeMenuOnSelect={false}
+                                                            styles={customStyles}
+                                                            onChange={(selectedOption) => {
+                                                                setFormArtist({ ...formArtist, artworkIds: selectedOption.map((option) => option.value) });
+                                                            }}
+                                                            options={artworks}
+                                                            placeholder="Select ArtWork"
+                                                        />
+                                                        {/* {errors.biography && <div className="text-danger">{errors.biography}</div>} */}
+                                                    </div>
+                                                </div>
+
+                                                <div className="col-lg-6 mb-2">
+                                                    <div className="mb-3">
+                                                        <label className="text-label form-label">School Of Art</label>
+                                                        <Select
+                                                            name="schoolOfArtIds"
+                                                            value={schoolOfArt.filter((option) => formArtist.schoolOfArtIds.includes(option.value))}
+                                                            isMulti
+                                                            closeMenuOnSelect={false}
+                                                            styles={customStyles}
+                                                            onChange={(selectedOption) => {
+                                                                setFormArtist({ ...formArtist, schoolOfArtIds: selectedOption.map((option) => option.value) });
+                                                            }}
+                                                            options={schoolOfArt}
+                                                            placeholder="Select School of Art"
+                                                        />
                                                         {errors.biography && <div className="text-danger">{errors.biography}</div>}
                                                     </div>
                                                 </div>
