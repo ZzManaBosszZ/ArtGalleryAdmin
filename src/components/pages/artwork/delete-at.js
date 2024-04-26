@@ -116,23 +116,23 @@ function ArtWorkDeleteAt() {
                                 <table className="table table-sm mb-0">
                                     <thead>
                                         <tr>
-                                            <th>
-                                                <strong>Thumbnail</strong>
+                                        <th>
+                                                <strong>Image</strong>
                                             </th>
                                             <th>
                                                 <strong>ArtWork Name</strong>
                                             </th>
                                             <th>
-                                                <strong>Director</strong>
+                                                <strong>Artist</strong>
                                             </th>
                                             <th>
-                                                <strong>Release Date</strong>
+                                                <strong>Medium</strong>
                                             </th>
                                             <th>
-                                                <strong>Movie Duration</strong>
+                                                <strong>Material</strong>
                                             </th>
                                             <th>
-                                                <strong>Genres</strong>
+                                                <strong>Price</strong>
                                             </th>
                                             <th>
                                                 <strong>Action</strong>
@@ -144,7 +144,7 @@ function ArtWorkDeleteAt() {
                                             return (
                                                 <tr>
                                                     <td>
-                                                        <img src={item.movie_image} className="rounded-lg me-2 movie-thumb" alt="" />
+                                                        <img src={item.artWorkImage} className="rounded-lg me-2 movie-thumb" alt="" />
                                                     </td>
                                                     <td>{item.title}</td>
                                                     <td>

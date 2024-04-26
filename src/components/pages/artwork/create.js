@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 import url from "../../services/url";
 import api from "../../services/api";
-import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import NotFound from "../../pages/other/not-found";
 
@@ -120,8 +120,12 @@ function ArtWorkCreate() {
             newErrors.frame = "Please choose Frame";
             valid = false;
         }
-        if (formArtWork.price === 0) {
-            newErrors.price = "Please choose Price";
+        if (formArtWork.series === "") {
+            newErrors.series = "Please choose Series";
+            valid = false;
+        }
+        if (formArtWork.price <= 0 || formArtWork.price == null) {
+            newErrors.price = "Please enter Price";
             valid = false;
         }
         setErrors(newErrors);
@@ -141,10 +145,12 @@ function ArtWorkCreate() {
                     headers: { "Content-Type": "multipart/form-data" },
                 });
                 if (response && response.data) {
-                    // console.log(response.data);
-                    toast.success("Create ArtWork Successffuly.", {
-                        // position: toast.POSITION.TOP_RIGHT,
-                        autoClose: 3000,
+                    // console.log(response.data);                  
+                    Swal.fire({
+                        text: "Create ArtWork Successffuly.",
+                        icon: "success",
+                        confirmButtonColor: "#3085d6",
+                        confirmButtonText: "Done",
                     });
                     setTimeout(() => {
                         navigate(`/artwork-list`); //chuyển đến trang artwork-list
@@ -154,15 +160,20 @@ function ArtWorkCreate() {
             } catch (error) {
                 if (error.response.status === 400 && error.response.data.message === "ArtWork already exists") {
                     setNameExistsError("The name of this ArtWork already exists");
-                    toast.error("The name of this ArtWork already exists", {
-                        // position: toast.POSITION.TOP_RIGHT,
-                        autoClose: 3000,
+                    Swal.fire({
+                        text: "The name of this ArtWork already exists",
+                        icon: "warning",
+                        confirmButtonColor: "#3085d6",
+                        confirmButtonText: "Done",
                     });
                 } else {
-                    toast.error("Unable to create ArtWork, please try again", {
-                        position: toast.POSITION.TOP_RIGHT,
-                        autoClose: 3000,
+                    Swal.fire({
+                        text: "Unable to create ArtWork, please try again",
+                        icon: "warning",
+                        confirmButtonColor: "#3085d6",
+                        confirmButtonText: "Done",
                     });
+                    
                 }
                 // console.error("Error creating test:", error);
                 // console.error("Response data:", error.response.data);
@@ -177,8 +188,8 @@ function ArtWorkCreate() {
 
         setFormArtWork({
             ...formArtWork,
-            [fieldName]: fieldName === "movie_image" ? (files.length > 0 ? files[0] : null) : null,
-            movie_image_preview: selectedImage,
+            [fieldName]: fieldName === "artWorkImage" ? (files.length > 0 ? files[0] : null) : null,
+            artWorkImage_preview: selectedImage,
         });
     };
     const handleFileCoverChange = (e, fieldName) => {
@@ -187,15 +198,15 @@ function ArtWorkCreate() {
 
         setFormArtWork({
             ...formArtWork,
-            [fieldName]: fieldName === "cover_image" ? (files.length > 0 ? files[0] : null) : null,
-            movie_cover_image_preview: selectedImage,
+            [fieldName]: fieldName === "artWorkImage_preview" ? (files.length > 0 ? files[0] : null) : null,
+            artWorkImage_preview: selectedImage,
         });
     };
     const handleChange = (e) => {
         const { name } = e.target;
-        if (name === "movie_image") {
+        if (name === "artWorkImage") {
             handleFileArtWorkChange(e, name);
-        } else if (name === "cover_image") {
+        } else if (name === "artWorkImage_preview") {
             handleFileCoverChange(e, name);
         } else {
             const { value } = e.target;
@@ -230,10 +241,10 @@ function ArtWorkCreate() {
             ) : (
                 <>
                     <Helmet>
-                        <title>Movie Create | Art Admin</title>
+                        <title>ArtWork Create | Art Admin</title>
                     </Helmet>
                     <Layout>
-                        <Breadcrumb title="Movie Create" />
+                        <Breadcrumb title="ArtWork Create" />
                         <div className="row">
                             <div className="col-xl-12 col-xxl-12">
                                 <div className="card">
@@ -248,7 +259,7 @@ function ArtWorkCreate() {
                                                         <label className="text-label form-label">
                                                             ArtWork Name <span className="text-danger">*</span>
                                                         </label>
-                                                        <input type="text" name="title" onChange={handleChange} className="form-control" placeholder="Please enter movie name" autoFocus />
+                                                        <input type="text" name="name" onChange={handleChange} className="form-control" placeholder="Please enter ArtWork name" autoFocus />
                                                         {errors.name && <div className="text-danger">{errors.name}</div>}
                                                         {nameExistsError && <div className="text-danger">{nameExistsError}</div>}
                                                     </div>
@@ -424,9 +435,19 @@ function ArtWorkCreate() {
                                                 <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
                                                         <label className="text-label form-label">
+                                                            ArtWork Series <span className="text-danger">*</span>
+                                                        </label>
+                                                        <input type="text" name="series" onChange={handleChange} className="form-control" placeholder="Please enter series" autoFocus />
+                                                        {errors.series && <div className="text-danger">{errors.series}</div>}
+                                                    </div>
+                                                </div>
+
+                                                <div className="col-lg-6 mb-2">
+                                                    <div className="mb-3">
+                                                        <label className="text-label form-label">
                                                             ArtWork Price <span className="text-danger">*</span>
                                                         </label>
-                                                        <input type="text" name="title" onChange={handleChange} className="form-control" placeholder="Please enter movie name" autoFocus />
+                                                        <input type="number" name="price" onChange={handleChange} className="form-control" placeholder="Please enter price" autoFocus />
                                                         {errors.price && <div className="text-danger">{errors.price}</div>}
                                                     </div>
                                                 </div>
@@ -434,24 +455,24 @@ function ArtWorkCreate() {
                                                 <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
                                                         <label className="text-label form-label">
-                                                            Movie photos <span className="text-danger">*</span>
+                                                            ArtWork photos <span className="text-danger">*</span>
                                                         </label>
-                                                        <input type="file" name="movie_image" onChange={handleChange} className="form-control" accept=".jpg, .png, .etc" />
-                                                        {errors.movie_image && <div className="text-danger">{errors.movie_image}</div>}
+                                                        <input type="file" name="artWorkImage" onChange={handleChange} className="form-control" accept=".jpg, .png, .etc" />
+                                                        {errors.artWorkImage && <div className="text-danger">{errors.artWorkImage}</div>}
                                                     </div>
                                                 </div>                                        
 
                                                 <div className="col-lg-2 mb-2">
                                                     <div className="mb-3">
-                                                        <label className="text-label form-label">Preview movie photos</label>
-                                                        {formArtWork.movie_image_preview && (
-                                                            <img src={formArtWork.movie_image_preview} alt="Movie Preview" style={{ width: "100%", height: "200px", objectFit: "cover" }} />
+                                                        <label className="text-label form-label">Preview ArtWork photos</label>
+                                                        {formArtWork.artWorkImage_preview && (
+                                                            <img src={formArtWork.artWorkImage_preview} alt="ArtWork Preview" style={{ width: "100%", height: "200px", objectFit: "cover" }} />
                                                         )}
                                                     </div>
                                                 </div>
                                                 <div className="text-end">
                                                     <button type="submit" className="btn btn-default">
-                                                        Create Movie
+                                                        Create ArtWork
                                                     </button>
                                                 </div>
                                             </div>

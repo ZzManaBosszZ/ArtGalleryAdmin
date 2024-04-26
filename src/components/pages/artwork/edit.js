@@ -25,6 +25,7 @@ function ArtWorkEdit() {
     const [error, setError] = useState(null);
     const { id } = useParams();
     const [artworkData, setArtWorkData] = useState({});
+    const [ArtWorkDetail, setArtWorkDetail] = useState({schoolOfArts: []});
     const [artworkImgePreview, setArtWorkImagePreview] = useState("");
     const [coverImgePreview, setCoverImagePreview] = useState("");
     const [errors, setErrors] = useState({});
@@ -38,44 +39,58 @@ function ArtWorkEdit() {
     const validateForm = () => {
         let valid = true;
         const newErrors = {};
-        if (artworkData.title === "") {
-            newErrors.title = "Please enter name ArtWork";
+        if (artworkData.name === "") {
+            newErrors.name = "Please enter name artwork";
             valid = false;
-        } else if (artworkData.title.length < 3) {
-            newErrors.title = "Enter at least 3 characters";
+        } else if (artworkData.name.length < 3) {
+            newErrors.name = "Enter at least 3 characters";
             valid = false;
-        } else if (artworkData.title.length > 255) {
-            newErrors.title = "Enter up to 255 characters";
-            valid = false;
-        }
-        if (artworkData.actor === "") {
-            newErrors.actor = "Please enter actor";
+        } else if (artworkData.name.length > 255) {
+            newErrors.name = "Enter up to 255 characters";
             valid = false;
         }
-        if (artworkData.movie_image === null) {
-            newErrors.movie_image = "Please choose ArtWork photo";
+        if (artworkData.medium === "") {
+            newErrors.medium = "Please enter medium";
             valid = false;
         }
-        if (artworkData.cover_image === null) {
-            newErrors.cover_image = "Please choose ArtWork cover photo";
+        if (artworkData.artWorkImage === null) {
+            newErrors.artWorkImage = "Please choose photo";
             valid = false;
         }
-        if (artworkData.director === "") {
-            newErrors.director = "Please enter director";
+        if (artworkData.materials === "") {
+            newErrors.materials = "Please enter materials";
             valid = false;
         }
-        if (artworkData.duration === "") {
-            newErrors.duration = "Please enter duration";
+        if (artworkData.size === "") {
+            newErrors.size = "Please enter size";
             valid = false;
-        } else {
-            const durationValue = parseFloat(artworkData.duration);
-            if (isNaN(durationValue) || durationValue < 60 || durationValue > 200) {
-                newErrors.duration = "Please enter a valid duration between 60 and 200 Minute";
-                valid = false;
-            }
         }
-        if (artworkData.release_date === "") {
-            newErrors.release_date = "Please enter release_date";
+        if (artworkData.condition === "") {
+            newErrors.condition = "Please enter condition";
+            valid = false;
+        }
+        if (artworkData.signature === "") {
+            newErrors.signature = "Please choose signature";
+            valid = false;
+        }
+        if (artworkData.rarity === "") {
+            newErrors.rarity = "Please choose rarity";
+            valid = false;
+        }
+        if (artworkData.certificateOfAuthenticity === "") {
+            newErrors.certificateOfAuthenticity = "Please choose Certificate";
+            valid = false;
+        }
+        if (artworkData.frame === "") {
+            newErrors.frame = "Please choose Frame";
+            valid = false;
+        }
+        if (artworkData.series === "") {
+            newErrors.series = "Please choose Series";
+            valid = false;
+        }
+        if (artworkData.price <= 0 || artworkData.price == null) {
+            newErrors.price = "Please enter Price";
             valid = false;
         }
         setErrors(newErrors);
@@ -88,15 +103,10 @@ function ArtWorkEdit() {
         api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
         api.get(`${url.ARTWORK.DETAIL.replace("{}", id)}`)
             .then((response) => {
-                const initialArtWorkData = {
-                    ...response.data,
-                    movie_image: response.data.movie_image,
-                    release_date: format(new Date(response.data.release_date), "yyyy-MM-dd"),
-                };
-                setArtWorkData(initialArtWorkData);
+                setArtWorkDetail(response.data);
             })
             .catch((error) => {
-                console.error("Error fetching ArtWork details:", error);
+                // console.error("Error fetching promotion details:", error);
             });
     }, [id]);
 

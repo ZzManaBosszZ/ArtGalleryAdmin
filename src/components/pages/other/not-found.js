@@ -13,9 +13,9 @@ function NotFound() {
             const userRole = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
             setUserRole(userRole);
 
-            if (userRole === "Movie Theater Manager Staff") {
+            if (userRole === "") {
                 setHomePath("/movie-theater-manager-staff-dashboard");
-            } else if (userRole === "Shopping Center Manager Staff") {
+            } else if (userRole === "") {
                 setHomePath("/shopping-center-manager-staff-dashboard");
             } else {
                 setHomePath("/");

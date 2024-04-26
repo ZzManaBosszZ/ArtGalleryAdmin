@@ -24,7 +24,7 @@ function ArtWorkDetail() {
     const [userRole, setUserRole] = useState(null);
     const [error, setError] = useState(null);
     const { id } = useParams();
-    const [ArtWorkDetail, setArtWorkDetail] = useState({ artWorkSchoolOfArts: [], schoolOfArt: []});
+    const [ArtWorkDetail, setArtWorkDetail] = useState({schoolOfArts: []});
 
     //hien thi thong tin chi tiet artwork
     useEffect(() => {
@@ -147,10 +147,9 @@ function ArtWorkDetail() {
                                                     <div style={{ paddingTop: "20px" }}>
                                                         <h4 className="d-inline">School Of Art  :</h4>
                                                         <p className="mb-0">
-                                                            {ArtWorkDetail.artWorkSchoolOfArts.map((schoolOfArt) => (
+                                                            {ArtWorkDetail.schoolOfArts.map((schoolOfArt) => (
                                                                 <span key={schoolOfArt.id} className="badge light badge-dark">
-                                                                    {schoolOfArt.name}
-                                                                    {schoolOfArt.artWorkId}
+                                                                    {schoolOfArt.name}  
                                                                 </span>
                                                             ))}
                                                         </p>
