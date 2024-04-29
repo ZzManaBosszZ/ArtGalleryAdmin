@@ -1,7 +1,7 @@
 function Animation() {
     return (
         <div className="animation">
-            <span className="circle one"></span>
+            {/* <span className="circle one"></span>
             <span className="circle two"></span>
             <span className="circle three"></span>
             <span className="circle four"></span>
@@ -41,7 +41,7 @@ function Animation() {
                         </linearGradient>
                     </defs>
                 </svg>
-            </span>
+            </span> */}
         </div>
     );
 }

@@ -1,14 +1,13 @@
 import { Helmet } from "react-helmet";
 import Layout from "../../layouts";
 import Breadcrumb from "../../layouts/breadcrumb";
-import Select from "react-select";
 import { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 import url from "../../services/url";
 import api from "../../services/api";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
-import { format } from "date-fns";
+import Swal from "sweetalert2";
 import Loading from "../../layouts/loading";
 import NotFound from "../../pages/other/not-found";
 
@@ -24,16 +23,11 @@ function ArtWorkEdit() {
     const [userRole, setUserRole] = useState(null);
     const [error, setError] = useState(null);
     const { id } = useParams();
-    const [artworkData, setArtWorkData] = useState({});
-    const [ArtWorkDetail, setArtWorkDetail] = useState({schoolOfArts: []});
+    const [artworkData, setArtWorkData] = useState({ schoolOfArts: [] });
     const [artworkImgePreview, setArtWorkImagePreview] = useState("");
-    const [coverImgePreview, setCoverImagePreview] = useState("");
     const [errors, setErrors] = useState({});
     const [nameExistsError, setNameExistsError] = useState("");
     const navigate = useNavigate();
-
-    //hiển thị video trailer
-    const [videoUrl, setVideoUrl] = useState("");
 
     //validate
     const validateForm = () => {
@@ -103,7 +97,7 @@ function ArtWorkEdit() {
         api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
         api.get(`${url.ARTWORK.DETAIL.replace("{}", id)}`)
             .then((response) => {
-                setArtWorkDetail(response.data);
+                setArtWorkData(response.data);
             })
             .catch((error) => {
                 // console.error("Error fetching promotion details:", error);
@@ -123,9 +117,11 @@ function ArtWorkEdit() {
                 });
                 if (response && response.data) {
                     // console.log(response.data);
-                    toast.success("Update ArtWork Successffuly.", {
-                        // position: toast.POSITION.TOP_RIGHT,
-                        autoClose: 3000,
+                    Swal.fire({
+                        text: "Update ArtWork Successffuly.",
+                        icon: "success",
+                        confirmButtonColor: "#3085d6",
+                        confirmButtonText: "Done",
                     });
                     setTimeout(() => {
                         navigate(`/artwork-list`); //chuyển đến trang artwork-list
@@ -194,117 +190,232 @@ function ArtWorkEdit() {
                                                 <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
                                                         <label className="text-label form-label">
-                                                        ArtWork Name <span className="text-danger">*</span>
+                                                            ArtWork Name <span className="text-danger">*</span>
                                                         </label>
                                                         <input
                                                             type="text"
-                                                            value={artworkData.title}
+                                                            value={artworkData.name}
                                                             onChange={(e) =>
                                                                 setArtWorkData({
                                                                     ...artworkData,
-                                                                    title: e.target.value,
+                                                                    name: e.target.value,
                                                                 })
                                                             }
                                                             className="form-control"
                                                         />
-                                                        {errors.title && <div className="text-danger">{errors.title}</div>}
+                                                        {errors.name && <div className="text-danger">{errors.name}</div>}
                                                         {nameExistsError && <div className="text-danger">{nameExistsError}</div>}
                                                     </div>
                                                 </div>
 
                                                 <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
-                                                        <label className="text-label form-label">Description</label>
-                                                        <textarea
-                                                            value={artworkData.describe}
+                                                        <label className="text-label form-label">Medium</label>
+                                                        <select
+                                                            class="form-control"
+                                                            value={artworkData.medium}
                                                             onChange={(e) =>
                                                                 setArtWorkData({
                                                                     ...artworkData,
-                                                                    describe: e.target.value,
+                                                                    medium: e.target.value,
                                                                 })
                                                             }
-                                                            className="form-control"
-                                                        ></textarea>
+                                                        >
+                                                            <option value="">Select Medium</option>
+                                                            <option value="A">A</option>
+                                                            <option value="B">B</option>
+                                                            <option value="C">C</option>
+                                                            <option value="D">D</option>
+                                                        </select>
+                                                        {errors.medium && <div className="text-danger">{errors.medium}</div>}
                                                     </div>
                                                 </div>
 
                                                 <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
                                                         <label className="text-label form-label">
-                                                            Actor <span className="text-danger">*</span>
+                                                            Materials <span className="text-danger">*</span>
                                                         </label>
                                                         <input
                                                             type="text"
-                                                            value={artworkData.actor}
+                                                            value={artworkData.materials}
                                                             onChange={(e) =>
                                                                 setArtWorkData({
                                                                     ...artworkData,
-                                                                    actor: e.target.value,
+                                                                    materials: e.target.value,
                                                                 })
                                                             }
                                                             className="form-control"
                                                         />
-                                                        {errors.actor && <div className="text-danger">{errors.actor}</div>}
+                                                        {errors.materials && <div className="text-danger">{errors.materials}</div>}
                                                     </div>
                                                 </div>
 
                                                 <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
                                                         <label className="text-label form-label">
-                                                            Director <span className="text-danger">*</span>
+                                                            Size <span className="text-danger">*</span>
                                                         </label>
                                                         <input
                                                             type="text"
-                                                            value={artworkData.director}
+                                                            value={artworkData.size}
                                                             onChange={(e) =>
                                                                 setArtWorkData({
                                                                     ...artworkData,
-                                                                    director: e.target.value,
+                                                                    size: e.target.value,
                                                                 })
                                                             }
                                                             className="form-control"
                                                         />
-                                                        {errors.director && <div className="text-danger">{errors.director}</div>}
+                                                        {errors.size && <div className="text-danger">{errors.size}</div>}
                                                     </div>
                                                 </div>
 
                                                 <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
                                                         <label className="text-label form-label">
-                                                            Release date <span className="text-danger">*</span>
+                                                            Condition <span className="text-danger">*</span>
                                                         </label>
-                                                        <input
-                                                            type="date"
-                                                            value={artworkData.release_date}
+                                                        <select
+                                                            value={artworkData.condition}
                                                             onChange={(e) =>
                                                                 setArtWorkData({
                                                                     ...artworkData,
-                                                                    release_date: e.target.value,
+                                                                    condition: e.target.value,
                                                                 })
                                                             }
                                                             className="form-control"
-                                                        />
-                                                        {errors.release_date && <div className="text-danger">{errors.release_date}</div>}
+                                                        >
+                                                            <option value="">Select Condition</option>
+                                                            <option value="A">A</option>
+                                                            <option value="B">B</option>
+                                                            <option value="C">C</option>
+                                                            <option value="D">D</option>
+                                                        </select>
+                                                        {errors.condition && <div className="text-danger">{errors.condition}</div>}
                                                     </div>
                                                 </div>
 
                                                 <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
                                                         <label className="text-label form-label">
-                                                            Movie duration (Hours) <span className="text-danger">*</span>
+                                                            Signature( Chữ ký )<span className="text-danger">*</span>
                                                         </label>
-                                                        <input
-                                                            type="number"
-                                                            value={artworkData.duration}
+                                                        <select
+
+                                                            value={artworkData.signature}
                                                             onChange={(e) =>
                                                                 setArtWorkData({
                                                                     ...artworkData,
-                                                                    duration: e.target.value,
+                                                                    signature: e.target.value,
+                                                                })
+                                                            }
+                                                            className="form-control"
+                                                        >
+                                                            <option value="">Select Signature</option>
+                                                            <option value="A">A</option>
+                                                            <option value="B">B</option>
+                                                            <option value="C">C</option>
+                                                            <option value="D">D</option>
+                                                        </select>
+                                                        {errors.signature && <div className="text-danger">{errors.signature}</div>}
+                                                    </div>
+                                                </div>
+
+                                                <div className="col-lg-6 mb-2">
+                                                    <div className="mb-3">
+                                                        <label className="text-label form-label">
+                                                            Rarity<span className="text-danger">*</span>
+                                                        </label>
+                                                        <select
+
+                                                            value={artworkData.rarity}
+                                                            onChange={(e) =>
+                                                                setArtWorkData({
+                                                                    ...artworkData,
+                                                                    rarity: e.target.value,
+                                                                })
+                                                            }
+                                                            className="form-control"
+                                                        >
+                                                            <option value="">Select Rarity</option>
+                                                            <option value="A">A</option>
+                                                            <option value="B">B</option>
+                                                            <option value="C">C</option>
+                                                            <option value="D">D</option>
+                                                        </select>
+                                                        {errors.rarity && <div className="text-danger">{errors.rarity}</div>}
+                                                    </div>
+                                                </div>
+
+                                                <div className="col-lg-6 mb-2">
+                                                    <div className="mb-3">
+                                                        <label className="text-label form-label">
+                                                            Certificate Of Authenticity<span className="text-danger">*</span>
+                                                        </label>
+                                                        <select
+
+                                                            value={artworkData.certificateOfAuthenticity}
+                                                            onChange={(e) =>
+                                                                setArtWorkData({
+                                                                    ...artworkData,
+                                                                    certificateOfAuthenticity: e.target.value,
+                                                                })
+                                                            }
+                                                            className="form-control"
+                                                        >
+                                                            <option value="">Select  Certificate Of Authenticity</option>
+                                                            <option value="A">A</option>
+                                                            <option value="B">B</option>
+                                                            <option value="C">C</option>
+                                                            <option value="D">D</option>
+                                                        </select>
+                                                        {errors.certificateOfAuthenticity && <div className="text-danger">{errors.certificateOfAuthenticity}</div>}
+                                                    </div>
+                                                </div>
+
+                                                <div className="col-lg-6 mb-2">
+                                                    <div className="mb-3">
+                                                        <label className="text-label form-label">
+                                                            Frame<span className="text-danger">*</span>
+                                                        </label>
+                                                        <select
+
+                                                            value={artworkData.frame}
+                                                            onChange={(e) =>
+                                                                setArtWorkData({
+                                                                    ...artworkData,
+                                                                    frame: e.target.value,
+                                                                })
+                                                            }
+                                                            className="form-control"
+                                                        >
+                                                            <option value="">Select Frame</option>
+                                                            <option value="A">A</option>
+                                                            <option value="B">B</option>
+                                                            <option value="C">C</option>
+                                                            <option value="D">D</option>
+                                                        </select>
+                                                        {errors.frame && <div className="text-danger">{errors.frame}</div>}
+                                                    </div>
+                                                </div>
+
+                                                <div className="col-lg-6 mb-2">
+                                                    <div className="mb-3">
+                                                        <label className="text-label form-label">
+                                                            ArtWork Series <span className="text-danger">*</span>
+                                                        </label>
+                                                        <input
+                                                            value={artworkData.series}
+                                                            onChange={(e) =>
+                                                                setArtWorkData({
+                                                                    ...artworkData,
+                                                                    series: e.target.value,
                                                                 })
                                                             }
                                                             className="form-control"
                                                         />
-                                                        {errors.duration && <div className="text-danger">{errors.duration}</div>}
+                                                        {errors.series && <div className="text-danger">{errors.series}</div>}
                                                     </div>
                                                 </div>
 
@@ -324,7 +435,7 @@ function ArtWorkEdit() {
                                                                     // Tiếp tục xử lý
                                                                     setArtWorkData({
                                                                         ...artworkData,
-                                                                        movie_image: file,
+                                                                        artWorkImage: file,
                                                                     });
                                                                 } else {
                                                                     console.error("Unsupported file format or no file selected");
@@ -333,52 +444,28 @@ function ArtWorkEdit() {
                                                             className="form-control"
                                                             accept=".jpg, .png, .jpeg"
                                                         />
-                                                        {errors.movie_image && <div className="text-danger">{errors.movie_image}</div>}
+                                                        {errors.artWorkImage && <div className="text-danger">{errors.artWorkImage}</div>}
                                                     </div>
                                                 </div>
+
+                                                
 
                                                 <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
                                                         <label className="text-label form-label">
-                                                            Movie cover photo <span className="text-danger">*</span>
+                                                            ArtWork Price <span className="text-danger">*</span>
                                                         </label>
                                                         <input
-                                                            type="file"
-                                                            onChange={(e) => {
-                                                                const file = e.target.files[0];
-                                                                if (file && /\.(jpg|png|jpeg)$/.test(file.name)) {
-                                                                    // Update image preview state
-                                                                    setCoverImagePreview(URL.createObjectURL(file));
-
-                                                                    // Tiếp tục xử lý
-                                                                    setArtWorkData({
-                                                                        ...artworkData,
-                                                                        cover_image: file,
-                                                                    });
-                                                                } else {
-                                                                    console.error("Unsupported file format or no file selected");
-                                                                }
-                                                            }}
+                                                            value={artworkData.price}                                        
+                                                            onChange={(e) =>
+                                                                setArtWorkData({
+                                                                    ...artworkData,
+                                                                    price: e.target.value,
+                                                                })
+                                                            }
                                                             className="form-control"
-                                                            accept=".jpg, .png, .jpeg"
                                                         />
-                                                        {errors.cover_image && <div className="text-danger">{errors.cover_image}</div>}
-                                                    </div>
-                                                </div>
-
-                                                <div className="col-lg-6 mb-2">
-                                                    <div className="mb-3">
-                                                        <label className="text-label form-label">Video Trailer</label>
-                                                        <input
-                                                            type="text"
-                                                            name="trailer"
-                                                            className="form-control"
-                                                            value={artworkData.trailer}
-                                                            onChange={(e) => {
-                                                                setVideoUrl(e.target.value);
-                                                                setArtWorkData({ ...artworkData, trailer: e.target.value });
-                                                            }}
-                                                        />
+                                                        {errors.price && <div className="text-danger">{errors.price}</div>}
                                                     </div>
                                                 </div>
 
@@ -387,34 +474,13 @@ function ArtWorkEdit() {
                                                         <label className="text-label form-label">Preview ArtWorks photos</label>
                                                         <img
                                                             id="imgPreview"
-                                                            src={artworkImgePreview || artworkData.movie_image}
+                                                            src={artworkImgePreview || artworkData.artWorkImage}
                                                             alt="Product Preview"
                                                             style={{ width: "100%", height: "200px", objectFit: "cover" }}
                                                             onError={(e) => console.error("Image Preview Error:", e)}
                                                         />{" "}
                                                     </div>
                                                 </div>
-
-                                                <div className="col-lg-2 mb-2">
-                                                    <div className="mb-3">
-                                                        <label className="text-label form-label">Preview ArtWork cover photo</label>
-                                                        <img
-                                                            id="imgPreview"
-                                                            src={coverImgePreview || artworkData.cover_image}
-                                                            alt="Product Preview"
-                                                            style={{ width: "100%", height: "200px", objectFit: "cover" }}
-                                                            onError={(e) => console.error("Image Preview Error:", e)}
-                                                        />{" "}
-                                                    </div>
-                                                </div>
-
-                                                <div className="col-lg-2 mb-2">
-                                                    <div className="mb-3">
-                                                        <label className="text-label form-label">Preview Trailer</label>
-                                                        {artworkData.trailer && <ReactPlayer url={artworkData.trailer} width="100%" height="200px" controls />}
-                                                    </div>
-                                                </div>
-
                                                 <div className="text-end">
                                                     <button type="submit" className="btn btn-default">
                                                         Update ArtWork
