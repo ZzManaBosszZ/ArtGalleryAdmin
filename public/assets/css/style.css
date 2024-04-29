@@ -321,9 +321,8 @@
         --bs-body-font-size: 0.875rem;
         --bs-body-font-weight: 400;
         --bs-body-line-height: 1.5;
-        --bs-body-color: rgba(255, 255, 255, 0.6);
-        --bs-body-bg: #311898;
-        /* --bs-body-bg: #808080; */
+        --bs-body-color: #7e7e7e;
+        --bs-body-bg: #7e7e7e;
     }
 
     *,
@@ -14255,7 +14254,7 @@
     }
 
     .header.sticky {
-        --headerbg: #311898;
+        --headerbg: #85929E;
         background-color: var(--headerbg);
         z-index: 2;
     }
@@ -32039,6 +32038,7 @@
 
     .card-body {
         padding: 1.875rem;
+        background-color: #566573;
     }
 
     @media only screen and (max-width: 35.9375rem) {
@@ -35152,6 +35152,7 @@
     .table tbody tr td {
         vertical-align: middle;
         border-color: rgba(255, 255, 255, 0.1);
+        font-size: 15px;
     }
 
     [data-theme-version="dark"] .table tbody tr td {
@@ -39280,9 +39281,9 @@
     }
 
     /* Art */
-    .movie-thumb {
-        width: 55px;
-        height: 55px;
+    .image-thumb {
+        width: 70px;
+        height: 70px;
         object-fit: contain;
     }
 

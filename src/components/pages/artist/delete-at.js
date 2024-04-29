@@ -146,7 +146,7 @@ function ArtistDeleteAt() {
                                                                     <strong>{index + 1}</strong>
                                                                 </td>
                                                                 <td>
-                                                                    <img src={item.imagePath} className="rounded-lg me-2 movie-thumb" alt="" />
+                                                                    <img src={item.imagePath} className="rounded-lg me-2 image-thumb" alt="" />
                                                                 </td>
                                                                 <td>{item.productName}</td>
                                                                 <td>{item.description}</td>
