@@ -8,6 +8,7 @@ import Sidebar from "./sidebar";
 function Layout({ children }) {
     return (
         <div id="main-wrapper">
+            <Animation />
             <NavHeader />
             <ChatBox />
             <Header />

@@ -4,7 +4,7 @@ function Animation() {
             {/* <span className="circle one"></span>
             <span className="circle two"></span>
             <span className="circle three"></span>
-            <span className="circle four"></span>
+            <span className="circle four"></span> */}
             <span className="line-1">
                 <svg width="1920" height="450" viewBox="0 0 1920 450" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -41,7 +41,7 @@ function Animation() {
                         </linearGradient>
                     </defs>
                 </svg>
-            </span> */}
+            </span>
         </div>
     );
 }
