@@ -406,7 +406,7 @@ function Dashboard() {
                                                                 return (
                                                                     <tr>
                                                                         <td>
-                                                                            <img src={item.movieImage} className="rounded-lg me-2 movie-thumb" alt="" />
+                                                                            <img src={item.movieImage} className="rounded-lg me-2 image-thumb" alt="" />
                                                                         </td>
                                                                         <td>{item.movieTitle}</td>
                                                                         <td>{item.ticketCount}</td>
@@ -461,7 +461,7 @@ function Dashboard() {
                                                                 return (
                                                                     <tr>
                                                                         <td>
-                                                                            <img src={item.imagePath} className="rounded-lg me-2 movie-thumb" alt="" />
+                                                                            <img src={item.imagePath} className="rounded-lg me-2 image-thumb" alt="" />
                                                                         </td>
                                                                         <td>{item.name}</td>
                                                                         <td>{item.contactInfo}</td>

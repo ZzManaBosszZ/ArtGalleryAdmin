@@ -14254,7 +14254,7 @@
     }
 
     .header.sticky {
-        --headerbg: #85929E;
+        --headerbg: #7e7e7e;
         background-color: var(--headerbg);
         z-index: 2;
     }
