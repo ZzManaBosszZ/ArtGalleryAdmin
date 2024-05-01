@@ -69,7 +69,7 @@ function App() {
 
                 {/* Start Offers */}
                 <Route path="/offer-list" element={<ProtectedRoute element={<OfferList />} />} />
-                <Route path="/offer-detail/:id" element={<ProtectedRoute element={<OfferDetail />} />} />
+                <Route path="/offer-detail/:orderCode" element={<ProtectedRoute element={<OfferDetail />} />} />
                 {/* End Offers */}
 
                 {/* Start Client */}

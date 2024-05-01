@@ -28,6 +28,11 @@ const url = {
         LIST: "/SchoolOfArts",
     },
 
+    OFFER: {
+        LIST: "/Offers",
+        DETAIL: "/Offers/get-by-id",  
+    },
+
     AUTH: {
         LOGIN: "/Auth/login",
         FORGOT_PASSWORD: "/Auth/forgot-password",
