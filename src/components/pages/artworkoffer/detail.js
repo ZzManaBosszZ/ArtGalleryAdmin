@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet";
 import Layout from "../../layouts";
 import Breadcrumb from "../../layouts/breadcrumb";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useCallback, useEffect, useState, useRef } from "react";
 import api from "../../services/api";
 import url from "../../services/url";
@@ -10,10 +10,12 @@ import Swal from "sweetalert2";
 import Loading from "../../layouts/loading";
 import { getAccessToken } from "../../../utils/auth";
 function OfferDetail() {
-    const { orderCode } = useParams();
+    const { offerCode } = useParams();
     const [offerDetail, setOfferDetail] = useState([]);
+    const [action, setAction] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     const loadOffer = useCallback(async () => {
         const config = {
@@ -24,12 +26,49 @@ function OfferDetail() {
         };
 
         try {
-            const offerResponse = await api.get(url.OFFER.DETAIL + `/${orderCode}`, config);
+            const offerResponse = await api.get(url.OFFER.DETAIL + `/${offerCode}`, config);
             setOfferDetail(offerResponse.data);
         } catch (error) {
             setError(true);
         }
-    }, [orderCode]);
+    }, [offerCode]);
+
+    const handleSubmit = async (action) => {
+            const userToken = localStorage.getItem("access_token");
+            api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+            try {
+                const response = await api.put(`${url.OFFER.UPDATE.replace("{}", offerCode)}`, { action }, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                });
+                if (response && response.data) {
+                    // console.log(response.data);
+                    Swal.fire({
+                        text: "Offer Approved",
+                        icon: "success",
+                        confirmButtonColor: "#3085d6",
+                        confirmButtonText: "Done",
+                    });
+                    setTimeout(() => {
+                        navigate(`/offer-list`); //chuyển đến trang artwork-list
+                    }, 3000);
+                } else {
+                    Swal.fire({
+                        text: "Offer Refuse",
+                        icon: "success",
+                        confirmButtonColor: "#3085d6",
+                        confirmButtonText: "Done",
+                    });
+                    setTimeout(() => {
+                        navigate(`/offer-list`); //chuyển đến trang artwork-list
+                    }, 3000);
+                }
+            } catch (error) {
+                
+                console.error("Error creating test:", error);
+                console.error("Response data:", error.response.data);
+
+        }
+    };
 
     useEffect(() => {
         setLoading(true);
@@ -67,16 +106,16 @@ function OfferDetail() {
                 <div className="row">
                     <div className="col-lg-12">
                         <div className="card mt-3">
-                            <div className="card-header"> 
-                                <span className="float-end"> Invoice: #{offerDetail.orderCode}</span>
+                            <div className="card-header">
+                                <span className="float-end"> Invoice: #{offerDetail.offerCode}</span>
                                 {/* <strong>01/01/2018</strong> */}
-                                <span className="float-end"><strong>Status:</strong>Pending</span>
+                                <span className="float-end"><strong>Status:</strong>{offerDetail.status}</span>
                             </div>
                             <div className="card-body">
                                 <div className="row mb-5">
                                     <div className="mt-4 col-xl-3 col-lg-3 col-md-6 col-sm-12 inv-text">
                                         <h4>From:</h4>
-                                        <div> <strong>{}</strong> </div>
+                                        <div> <strong>{ }</strong> </div>
                                         <div>Madalinskiego 8</div>
                                         <div>71-101 Szczecin, Poland</div>
                                         <div>Email: info@webz.com.pl</div>
@@ -96,46 +135,22 @@ function OfferDetail() {
                                     <table className="table table-striped">
                                         <thead>
                                             <tr>
-                                                <th className="center">#</th>
+                                                <th className="center">User ID</th>
+                                                <th>User Name</th>
                                                 <th>Item</th>
                                                 <th>Description</th>
-                                                <th className="right">Unit Cost</th>
-                                                <th className="center">Qty</th>
-                                                <th className="right">Total</th>
+                                                <th className="right">Starting Price</th>
+                                                <th className="right">Offer Price</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td className="center text-white">1</td>
-                                                <td className="left strong text-white">Origin License</td>
+                                                <td className="center text-white">{offerDetail.userId}</td>
+                                                <td className="center text-white">{offerDetail.userName}</td>
+                                                <td className="left strong text-white">{offerDetail.artWorkNames}</td>
                                                 <td className="left text-white">Extended License</td>
-                                                <td className="right text-white">$999,00</td>
-                                                <td className="center text-white">1</td>
-                                                <td className="right text-white">$999,00</td>
-                                            </tr>
-                                            <tr>
-                                                <td className="center">2</td>
-                                                <td className="left">Custom Services</td>
-                                                <td className="left">Instalation and Customization (cost per hour)</td>
-                                                <td className="right">$150,00</td>
-                                                <td className="center">20</td>
-                                                <td className="right">$3.000,00</td>
-                                            </tr>
-                                            <tr>
-                                                <td className="center">3</td>
-                                                <td className="left">Hosting</td>
-                                                <td className="left">1 year subcription</td>
-                                                <td className="right">$499,00</td>
-                                                <td className="center">1</td>
-                                                <td className="right">$499,00</td>
-                                            </tr>
-                                            <tr>
-                                                <td className="center">4</td>
-                                                <td className="left">Platinum Support</td>
-                                                <td className="left">1 year subcription 24/7</td>
-                                                <td className="right">$3.999,00</td>
-                                                <td className="center">1</td>
-                                                <td className="right">$3.999,00</td>
+                                                <td className="right text-white">${offerDetail.toTal}</td>
+                                                <td className="right text-white">${offerDetail.offerPrice}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -146,25 +161,13 @@ function OfferDetail() {
                                         <table className="table table-clear">
                                             <tbody>
                                                 <tr>
-                                                    <td className="left"><strong>Subtotal</strong></td>
-                                                    <td className="right">$8.497,00</td>
-                                                </tr>
-                                                <tr>
-                                                    <td className="left"><strong>Discount (20%)</strong></td>
-                                                    <td className="right">$1,699,40</td>
-                                                </tr>
-                                                <tr>
-                                                    <td className="left"><strong>VAT (10%)</strong></td>
-                                                    <td className="right">$679,76</td>
-                                                </tr>
-                                                <tr>
                                                     <td className="left"><strong>Total</strong></td>
-                                                    <td className="right"><strong>$7.477,36</strong><br />
-                                                        <strong>0.15050000 BTC</strong></td>
+                                                    <td className="right"><strong>${offerDetail.offerPrice}</strong><br /></td>
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        <button type="button" className="btn btn-rounded btn-info"><span className="btn-icon-check text-info"></span>Accept Offer</button>
+                                        <button type="button" className="btn btn-rounded btn-info" onClick={() => handleSubmit('accept')}><span className="btn-icon-check text-info"></span>Accept Offer</button>
+                                        <button type="button" className="btn btn-rounded btn-info1" onClick={() => handleSubmit('refuse')}><span className="btn-icon-check text-info"></span>Refuse Offer</button>
                                     </div>
                                 </div>
                             </div>

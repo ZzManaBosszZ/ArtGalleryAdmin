@@ -3591,6 +3591,12 @@
         border-color: #00afef;
     }
 
+    .btn-info1 {
+        color: #000;
+        background-color: #BB0000;
+        border-color: #00afef;
+    }
+
     .btn-info:hover {
         color: #000;
         background-color: #26bbf1;
@@ -13819,7 +13825,7 @@
         padding: 0.625rem;
         z-index: 999;
         border-radius: 0.938rem;
-        background: var(--bs-card-bg);
+        background: #363636;
     }
 
     @media only screen and (max-width: 74.9375rem) {
@@ -15252,6 +15258,7 @@
     .dlabnav .dlabnav-scroll {
         position: relative;
         height: 100%;
+        background-color: #4F4F4F;
     }
 
     @media only screen and (max-width: 87.5rem) {
@@ -19318,7 +19325,7 @@
     }
 
     :root {
-        --nav-headbg: rgba(118, 62, 208, 1);
+        --nav-headbg: #363636;
         --sidebar-bg: linear-gradient(180deg, rgba(118, 62, 208, 1) 0%, rgba(46, 27, 160, 1) 155.56%);
         --headerbg: transparent;
     }

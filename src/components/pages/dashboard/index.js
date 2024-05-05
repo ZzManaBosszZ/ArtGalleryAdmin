@@ -25,7 +25,7 @@ function Dashboard() {
             ) : (
                 <>
                     <Helmet>
-                        <title>Dashboard | R Admin</title>
+                        <title>Dashboard | Art Admin</title>
                     </Helmet>
                     {loading ? <Loading /> : ""}
                     <Layout>

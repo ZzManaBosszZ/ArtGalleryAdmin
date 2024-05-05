@@ -29,8 +29,9 @@ const url = {
     },
 
     OFFER: {
-        LIST: "/Offers",
-        DETAIL: "/Offers/get-by-id",  
+        LIST: "/Offers/GetOrderAllAdmin",
+        DETAIL: "/Offers/get-by-id-admin",  
+        UPDATE: "Offers/update-status-Admin/{}"
     },
 
     AUTH: {
@@ -40,6 +41,7 @@ const url = {
         UPDATE_PROFILE: "/Auth/update-profile",
         CHANGE_PASSWORD: "/Auth/change-password",
         RESET_PASSWORD: "/Auth/reset-password",
+        USER: "/Auth/user"
     },
 
 };

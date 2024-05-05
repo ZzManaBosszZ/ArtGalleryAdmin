@@ -22,10 +22,11 @@ function OfferList() {
     const [userRole, setUserRole] = useState(null);
     const [error, setError] = useState(null);
     const [offers, setOffers] = useState([]);
+    const [offerStatus, setOfferStatus] = useState('');
     const [selectedDate, setSelectedDate] = useState(null);
 
     useEffect(() => {
-        const loadBooking = async () => {
+        const loadOffer = async () => {
             const userToken = localStorage.getItem("access_token");
             api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
             try {
@@ -36,7 +37,7 @@ function OfferList() {
                 setOffers(filteredOffers);
             } catch (error) { }
         };
-        loadBooking();
+        loadOffer();
     }, [selectedDate]);
 
     //paginate
@@ -62,9 +63,36 @@ function OfferList() {
         setSearchCode(e.target.value);
     };
     const filteredCodes = currentOfferCode.filter((item) => {
-        const codeMatch = typeof item.orderCode === 'string' && item.orderCode.toLowerCase().includes(searchCode.toLowerCase());
+        const codeMatch = typeof item.offerCode === 'string' && item.offerCode.toLowerCase().includes(searchCode.toLowerCase());
         return codeMatch;
     });
+
+    const getStatusColor = (status) => {
+        switch (status) {
+            case 0:
+                return "bg-warning";
+            case 1:
+                return "bg-success";
+            case -1:
+                return "bg-danger";
+            default:
+                return "bg-danger";
+        }
+    };
+
+    const getStatusText = (status) => {
+        switch (status) {
+            case 0: // Giả sử 0 là trạng thái "Pending"
+                return "Pending";
+            case 1: // Giả sử 1 là trạng thái "Approved"
+                return "Approved";
+            case -1: // Giả sử -1 là trạng thái "Refuse"
+                return "Refuse";
+            default:
+                return "Unknown";
+        }
+    };
+    
 
     // kiểm tra role
     useEffect(() => {
@@ -121,10 +149,11 @@ function OfferList() {
                                                             </div>
                                                         </th>
                                                         <th class="align-middle">Order</th>
+                                                        <th class="align-middle">User</th>
                                                         <th class="align-middle pe-7">Date</th>
                                                         <th class="align-middle" style={{ minWidth: '12.5rem' }}>Ship To</th>
-                                                        <th class="align-middle text-end">Status</th>
                                                         <th class="align-middle text-end">Amount</th>
+                                                        <th class="align-middle text-end">Status</th>
                                                         <th class="no-sort"></th>
                                                     </tr>
                                                 </thead>
@@ -137,18 +166,19 @@ function OfferList() {
                                                                 </td>
                                                                 <td className="py-2">
                                                                     <Link to="">
-                                                                        <strong>#{item.orderCode}</strong>
+                                                                        <strong>#{item.offerCode}</strong>
                                                                     </Link>
                                                                     <br />
                                                                     <Link to="">by {item.userName}</Link>
                                                                 </td>
+                                                                <td>{item.userName}</td>
                                                                 <td className="py-2">{item.movieTitle}</td>
                                                                 <td className="py-2">{item.showId}</td>
-                                                                <td className="py-2">{item.paymentMethod}</td>
-                                                                <td className="py-2">${item.finalTotal}</td>
+                                                                <td className="py-2">${item.offerPrice}</td>
                                                                 <td className="py-2">{format(new Date(item.createdAt), "yyyy-MM-dd HH:mm")}</td>
+                                                                <td className= {`badge ${getStatusColor(item.status)}`}>{getStatusText(item.status)}</td>
                                                                 <td className="py-2 text-end">
-                                                                    <Link to={`/booking-detail/${item.orderCode}`} className="btn btn-primary shadow btn-xs sharp me-1">
+                                                                    <Link to={`/offer-detail/${item.offerCode}`} className="btn btn-primary shadow btn-xs sharp me-1">
                                                                         <i className="fa fa-eye"></i>
                                                                     </Link>
                                                                 </td>
@@ -158,33 +188,33 @@ function OfferList() {
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <div className="card-footer">
-                                            <div className="row">
-                                                <div className="col-lg-5"></div>
-                                                <div className="col-lg-4"></div>
-                                                <div className="col-lg-3 text-end">
-                                                    <nav>
-                                                        <ul className="pagination pagination-gutter pagination-primary no-bg">
-                                                            <li className={`page-item page-indicator ${currentPage === 1 ? "disabled" : ""}`}>
-                                                                <a className="page-link" href="javascript:void(0)" onClick={handlePrevPage}>
-                                                                    <i className="la la-angle-left"></i>
+                                    </div>
+                                    <div className="card-footer">
+                                        <div className="row">
+                                            <div className="col-lg-5"></div>
+                                            <div className="col-lg-4"></div>
+                                            <div className="col-lg-3 text-end">
+                                                <nav>
+                                                    <ul className="pagination pagination-gutter pagination-primary no-bg">
+                                                        <li className={`page-item page-indicator ${currentPage === 1 ? "disabled" : ""}`}>
+                                                            <a className="page-link" href="javascript:void(0)" onClick={handlePrevPage}>
+                                                                <i className="la la-angle-left"></i>
+                                                            </a>
+                                                        </li>
+                                                        {Array.from({ length: totalPages }).map((_, index) => (
+                                                            <li key={index} className={`page-item ${currentPage === index + 1 ? "active" : ""}`}>
+                                                                <a className="page-link" href="javascript:void(0)" onClick={() => handlePageChange(index + 1)}>
+                                                                    {index + 1}
                                                                 </a>
                                                             </li>
-                                                            {Array.from({ length: totalPages }).map((_, index) => (
-                                                                <li key={index} className={`page-item ${currentPage === index + 1 ? "active" : ""}`}>
-                                                                    <a className="page-link" href="javascript:void(0)" onClick={() => handlePageChange(index + 1)}>
-                                                                        {index + 1}
-                                                                    </a>
-                                                                </li>
-                                                            ))}
-                                                            <li className={`page-item page-indicator ${currentPage === totalPages ? "disabled" : ""}`}>
-                                                                <a className="page-link" href="javascript:void(0)" onClick={handleNextPage}>
-                                                                    <i className="la la-angle-right"></i>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </nav>
-                                                </div>
+                                                        ))}
+                                                        <li className={`page-item page-indicator ${currentPage === totalPages ? "disabled" : ""}`}>
+                                                            <a className="page-link" href="javascript:void(0)" onClick={handleNextPage}>
+                                                                <i className="la la-angle-right"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
                                             </div>
                                         </div>
                                     </div>
