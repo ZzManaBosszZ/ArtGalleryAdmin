@@ -53,7 +53,7 @@ function OfferDetail() {
                     }, 3000);
                 } else {
                     Swal.fire({
-                        text: "Offer Refuse",
+                        text: "Offer Reject",
                         icon: "success",
                         confirmButtonColor: "#3085d6",
                         confirmButtonText: "Done",

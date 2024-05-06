@@ -17,7 +17,393 @@ function Dashboard() {
         }, 2000);
     }, []);
 
+     //base biểu đồ doanh thu theo tuần
+     const ChartRevenueWeekly = {
+        options: {
+            dataLabels: {
+                enabled: false,
+            },
+            stroke: {
+                curve: "smooth",
+            },
+            animations: {
+                enabled: true,
+                easing: "easeinout",
+                speed: 800,
+                animateGradually: {
+                    enabled: true,
+                    delay: 150,
+                },
+                dynamicAnimation: {
+                    enabled: true,
+                    speed: 350,
+                },
+            },
+        },
+        series: [
+            {
+                name: "Total proceeds",
+                data: [],
+            },
+        ],
+        xaxis: {
+            categories: [],
+        },
+    };
+
+    //base biểu đồ doanh thu theo tháng
+    const ChartRevenueMonthly = {
+        options: {
+            dataLabels: {
+                enabled: false,
+            },
+            stroke: {
+                curve: "smooth",
+            },
+            animations: {
+                enabled: true,
+                easing: "easeinout",
+                speed: 800,
+                animateGradually: {
+                    enabled: true,
+                    delay: 150,
+                },
+                dynamicAnimation: {
+                    enabled: true,
+                    speed: 350,
+                },
+            },
+        },
+        series: [
+            {
+                name: "Total proceeds",
+                data: [],
+            },
+        ],
+        xaxis: {
+            categories: [],
+        },
+    };
+
+    //base biểu đồ doanh thu theo năm
+    const ChartRevenueYearly = {
+        options: {
+            dataLabels: {
+                enabled: false,
+            },
+            stroke: {
+                curve: "smooth",
+            },
+            animations: {
+                enabled: true,
+                easing: "easeinout",
+                speed: 800,
+                animateGradually: {
+                    enabled: true,
+                    delay: 150,
+                },
+                dynamicAnimation: {
+                    enabled: true,
+                    speed: 350,
+                },
+            },
+        },
+        series: [
+            {
+                name: "Total proceeds",
+                data: [],
+            },
+        ],
+        xaxis: {
+            categories: [],
+        },
+    };
+
+
+    const [userRole, setUserRole] = useState(null);
     const [error, setError] = useState(null);
+    const [totalOffers, setTotalOffers] = useState([]);
+    const [totalOfferToday, setTotalOfferToday] = useState([]);
+    const [listOfferToday, setListOfferToday] = useState([]);
+    const [totalArtists, setTotalArtists] = useState([]);
+    const [totalUsers, setTotalUsers] = useState([]);
+    const [totalArtWorks, setTotalArtWorks] = useState([]);
+    const [totalRevenue, setTotalRevenue] = useState([]);
+    const [chartWeeklyOptions, setChartWeeklyOptions] = useState(ChartRevenueWeekly.options);
+    const [chartWeeklySeries, setChartWeeklySeries] = useState(ChartRevenueWeekly.series);
+    const [chartMonthlyOptions, setChartMonthlyOptions] = useState(ChartRevenueMonthly.options);
+    const [chartMonthlySeries, setChartMonthlySeries] = useState(ChartRevenueMonthly.series);
+
+    const getStatusColor = (status) => {
+        switch (status) {
+            case 0:
+                return "bg-warning";
+            case 1:
+                return "bg-success";
+            case -1:
+                return "bg-danger";
+            default:
+                return "bg-danger";
+        }
+    };
+
+    const getStatusText = (status) => {
+        switch (status) {
+            case 0: // Giả sử 0 là trạng thái "Pending"
+                return "Pending";
+            case 1: // Giả sử 1 là trạng thái "Approved"
+                return "Approved";
+            case -1: // Giả sử -1 là trạng thái "Refuse"
+                return "Refuse";
+            default:
+                return "Unknown";
+        }
+    };
+
+    //chuyển đổi các tháng từ 1 thành Jan
+    const getMonthName = (monthNumber) => {
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        return monthNames[monthNumber - 1];
+    };
+    const [selectedYear, setSelectedYear] = useState(new Date().getFullYear()); //chọn năm của biểu đồ 12 tháng
+    const [availableYears, setAvailableYears] = useState([]);
+    const [chartYearlyOptions, setChartYearlyOptions] = useState(ChartRevenueYearly.options);
+    const [chartYearlySeries, setChartYearlySeries] = useState(ChartRevenueYearly.series);
+
+    //hiển thị total Offer
+    useEffect(() => {
+        const loadTotalOffers = async () => {
+            const userToken = localStorage.getItem("access_token");
+            api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+            try {
+                const response = await api.get(url.DASHBOARD.TOTAL_OFFER);
+                setTotalOffers(response.data);
+            } catch (error) {}
+        };
+        loadTotalOffers();
+    }, []);
+
+    //hiển thị total offer today
+    useEffect(() => {
+        const loadTotalOfferToday = async () => {
+            const userToken = localStorage.getItem("access_token");
+            api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+            try {
+                const response = await api.get(url.DASHBOARD.TOTAL_OFFER_TODAY);
+                setTotalOfferToday(response.data);
+            } catch (error) {}
+        };
+        loadTotalOfferToday();
+    }, []);
+
+    //hiển thị list offer today
+    useEffect(() => {
+        const loadListOfferToday = async () => {
+            const userToken = localStorage.getItem("access_token");
+            api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+            try {
+                const response = await api.get(url.DASHBOARD.LIST_OFFER_TODAY);
+                setListOfferToday(response.data);
+            } catch (error) {}
+        };
+        loadListOfferToday();
+    }, []);
+
+    //hiển thị total Artist
+    useEffect(() => {
+        const loadTotalArtists = async () => {
+            const userToken = localStorage.getItem("access_token");
+            api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+            try {
+                const response = await api.get(url.DASHBOARD.TOTAL_ARTIST);
+                setTotalArtists(response.data);
+            } catch (error) {}
+        };
+        loadTotalArtists();
+    }, []);
+
+    //hiển thị total Artwork
+    useEffect(() => {
+        const loadTotalArtworks = async () => {
+            const userToken = localStorage.getItem("access_token");
+            api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+            try {
+                const response = await api.get(url.DASHBOARD.TOTAL_ARTWORK);
+                setTotalArtWorks(response.data);
+            } catch (error) {}
+        };
+        loadTotalArtworks();
+    }, []);
+
+    //hiển thị total User
+    useEffect(() => {
+        const loadTotalUsers = async () => {
+            const userToken = localStorage.getItem("access_token");
+            api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+            try {
+                const response = await api.get(url.DASHBOARD.TOTAL_USER);
+                setTotalUsers(response.data);
+            } catch (error) {}
+        };
+        loadTotalUsers();
+    }, []);
+
+     //hiển thị total revenue
+     useEffect(() => {
+        const loadTotalRevenue = async () => {
+            const userToken = localStorage.getItem("access_token");
+            api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+            try {
+                const response = await api.get(url.DASHBOARD.TOTAL_REVENUE);
+                setTotalRevenue(response.data);
+            } catch (error) {}
+        };
+        loadTotalRevenue();
+    }, []);
+
+    //biểu đồ doanh thu theo tuần
+    const processDataForChartWeekly = (data) => {
+        const categories = data.map((entry) => {
+            const date = new Date(entry.date);
+            const formattedDate = `${date.getDate()}/${date.getMonth() + 1}`;
+            return formattedDate;
+        });
+        const seriesData = data.map((entry) => entry.totalSales);
+        return {
+            categories,
+            seriesData,
+        };
+    };
+    useEffect(() => {
+        const loadWeeklyRevenue = async () => {
+            const userToken = localStorage.getItem("access_token");
+            api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+            try {
+                const response = await api.get(url.DASHBOARD.CHARTWEEKLY);
+                const processedData = processDataForChartWeekly(response.data);
+
+                setChartWeeklyOptions({
+                    ...ChartRevenueWeekly.options,
+                    xaxis: {
+                        categories: processedData.categories,
+                    },
+                });
+
+                setChartWeeklySeries([
+                    {
+                        name: "Total proceeds",
+                        data: processedData.seriesData,
+                    },
+                ]);
+            } catch (error) {}
+        };
+        loadWeeklyRevenue();
+    }, []);
+
+
+    //biểu đồ doanh thu theo 12 tháng của năm người dùng chọn
+    const processDataForChartMonthly = (data) => {
+        const categories = data.map((entry) => getMonthName(entry.month));
+        const seriesData = data.map((entry) => entry.totalSales);
+        return {
+            categories,
+            seriesData,
+        };
+    };
+    useEffect(() => {
+        const loadMonthlyRevenue = async () => {
+            const userToken = localStorage.getItem("access_token");
+            api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+            try {
+                const response = await api.get(url.DASHBOARD.CHARTMONTHLY.replace("{}", selectedYear));
+                const processedData = processDataForChartMonthly(response.data);
+
+                setChartMonthlyOptions({
+                    ...ChartRevenueMonthly.options,
+                    xaxis: {
+                        categories: processedData.categories,
+                    },
+                });
+
+                setChartMonthlySeries([
+                    {
+                        name: "Total proceeds",
+                        data: processedData.seriesData,
+                    },
+                ]);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        loadMonthlyRevenue();
+    }, [selectedYear]);
+    useEffect(() => {
+        const loadAvailableYears = () => {
+            const currentYear = new Date().getFullYear();
+            const availableYears = Array.from({ length: 11 }, (_, index) => currentYear - 5 + index);
+            setAvailableYears(availableYears);
+        };
+        loadAvailableYears();
+    }, []);
+
+    //biểu đồ doanh thu theo năm
+    const processDataForChartYearly = (data) => {
+        const categories = data.map((entry) => entry.year);
+        const seriesData = data.map((entry) => entry.totalSales);
+        return {
+            categories,
+            seriesData,
+        };
+    };
+    useEffect(() => {
+        const loadYearlyRevenue = async () => {
+            const userToken = localStorage.getItem("access_token");
+            api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+            try {
+                const response = await api.get(url.DASHBOARD.CHARTYEARLY);
+                const processedData = processDataForChartYearly(response.data);
+
+                setChartYearlyOptions({
+                    ...ChartRevenueYearly.options,
+                    xaxis: {
+                        categories: processedData.categories,
+                    },
+                });
+
+                setChartYearlySeries([
+                    {
+                        name: "Total proceeds",
+                        data: processedData.seriesData,
+                    },
+                ]);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        loadYearlyRevenue();
+    }, []);
+
+
+
+    // kiểm tra role
+    useEffect(() => {
+        const fetchUserRole = async () => {
+            const token = localStorage.getItem("access_token");
+            try {
+                const decodedToken = JSON.parse(atob(token.split(".")[1]));
+                const userRole = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+                setUserRole(userRole);
+
+                if (userRole === "User" || userRole === "Movie Theater Manager Staff" || userRole === "Shopping Center Manager Staff") {
+                    setError(true);
+                }
+            } catch (error) {
+                console.error("Error loading user role:", error);
+            }
+        };
+
+        fetchUserRole();
+    }, []);
     return (
         <>
             {error ? (
@@ -64,7 +450,7 @@ function Dashboard() {
                                                                     </div>
                                                                     <div className=" ">
                                                                         <h4 className="fs-18 font-w600 mb-1 text-break">Total Artist</h4>
-                                                                        <span className="fs-14">{ }</span>
+                                                                        <span className="fs-14">{totalArtists}</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -86,7 +472,7 @@ function Dashboard() {
                                                                     </div>
                                                                     <div className="">
                                                                         <h4 className="fs-18 font-w600 mb-1 text-break">Total ArtWork</h4>
-                                                                        <span className="fs-14">{ }</span>
+                                                                        <span className="fs-14">{totalArtWorks}</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -119,9 +505,9 @@ function Dashboard() {
                                                                         </svg>
                                                                     </div>
                                                                     <div className=" ">
-                                                                        <h4 className="fs-18 font-w600 mb-1 text-break">User/Staff</h4>
+                                                                        <h4 className="fs-18 font-w600 mb-1 text-break">User/Artist</h4>
                                                                         <span className="fs-14">
-                                                                            {/* {totalCusAndSta.totalUser}/{totalCusAndSta.totalStaff} */}
+                                                                            {totalUsers.totalUser}/{totalUsers.totalArtist}
                                                                         </span>
                                                                     </div>
                                                                 </div>
@@ -138,7 +524,7 @@ function Dashboard() {
                                                                     <div className=" ">
                                                                         <h4 className="fs-18 font-w600 mb-1 text-break">Total Order</h4>
                                                                         <span className="fs-14">
-                                                                            {/* {totalShowAndUp.totalShows} ({totalShowAndUp.upcomingShows} Upcoming) */}
+                                                                            {totalOffers}
                                                                         </span>
                                                                     </div>
                                                                 </div>
@@ -154,7 +540,7 @@ function Dashboard() {
                                             <div className="card-body p-4 p-lg-3 p-xl-4 ">
                                                 <div className="students1 one d-flex align-items-center justify-content-between ">
                                                     <div className="content">
-                                                        <h2 className="mb-0">${ }</h2>
+                                                        <h2 className="mb-0">${totalRevenue.totalRevenue}</h2>
                                                         <span className="mb-2">Dollar</span>
                                                         <h5>Total revenue of the entire system!</h5>
                                                     </div>
@@ -188,7 +574,7 @@ function Dashboard() {
                                             <div className="card-header pb-0 d-block d-sm-flex border-0">
                                                 <div className="me-3">
                                                     <h4 className="card-title mb-2">Revenue chart</h4>
-                                                    <span className="fs-12">Chart of cinema revenue</span>
+                                                    <span className="fs-12">Chart of Art Gallery revenue</span>
                                                 </div>
                                                 <div className="card-tabs mt-3 mt-sm-0">
                                                     <ul className="nav nav-tabs" role="tablist">
@@ -214,7 +600,7 @@ function Dashboard() {
                                                 <div className="tab-pane fade active show" id="weekly" role="tabpanel">
                                                     <div className="card-body custome-tooltip">
                                                         <div style={{ height: "100%", width: "100%" }}>
-                                                            {/* <Chart   type="area" /> */}
+                                                        <Chart options={chartWeeklyOptions} series={chartWeeklySeries} type="area" />
                                                         </div>
 
                                                         <div className="d-flex align-items-center justify-content-center">
@@ -226,22 +612,22 @@ function Dashboard() {
                                                 <div className="tab-pane fade " id="monthly" role="tabpanel">
                                                     <div className="card-body custome-tooltip">
                                                         <div style={{ height: "100%", width: "100%" }}>
-                                                            {/* <Chart options={chartMonthlyOptions} series={chartMonthlySeries} type="area" /> */}
+                                                            <Chart options={chartMonthlyOptions} series={chartMonthlySeries} type="area" />
                                                         </div>
 
                                                         <div className="d-flex align-items-center justify-content-center">
                                                             <span
                                                                 className="fc-icon fc-icon-chevron-left"
-                                                                // onClick={() => setSelectedYear(selectedYear - 1)}
-                                                                // disabled={selectedYear <= availableYears[0]}
+                                                                onClick={() => setSelectedYear(selectedYear - 1)}
+                                                                disabled={selectedYear <= availableYears[0]}
                                                                 style={{ fontSize: "30px", marginRight: "30px", cursor: "pointer", fontWeight: "600", color: "white" }}
                                                             ></span>
-                                                            {/* <span style={{ fontSize: "20px", fontWeight: "600", color: "white" }}>{selectedYear}</span> */}
+                                                            <span style={{ fontSize: "20px", fontWeight: "600", color: "white" }}>{selectedYear}</span>
                                                             <span
-                                                            // className="fc-icon fc-icon-chevron-right"
-                                                            // onClick={() => setSelectedYear(selectedYear + 1)}
-                                                            // disabled={selectedYear >= availableYears[availableYears.length - 1]}
-                                                            // style={{ fontSize: "30px", marginLeft: "30px", cursor: "pointer", fontWeight: "600", color: "white" }}
+                                                            className="fc-icon fc-icon-chevron-right"
+                                                            onClick={() => setSelectedYear(selectedYear + 1)}
+                                                            disabled={selectedYear >= availableYears[availableYears.length - 1]}
+                                                            style={{ fontSize: "30px", marginLeft: "30px", cursor: "pointer", fontWeight: "600", color: "white" }}
                                                             ></span>
                                                         </div>
                                                     </div>
@@ -250,7 +636,7 @@ function Dashboard() {
                                                 <div className="tab-pane fade " id="yearly" role="tabpanel">
                                                     <div className="card-body custome-tooltip">
                                                         <div style={{ height: "100%", width: "100%" }}>
-                                                            {/* <Chart options={chartYearlyOptions} series={chartYearlySeries} type="bar" /> */}
+                                                            <Chart options={chartYearlyOptions} series={chartYearlySeries} type="bar" />
                                                         </div>
 
                                                         <div className="d-flex align-items-center justify-content-center">
@@ -333,22 +719,7 @@ function Dashboard() {
                                                         </div>
                                                         <div className="card-body py-1">
                                                             <div className="row d-flex">
-                                                                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                                                                    <span data-bs-toggle="modal" data-bs-target=".modal-show" style={{ cursor: "pointer" }}>
-                                                                        <div className="card mt-1 mt-md-3">
-                                                                            <div className="card-body p-3">
-                                                                                <div className="align-items-center h-100 d-flex flex-wrap">
-                                                                                    <div className=" ">
-                                                                                        <h4 className="fs-18 font-w600 mb-1 text-break">
-                                                                                            {/* Show Today: <span className="text-primary">{totalShowToday.totalShowToday}</span> */}
-                                                                                        </h4>
-                                                                                        <span className="fs-14"> (Click to view)</span>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </span>
-                                                                </div>
+                                                                
                                                                 <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                                                                     <span data-bs-toggle="modal" data-bs-target=".modal-order" style={{ cursor: "pointer" }}>
                                                                         <div className="card mt-1 mt-md-3">
@@ -356,7 +727,7 @@ function Dashboard() {
                                                                                 <div className="align-items-center h-100 d-flex flex-wrap">
                                                                                     <div className=" ">
                                                                                         <h4 className="fs-18 font-w600 mb-1 text-break">
-                                                                                            {/* Order Today: <span className="text-primary">{totalOrderToday.totalShowToday}</span> */}
+                                                                                            Offer Today: <span className="text-primary">{totalOfferToday.totalOfferToday}</span>
                                                                                         </h4>
                                                                                         <span className="fs-14">(Click to view)</span>
                                                                                     </div>
@@ -372,198 +743,6 @@ function Dashboard() {
                                             </div>
                                         </div>
                                     </div>
-
-                                    {/* <div className="col-xl-6 col-lg-6 col-md-6">
-                                        <div className="card student-chart">
-                                            <div className="card-header border-0 pb-0">
-                                                <h4>Top 10 best-selling movies</h4>
-                                            </div>
-                                            <div className="card-body pt-0 custome-tooltip">
-                                                <div className="table-responsive">
-                                                    <div className="text-end"></div>
-                                                    <table className="table table-sm mb-0">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>
-                                                                    <strong>Image</strong>
-                                                                </th>
-                                                                <th>
-                                                                    <strong>Movie Title</strong>
-                                                                </th>
-                                                                <th>
-                                                                    <strong>Tickets sold</strong>
-                                                                </th>
-                                                                <th>
-                                                                    <strong>Collected</strong>
-                                                                </th>
-                                                                <th>
-                                                                    <strong>Action</strong>
-                                                                </th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            {topMovieSelling.map((item, index) => {
-                                                                return (
-                                                                    <tr>
-                                                                        <td>
-                                                                            <img src={item.movieImage} className="rounded-lg me-2 image-thumb" alt="" />
-                                                                        </td>
-                                                                        <td>{item.movieTitle}</td>
-                                                                        <td>{item.ticketCount}</td>
-                                                                        <td>{item.money}</td>
-                                                                        <td>
-                                                                            <div className="d-flex">
-                                                                                <NavLink to={`/movie-detail/${item.movieId}`} className="btn btn-success shadow btn-xs sharp me-1">
-                                                                                    <i className="fa fa-eye"></i>
-                                                                                </NavLink>
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                );
-                                                            })}
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> */}
-
-                                    {/* <div className="col-xl-6 col-lg-6 col-md-6">
-                                        <div className="card student-chart">
-                                            <div className="card-header border-0 pb-0">
-                                                <h4>Top 10 most outstanding shops</h4>
-                                            </div>
-                                            <div className="card-body pt-0 custome-tooltip">
-                                                <div className="table-responsive">
-                                                    <div className="text-end"></div>
-                                                    <table className="table table-sm mb-0">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>
-                                                                    <strong>Shop Avatar</strong>
-                                                                </th>
-                                                                <th>
-                                                                    <strong>Shop Name</strong>
-                                                                </th>
-                                                                <th>
-                                                                    <strong>Contact</strong>
-                                                                </th>
-                                                                <th>
-                                                                    <strong>Category</strong>
-                                                                </th>
-                                                                <th>
-                                                                    <strong>Action</strong>
-                                                                </th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            {topShopTraffic.map((item, index) => {
-                                                                return (
-                                                                    <tr>
-                                                                        <td>
-                                                                            <img src={item.imagePath} className="rounded-lg me-2 image-thumb" alt="" />
-                                                                        </td>
-                                                                        <td>{item.name}</td>
-                                                                        <td>{item.contactInfo}</td>
-                                                                        <td>{item.categoryName}</td>
-                                                                        <td>
-                                                                            <div className="d-flex">
-                                                                                <NavLink to={`/product-list/${item.slug}`} className="btn btn-success shadow btn-xs sharp me-1">
-                                                                                    <i className="fa fa-eye"></i>
-                                                                                </NavLink>
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                );
-                                                            })}
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> */}
-
-                                    {/* modal list show today */}
-                                    <div class="modal fade modal-show" tabindex="-1" role="dialog" aria-hidden="true">
-                                        <div class="modal-dialog modal-lg">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">List Show Today</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="card user-data-table">
-                                                        <div class="card-body tab-content p-0">
-                                                            <div class="tab-pane fade active show" id="monthly" role="tabpanel">
-                                                                <div id="accordion-one" class="accordion style-1">
-                                                                    <div class="row">
-                                                                        <div class="col-md-12">
-                                                                            <div class="card">
-                                                                                <div class="accordion-header my-2">
-                                                                                    <div class="d-flex align-items-center">
-                                                                                        <div class="user-info">
-                                                                                            <h6 class="fs-16 font-w500 mb-0">
-                                                                                                <a href="javascript:void(0)">Show Code</a>
-                                                                                            </h6>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <span>Movie</span>
-                                                                                    <span>Room</span>
-                                                                                    <span>Start Date</span>
-                                                                                    <span>Language</span>
-                                                                                    <span class="accordion-header-indicator"></span>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <div class="col-md-12">
-                                                                            <div class="accordion-item bg-transparent mb-0">
-                                                                                {/* {listShowToday.map((item, index) => {
-                                                                                    const accordionTargetId = `linkopenaccordion_${index}`;
-                                                                                    return (
-                                                                                        <>
-                                                                                            <div
-                                                                                                class="accordion-header collapsed my-2"
-                                                                                                data-bs-toggle="collapse"
-                                                                                                data-bs-target={`#${accordionTargetId}`}
-                                                                                            >
-                                                                                                <div class="d-flex align-items-center">
-                                                                                                    <div class="user-info">
-                                                                                                        <h6 class="fs-16 font-w500 mb-0">
-                                                                                                            <a href="javascript:void(0)">{item.showCode}</a>
-                                                                                                        </h6>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <span>{item.movieName.length > 10 ? `${item.movieName.slice(0, 10)}...` : item.movieName}</span>
-                                                                                                <span>{item.roomName}</span>
-                                                                                                <span>{format(new Date(item.startDate), "yyyy-MM-dd HH:mm")}</span>
-                                                                                                <NavLink to="">{item.language}</NavLink>
-                                                                                                <span class="accordion-header-indicator"></span>
-                                                                                            </div>
-                                                                                            <div id={accordionTargetId} class="collapse accordion_body" data-bs-parent="#accordion-one">
-                                                                                                <SeatPricing seatPricings={item.seatPricings || []} />
-                                                                                            </div>
-                                                                                        </>
-                                                                                    );
-                                                                                })} */}
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-danger light btn-sm" data-bs-dismiss="modal">
-                                                        Close
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
                                     {/* modal list order today */}
                                     <div class="modal fade modal-order" tabindex="-1" role="dialog" aria-hidden="true">
                                         <div class="modal-dialog modal-lg">
@@ -581,19 +760,16 @@ function Dashboard() {
                                                                         <strong>Booking</strong>
                                                                     </th>
                                                                     <th className="align-middle pe-7">
-                                                                        <strong>Movie</strong>
-                                                                    </th>
-                                                                    <th className="align-middle pe-7">
-                                                                        <strong>Show</strong>
+                                                                        <strong>ArtWork</strong>
                                                                     </th>
                                                                     <th className="align-middle">
-                                                                        <strong>Payment</strong>
+                                                                        <strong>Offer Price</strong>
                                                                     </th>
                                                                     <th className="align-middle">
-                                                                        <strong>Final Total</strong>
+                                                                        <strong>Status</strong>
                                                                     </th>
                                                                     <th className="align-middle">
-                                                                        <strong>Booking Date</strong>
+                                                                        <strong>Offer Date</strong>
                                                                     </th>
                                                                     <th className="align-middle text-end">
                                                                         <strong>Actions</strong>
@@ -601,29 +777,28 @@ function Dashboard() {
                                                                 </tr>
                                                             </thead>
                                                             <tbody id="orders">
-                                                                {/* {listOrderToday.map((item, index) => {
+                                                                {listOfferToday.map((item, index) => {
                                                                     return (
                                                                         <tr className="btn-reveal-trigger" key={index}>
                                                                             <td className="py-2">
                                                                                 <Link to="">
-                                                                                    <strong>#{item.orderCode}</strong>
+                                                                                    <strong>#{item.offerCode}</strong>
                                                                                 </Link>
                                                                                 <br />
                                                                                 <Link to="">by {item.userName}</Link>
                                                                             </td>
-                                                                            <td className="py-2">{item.movieTitle.length > 15 ? `${item.movieTitle.slice(0, 15)}...` : item.movieTitle}</td>
-                                                                            <td className="py-2">{item.showId}</td>
-                                                                            <td className="py-2">{item.paymentMethod}</td>
-                                                                            <td className="py-2">${item.finalTotal}</td>
-                                                                            <td className="py-2">{format(new Date(item.createdAt), "yyyy-MM-dd HH:mm")}</td>
+                                                                            <td className="py-2">{item.artWorkNames.length > 15 ? `${item.artWorkNames.slice(0, 15)}...` : item.artWorkNames}</td>
+                                                                            <td className="py-2">${item.offerPrice}</td>
+                                                                            <td className={`badge ${getStatusColor(item.status)} py-2`}>{getStatusText(item.status)}</td>
+                                                                            <td className="py-2" >{format(new Date(item.createdAt), "yyyy-MM-dd HH:mm")}</td>
                                                                             <td className="py-2 text-end">
-                                                                                <Link to={`/booking-detail/${item.orderCode}`} className="btn btn-primary shadow btn-xs sharp me-1">
+                                                                                <Link to={`/booking-detail/${item.offerCode}`} className="btn btn-primary shadow btn-xs sharp me-1">
                                                                                     <i className="fa fa-eye"></i>
                                                                                 </Link>
                                                                             </td>
                                                                         </tr>
                                                                     );
-                                                                })} */}
+                                                                })}
                                                             </tbody>
                                                         </table>
                                                     </div>

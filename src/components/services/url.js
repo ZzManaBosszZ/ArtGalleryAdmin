@@ -4,6 +4,20 @@ const url = {
         LIST: "/Menu",
     },
 
+    DASHBOARD: {
+        TOTAL_OFFER: "Dashboard/total-count-offer",
+        TOTAL_USER: "Dashboard/total-count-user",
+        TOTAL_ARTIST: "Dashboard/total-count-artist",
+        TOTAL_ARTWORK: "Dashboard/total-count-artwork",
+        TOTAL_OFFER_TODAY: "Dashboard/total-offer-today",
+        TOTAL_REVENUE: "Dashboard/total-revenue",
+        CHARTWEEKLY: "Dashboard/revenue/weekly",
+        CHARTMONTHLY: "Dashboard/revenue/monthly/{}",
+        CHARTYEARLY: "Dashboard/revenue/yearly",
+        CHARTPERFORMANCE: "Dashboard/",
+        LIST_OFFER_TODAY: "Dashboard/list-offer-today",
+    },
+
     ARTWORK: {
         LIST: "/Artworks",
         DETAIL: "/Artworks/{}",
