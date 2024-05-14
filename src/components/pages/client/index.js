@@ -134,7 +134,7 @@ function ClientList() {
                                             <th>Email</th>
                                             <th>Phone</th>
                                             <th>Joined</th>
-                                            <th></th>
+                                            {/* <th></th> */}
                                         </tr>
                                     </thead>
                                     <tbody id="customers">
@@ -170,13 +170,13 @@ function ClientList() {
                                                     </td>
                                                     {/* <td className="py-2 ps-5">2392 Main Avenue, Penasauka</td> */}
                                                     <td className="py-2">{format(new Date(item.createdAt), "yyyy-MM-dd")}</td>
-                                                    <td>
+                                                    {/* <td>
                                                         <div className="d-flex">
                                                             <Link to={``} className="btn btn-primary shadow btn-xs sharp me-1">
                                                                 <i className="fas fa-pencil-alt"></i>
                                                             </Link>
                                                         </div>
-                                                    </td>
+                                                    </td> */}
                                                 </tr>
                                             );
                                         })}

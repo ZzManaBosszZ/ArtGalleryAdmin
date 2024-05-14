@@ -49,7 +49,7 @@ function OfferDetail() {
                         confirmButtonText: "Done",
                     });
                     setTimeout(() => {
-                        navigate(`/offer-list`); //chuyển đến trang artwork-list
+                        navigate(`/offer-list`); //chuyển đến trang offer-list
                     }, 3000);
                 } else {
                     Swal.fire({
@@ -59,7 +59,7 @@ function OfferDetail() {
                         confirmButtonText: "Done",
                     });
                     setTimeout(() => {
-                        navigate(`/offer-list`); //chuyển đến trang artwork-list
+                        navigate(`/offer-list`); //chuyển đến trang offer-list
                     }, 3000);
                 }
             } catch (error) {
@@ -139,8 +139,8 @@ function OfferDetail() {
                                                 <th>User Name</th>
                                                 <th>Item</th>
                                                 <th>Description</th>
-                                                <th className="right">Starting Price</th>
                                                 <th className="right">Offer Price</th>
+                                                <th className="right">Total</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -149,8 +149,8 @@ function OfferDetail() {
                                                 <td className="center text-white">{offerDetail.userName}</td>
                                                 <td className="left strong text-white">{offerDetail.artWorkNames}</td>
                                                 <td className="left text-white">Extended License</td>
-                                                <td className="right text-white">${offerDetail.toTal}</td>
                                                 <td className="right text-white">${offerDetail.offerPrice}</td>
+                                                <td className="right text-white">${offerDetail.toTal}</td>
                                             </tr>
                                         </tbody>
                                     </table>

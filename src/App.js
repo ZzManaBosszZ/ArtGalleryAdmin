@@ -19,6 +19,7 @@ import Dashboard from "./components/pages/dashboard";
 import ClientList from "./components/pages/client";
 import OfferList from "./components/pages/artworkoffer";
 import OfferDetail from "./components/pages/artworkoffer/detail";
+import ArtistDash from "./components/pages/dashboard/artist-dashboard";
 
 function App() {
     const ProtectedRoute = ({ element }) => {
@@ -50,6 +51,7 @@ function App() {
             <Routes>
                 {/* Start Dashboard */}
                 <Route path="/" element={<ProtectedRoute element={<Dashboard />} />} />
+                <Route path="/artist-dashboard" element={<ProtectedRoute element={<ArtistDash />} />} />
                 {/* End Dashboard */}
 
                 {/* Start Artist */}

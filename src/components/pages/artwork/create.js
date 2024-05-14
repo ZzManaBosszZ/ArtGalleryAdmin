@@ -3,7 +3,6 @@ import Layout from "../../layouts";
 import Breadcrumb from "../../layouts/breadcrumb";
 import Select from "react-select";
 import { useEffect, useState } from "react";
-import ReactPlayer from "react-player";
 import url from "../../services/url";
 import api from "../../services/api";
 import Swal from "sweetalert2";
@@ -24,6 +23,7 @@ function ArtWorkCreate() {
         frame: "",
         series: "",
         price: 0,
+        artistId: [],
         schoolOfArtIds: [],
         artWorkImage_preview: null,
     });
@@ -32,13 +32,14 @@ function ArtWorkCreate() {
     const [errors, setErrors] = useState({});
     const [nameExistsError, setNameExistsError] = useState("");
     const [schoolOfArt, setschoolOfArts] = useState([]);
+    const [artist, setArtist] = useState([]);
     const navigate = useNavigate();
 
     //css background Select React
     const customStyle = {
         control: (provided, state) => ({
             ...provided,
-            backgroundColor: "#5336BC",
+            backgroundColor: "#566573",
         }),
         option: (provided, state) => ({
             ...provided,
@@ -55,19 +56,36 @@ function ArtWorkCreate() {
     };
     //hiển thị select school of art 
     useEffect(() => {
-        const fetchLanguages = async () => {
+        const fetchSchoolOfArt = async () => {
             const userToken = localStorage.getItem("access_token");
             api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
             try {
                 const response = await api.get(url.ART.LIST);
-                const languageData = response.data.map((schoolOfArt) => ({
+                const artData = response.data.map((schoolOfArt) => ({
                     value: schoolOfArt.id,
                     label: schoolOfArt.name,
                 }));
-                setschoolOfArts(languageData);
+                setschoolOfArts(artData);
             } catch (error) { }
         };
-        fetchLanguages();
+        fetchSchoolOfArt();
+    }, []);
+
+    //hiển thị select artist
+    useEffect(() => {
+        const fetchArtist = async () => {
+            const userToken = localStorage.getItem("access_token");
+            api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+            try {
+                const response = await api.get(url.ARTIST.LIST);
+                const artistData = response.data.map((artist) => ({
+                    value: artist.id,
+                    label: artist.name,
+                }));
+                setArtist(artistData);
+            } catch (error) { }
+        };
+        fetchArtist();
     }, []);
 
     //validate
@@ -262,6 +280,27 @@ function ArtWorkCreate() {
                                                         <input type="text" name="name" onChange={handleChange} className="form-control" placeholder="Please enter ArtWork name" autoFocus />
                                                         {errors.name && <div className="text-danger">{errors.name}</div>}
                                                         {nameExistsError && <div className="text-danger">{nameExistsError}</div>}
+                                                    </div>
+                                                </div>
+
+                                                <div className="col-lg-6 mb-2">
+                                                    <div className="mb-3">
+                                                        <label className="text-label form-label">
+                                                            Artist <span className="text-danger">*</span>
+                                                        </label>
+                                                        <Select
+                                                            name="artistId"
+                                                            value={artist.filter((option) => formArtWork.artistId.includes(option.value))}
+                                                            isMulti
+                                                            closeMenuOnSelect={false}
+                                                            styles={customStyle}
+                                                            onChange={(selectedOption) => {
+                                                                setFormArtWork({ ...formArtWork, artistId: selectedOption.map((option) => option.value) });
+                                                            }}
+                                                            options={artist}
+                                                            placeholder="Select artist"
+                                                        />
+                                                        {errors.artistId && <div className="text-danger">{errors.artistId}</div>}
                                                     </div>
                                                 </div>
 

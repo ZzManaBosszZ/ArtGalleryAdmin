@@ -8,7 +8,7 @@ import { Link, NavLink } from "react-router-dom";
 import Chart from "react-apexcharts";
 import { format } from "date-fns";
 import NotFound from "../../pages/other/not-found";
-function Dashboard() {
+function ArtistDash() {
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         setLoading(true);
@@ -209,19 +209,6 @@ function Dashboard() {
         loadListOfferToday();
     }, []);
 
-    //hiển thị total Artist
-    useEffect(() => {
-        const loadTotalArtists = async () => {
-            const userToken = localStorage.getItem("access_token");
-            api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
-            try {
-                const response = await api.get(url.DASHBOARD.TOTAL_ARTIST);
-                setTotalArtists(response.data);
-            } catch (error) {}
-        };
-        loadTotalArtists();
-    }, []);
-
     //hiển thị total Artwork
     useEffect(() => {
         const loadTotalArtworks = async () => {
@@ -233,19 +220,6 @@ function Dashboard() {
             } catch (error) {}
         };
         loadTotalArtworks();
-    }, []);
-
-    //hiển thị total User
-    useEffect(() => {
-        const loadTotalUsers = async () => {
-            const userToken = localStorage.getItem("access_token");
-            api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
-            try {
-                const response = await api.get(url.DASHBOARD.TOTAL_USER);
-                setTotalUsers(response.data);
-            } catch (error) {}
-        };
-        loadTotalUsers();
     }, []);
 
      //hiển thị total revenue
@@ -394,7 +368,7 @@ function Dashboard() {
                 const userRole = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
                 setUserRole(userRole);
 
-                if (userRole === "User" || userRole === "Movie Theater Manager Staff" || userRole === "Shopping Center Manager Staff") {
+                if (userRole === "User" || userRole === "Super Admin") {
                     setError(true);
                 }
             } catch (error) {
@@ -422,42 +396,7 @@ function Dashboard() {
                                         <div className="card">
                                             <div className="card-body py-3 py-md-2 px-4">
                                                 <div className="row">
-                                                    <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6">
-                                                        <div className="card mt-1 mt-md-3">
-                                                            <div className="card-body p-3">
-                                                                <div className="align-items-center h-100 d-flex flex-wrap">
-                                                                    <div className="d-inline-block position-relative donut-chart-sale me-2">
-                                                                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                            <path
-                                                                                d="M9.34933 14.8577C5.38553 14.8577 2 15.47 2 17.9174C2 20.3666 5.364 21 9.34933 21C13.3131 21 16.6987 20.3877 16.6987 17.9404C16.6987 15.4911 13.3347 14.8577 9.34933 14.8577Z"
-                                                                                fill="#FFFFFF"
-                                                                            ></path>
-                                                                            <path
-                                                                                opacity="0.4"
-                                                                                d="M9.34935 12.5248C12.049 12.5248 14.2124 10.4062 14.2124 7.76241C14.2124 5.11865 12.049 3 9.34935 3C6.65072 3 4.48633 5.11865 4.48633 7.76241C4.48633 10.4062 6.65072 12.5248 9.34935 12.5248Z"
-                                                                                fill="#FFFFFF"
-                                                                            ></path>
-                                                                            <path
-                                                                                opacity="0.4"
-                                                                                d="M16.1734 7.84875C16.1734 9.19507 15.7605 10.4513 15.0364 11.4948C14.9611 11.6021 15.0276 11.7468 15.1587 11.7698C15.3407 11.7995 15.5276 11.8177 15.7184 11.8216C17.6167 11.8704 19.3202 10.6736 19.7908 8.87118C20.4885 6.19676 18.4415 3.79543 15.8339 3.79543C15.5511 3.79543 15.2801 3.82418 15.0159 3.87688C14.9797 3.88454 14.9405 3.90179 14.921 3.93246C14.8955 3.97174 14.9141 4.02253 14.9395 4.05607C15.7233 5.13216 16.1734 6.44207 16.1734 7.84875Z"
-                                                                                fill="#FFFFFF"
-                                                                            ></path>
-                                                                            <path
-                                                                                d="M21.7791 15.1693C21.4317 14.444 20.5932 13.9466 19.3172 13.7023C18.7155 13.5586 17.0853 13.3545 15.5697 13.3832C15.5472 13.3861 15.5344 13.4014 15.5325 13.411C15.5295 13.4263 15.5364 13.4493 15.5658 13.4656C16.2663 13.8048 18.9738 15.2805 18.6333 18.3928C18.6186 18.5289 18.7292 18.6439 18.8671 18.6247C19.5335 18.5318 21.2478 18.1705 21.7791 17.0475C22.0736 16.4534 22.0736 15.7635 21.7791 15.1693Z"
-                                                                                fill="#FFFFFF"
-                                                                            ></path>
-                                                                        </svg>
-                                                                    </div>
-                                                                    <Link to={"/artist-list"}>
-                                                                    <div className=" ">
-                                                                        <h4 className="fs-18 font-w600 mb-1 text-break">Total Artist</h4>
-                                                                        <span className="fs-14">{totalArtists}</span>
-                                                                    </div>
-                                                                    </Link>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    
                                                     <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6">
                                                         <div className="card mt-3">
                                                             <div className="card-body p-3">
@@ -482,42 +421,7 @@ function Dashboard() {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6">
-                                                        <div className="card mt-3">
-                                                            <div className="card-body p-3">
-                                                                <div className="align-items-center h-100 d-flex flex-wrap">
-                                                                    <div className="d-inline-block position-relative donut-chart-sale me-2">
-                                                                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                            <path
-                                                                                d="M9.34933 14.8577C5.38553 14.8577 2 15.47 2 17.9174C2 20.3666 5.364 21 9.34933 21C13.3131 21 16.6987 20.3877 16.6987 17.9404C16.6987 15.4911 13.3347 14.8577 9.34933 14.8577Z"
-                                                                                fill="#FFFFFF"
-                                                                            ></path>
-                                                                            <path
-                                                                                opacity="0.4"
-                                                                                d="M9.34935 12.5248C12.049 12.5248 14.2124 10.4062 14.2124 7.76241C14.2124 5.11865 12.049 3 9.34935 3C6.65072 3 4.48633 5.11865 4.48633 7.76241C4.48633 10.4062 6.65072 12.5248 9.34935 12.5248Z"
-                                                                                fill="#FFFFFF"
-                                                                            ></path>
-                                                                            <path
-                                                                                opacity="0.4"
-                                                                                d="M16.1734 7.84875C16.1734 9.19507 15.7605 10.4513 15.0364 11.4948C14.9611 11.6021 15.0276 11.7468 15.1587 11.7698C15.3407 11.7995 15.5276 11.8177 15.7184 11.8216C17.6167 11.8704 19.3202 10.6736 19.7908 8.87118C20.4885 6.19676 18.4415 3.79543 15.8339 3.79543C15.5511 3.79543 15.2801 3.82418 15.0159 3.87688C14.9797 3.88454 14.9405 3.90179 14.921 3.93246C14.8955 3.97174 14.9141 4.02253 14.9395 4.05607C15.7233 5.13216 16.1734 6.44207 16.1734 7.84875Z"
-                                                                                fill="#FFFFFF"
-                                                                            ></path>
-                                                                            <path
-                                                                                d="M21.7791 15.1693C21.4317 14.444 20.5932 13.9466 19.3172 13.7023C18.7155 13.5586 17.0853 13.3545 15.5697 13.3832C15.5472 13.3861 15.5344 13.4014 15.5325 13.411C15.5295 13.4263 15.5364 13.4493 15.5658 13.4656C16.2663 13.8048 18.9738 15.2805 18.6333 18.3928C18.6186 18.5289 18.7292 18.6439 18.8671 18.6247C19.5335 18.5318 21.2478 18.1705 21.7791 17.0475C22.0736 16.4534 22.0736 15.7635 21.7791 15.1693Z"
-                                                                                fill="#FFFFFF"
-                                                                            ></path>
-                                                                        </svg>
-                                                                    </div>
-                                                                    <div className=" ">
-                                                                        <h4 className="fs-18 font-w600 mb-1 text-break">User/Artist</h4>
-                                                                        <span className="fs-14">
-                                                                            {totalUsers.totalUser}/{totalUsers.totalArtist}
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    
                                                     <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6">
                                                         <div className="card mt-3">
                                                             <div className="card-body p-3">
@@ -671,7 +575,7 @@ function Dashboard() {
                                     <div className="col-xl-12">
                                         <div className="card mb-2">
                                             <div className="row gx-0">
-                                                <div className="col-xl-7 col-sm-6">
+                                                {/* <div className="col-xl-7 col-sm-6">
                                                     <div className="card progressbar bg-transparent mb-0">
                                                         <div className="card-header border-0 pb-0">
                                                             <div>
@@ -682,16 +586,16 @@ function Dashboard() {
                                                         <div className="card-body">
                                                             <div className="progress default-progress">
                                                                 <div
-                                                                // className="progress-bar linear bg-vigit progress-animated"
-                                                                // style={{ width: `${(orderOverview.dailyRevenue / 500).toFixed(2) * 100}%`, height: "8px" }}
-                                                                // role="progressbar"
+                                                                className="progress-bar linear bg-vigit progress-animated"
+                                                                style={{ width: `${(orderOverview.dailyRevenue / 500).toFixed(2) * 100}%`, height: "8px" }}
+                                                                role="progressbar"
                                                                 ></div>
                                                             </div>
                                                             <div className="d-flex align-items-end mt-2 pb-2 justify-content-between">
                                                                 <span className="fs-16 font-w600 value">#Total proceeds today</span>
                                                                 <span>
-                                                                    {/* <span className="text-black pe-2"></span>${orderOverview.dailyRevenue} / $500 (Reached{" "}
-                                                                    {((orderOverview.dailyRevenue / 500) * 100).toFixed(2)}% of today's revenue) */}
+                                                                    <span className="text-black pe-2"></span>${orderOverview.dailyRevenue} / $500 (Reached{" "}
+                                                                    {((orderOverview.dailyRevenue / 500) * 100).toFixed(2)}% of today's revenue)
                                                                 </span>
                                                             </div>
 
@@ -705,15 +609,15 @@ function Dashboard() {
                                                             <div className="d-flex align-items-end mt-2 pb-2 justify-content-between">
                                                                 <span className="fs-16 font-w600 value">#Total proceeds this month</span>
                                                                 <span>
-                                                                    {/* <span className="text-black pe-2"></span>${orderOverview.monthlyRevenue} / $15000 (Reached{" "}
-                                                                    {((orderOverview.monthlyRevenue / 15000) * 100).toFixed(2)}% of this month's revenue) */}
+                                                                    <span className="text-black pe-2"></span>${orderOverview.monthlyRevenue} / $15000 (Reached{" "}
+                                                                    {((orderOverview.monthlyRevenue / 15000) * 100).toFixed(2)}% of this month's revenue)
                                                                 </span>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> */}
 
-                                                <div className="col-xl-5 col-sm-6">
+                                                <div className="col-xl-12 col-sm-6">
                                                     <div className="card tags bg-transparent">
                                                         <div className="card-header border-0">
                                                             <div>
@@ -825,4 +729,4 @@ function Dashboard() {
     );
 }
 
-export default Dashboard;
+export default ArtistDash;

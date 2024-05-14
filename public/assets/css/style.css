@@ -14505,7 +14505,8 @@
     .header-right .notification_dropdown .nav-link::before {
         content: "";
         display: block;
-        background-color: #fff;
+        /* background-color: #fff; */
+        background-color: red;
         width: 0.5rem;
         height: 0.5rem;
         border-radius: 50%;
@@ -30828,7 +30829,7 @@
                     font-weight: 400;
                     position:absolute;
                     font-size: 10px; */
-        color: #e43bff;
+        color: white;
     }
 
     .page-titles .breadcrumb-datepicker {

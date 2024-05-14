@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 function NavHeader() {
     return (
         <div className="nav-header">
-            <Link to="/" className="brand-logo">
+            <Link to="" className="brand-logo">
                 <div className="logo">
                     <div className="text-center">
                         <img src="/assets/images/logo/logo.png" alt="" width={"100%"} />

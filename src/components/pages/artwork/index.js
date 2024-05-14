@@ -40,7 +40,7 @@ function ArtWorkList() {
                 //     : response.data;
                 setArtWorks(response.data);
                 setTbodyCheckboxes(Array.from({ length: response.data.length }).fill(false));
-            } catch (error) {}
+            } catch (error) { }
         };
         loadArtWorks();
     }, []);
@@ -158,7 +158,7 @@ function ArtWorkList() {
                 const userRole = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
                 setUserRole(userRole);
 
-                if (userRole === "User" || userRole === "Shopping Center Manager Staff") {
+                if (userRole === "User" || userRole === "") {
                     setError(true);
                 }
             } catch (error) {
@@ -182,37 +182,20 @@ function ArtWorkList() {
                         <Breadcrumb title="ArtWork List" />
 
                         <div className="row page-titles">
-                            <div className="col-lg-4">
+                            <div className="col-lg-3">
                                 <input type="text" className="form-control input-rounded" placeholder="Search title ArtWork . . ." value={searchName} onChange={handleSearchNameChange} />
                             </div>
-                            <div className="col-lg-4">
-                                <input type="text" className="form-control input-rounded" placeholder="Search director ArtWork . . ." value={searchSchoolOfArt} onChange={handleSearchSchoolOfArtChange} />
+                            <div className="col-lg-3">
+                                <input type="text" className="form-control input-rounded" placeholder="Search School Of ArtWork . . ." value={searchSchoolOfArt} onChange={handleSearchSchoolOfArtChange} />
                             </div>
-                            <div className="col-lg-4">
-                                {/* <input type="date" className="form-control input-rounded" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} /> */}
-                            </div>
-                        </div>
-
-                        <div className="card-header">
-                            <div className="col-lg-6"></div>
-                            <div className="col-lg-1 text-end">
+                            <div className="col-lg-3">
                                 <NavLink onClick={handleDeleteArtWork}>
                                     <button type="button" className={`btn btn-danger ${isDeleteVisible ? "" : "d-none"}`}>
                                         <i className="fa fa-trash"></i>
                                     </button>
                                 </NavLink>
                             </div>
-                            <div className="col-lg-2 text-end">
-                                <NavLink to="/artwork-delete-at">
-                                    <button type="button" className="btn btn-rounded btn-warning">
-                                        <span className="btn-icon-start text-warning">
-                                            <i className="fa fa-trash"></i>
-                                        </span>
-                                        Deleted List
-                                    </button>
-                                </NavLink>
-                            </div>
-                            <div className="col-lg-3 text-end">
+                            <div className="col-lg-3">
                                 <NavLink to="/artwork-create">
                                     <button type="button" className="btn btn-rounded btn-info">
                                         <span className="btn-icon-start text-info">
@@ -222,6 +205,7 @@ function ArtWorkList() {
                                     </button>
                                 </NavLink>
                             </div>
+
                         </div>
                         <div className="card-body">
                             <div className="table-responsive">
@@ -249,7 +233,7 @@ function ArtWorkList() {
                                                 <strong>ArtWork Name</strong>
                                             </th>
                                             <th>
-                                                <strong>Artist</strong>
+                                                <strong>School Of Art</strong>
                                             </th>
                                             <th>
                                                 <strong>Medium</strong>
@@ -283,11 +267,10 @@ function ArtWorkList() {
                                                             <span className="w-space-no">{item.schoolOfArts[0].name}</span>
                                                         </div>
                                                     </td>
-                                                    {/* <td>{format(new Date(item.material), "yyyy-MM-dd")}</td> */}
                                                     <td>{item.medium}</td>
                                                     <td>{item.materials} </td>
                                                     <td>{item.price} ($)</td>
-                                                    
+
                                                     <td>
                                                         <div className="d-flex">
                                                             <Link to={`/artwork-detail/${item.id}`} className="btn btn-success shadow btn-xs sharp me-1">

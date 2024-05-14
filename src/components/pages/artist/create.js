@@ -15,6 +15,7 @@ function ArtistCreate() {
     const [formArtist, setFormArtist] = useState({
         name: "",
         biography: "",
+        description: "",
         imagePath: null,
         artworkIds: [],
         schoolOfArtIds: [],
@@ -29,7 +30,7 @@ function ArtistCreate() {
     const customStyles = {
         control: (provided, state) => ({
             ...provided,
-            backgroundColor: "#5336BC",
+            backgroundColor: "#566573",
         }),
         option: (provided, state) => ({
             ...provided,
@@ -205,12 +206,20 @@ function ArtistCreate() {
                                                 <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
                                                         <label className="text-label form-label">Biography</label>
-                                                        <input type="text" name="biography" onChange={handleChange} className="form-control" placeholder="Please enter description" />
+                                                        <input type="text" name="biography" onChange={handleChange} className="form-control" placeholder="Please enter Biography" />
                                                         {errors.biography && <div className="text-danger">{errors.biography}</div>}
                                                     </div>
                                                 </div>
 
                                                 <div className="col-lg-6 mb-2">
+                                                    <div className="mb-3">
+                                                        <label className="text-label form-label">Description</label>
+                                                        <input type="text" name="description" onChange={handleChange} className="form-control" placeholder="Please enter Description" />
+                                                        {errors.description && <div className="text-danger">{errors.description}</div>}
+                                                    </div>
+                                                </div>
+
+                                                {/* <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
                                                         <label className="text-label form-label">ArtWork</label>
                                                         <Select
@@ -225,9 +234,9 @@ function ArtistCreate() {
                                                             options={artworks}
                                                             placeholder="Select ArtWork"
                                                         />
-                                                        {/* {errors.biography && <div className="text-danger">{errors.biography}</div>} */}
+                                                        
                                                     </div>
-                                                </div>
+                                                </div> */}
 
                                                 <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">

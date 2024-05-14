@@ -150,10 +150,10 @@ function OfferList() {
                                                         </th>
                                                         <th class="align-middle">Order</th>
                                                         <th class="align-middle">User</th>
-                                                        <th class="align-middle pe-7">Date</th>
-                                                        <th class="align-middle" style={{ minWidth: '12.5rem' }}>Ship To</th>
-                                                        <th class="align-middle text-end">Amount</th>
-                                                        <th class="align-middle text-end">Status</th>
+                                                        {/* <th class="align-middle" style={{ minWidth: '12.5rem' }}>Ship To</th> */}
+                                                        <th class="align-middle">Amount</th>
+                                                        <th class="align-middle">Date</th>
+                                                        <th class="align-middle">Status</th>
                                                         <th class="no-sort"></th>
                                                     </tr>
                                                 </thead>
@@ -172,9 +172,7 @@ function OfferList() {
                                                                     <Link to="">by {item.userName}</Link>
                                                                 </td>
                                                                 <td>{item.userName}</td>
-                                                                <td className="py-2">{item.movieTitle}</td>
-                                                                <td className="py-2">{item.showId}</td>
-                                                                <td className="py-2">${item.offerPrice}</td>
+                                                                <td className="py-2">${item.toTal}</td>
                                                                 <td className="py-2">{format(new Date(item.createdAt), "yyyy-MM-dd HH:mm")}</td>
                                                                 <td className= {`badge ${getStatusColor(item.status)}`}>{getStatusText(item.status)}</td>
                                                                 <td className="py-2 text-end">

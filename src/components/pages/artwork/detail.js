@@ -2,7 +2,6 @@ import { Helmet } from "react-helmet";
 import Layout from "../../layouts";
 import Breadcrumb from "../../layouts/breadcrumb";
 import { useEffect, useState } from "react";
-import ReactPlayer from "react-player";
 import url from "../../services/url";
 import api from "../../services/api";
 import { toast } from "react-toastify";

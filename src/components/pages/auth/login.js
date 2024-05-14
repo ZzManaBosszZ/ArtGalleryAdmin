@@ -83,11 +83,9 @@ function Login() {
                         let redirectUrl = "/";
                         if (accountRole === "Super Admin") {
                             redirectUrl = "/";
-                        } else if (accountRole === "") {
-                            redirectUrl = "/shopping-center-manager-staff-dashboard";
-                        } else if (accountRole === "") {
-                            redirectUrl = "/movie-theater-manager-staff-dashboard";
-                        }
+                        } else if (accountRole === "Artist") {
+                            redirectUrl = "/artist-dashboard";
+                        } 
 
                         navigate(redirectUrl);
                     }
