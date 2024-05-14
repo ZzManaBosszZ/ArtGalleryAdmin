@@ -1,15 +1,15 @@
-import Layout from "../../layouts/index";
-import Breadcrumb from "../../layouts/breadcrumb";
+import Layout from "../../../layouts/index";
+import Breadcrumb from "../../../layouts/breadcrumb";
 import { Link, NavLink } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import api from "../../services/api";
-import url from "../../services/url";
+import api from "../../../services/api";
+import url from "../../../services/url";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
-import Loading from "../../layouts/loading";
-import NotFound from "../other/not-found";
-function ArtWorkList() {
+import Loading from "../../../layouts/loading";
+import NotFound from "../../other/not-found";
+function ArtWorkArtistList() {
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         setLoading(true);
@@ -32,7 +32,7 @@ function ArtWorkList() {
             const userToken = localStorage.getItem("access_token");
             api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
             try {
-                const response = await api.get(url.ARTWORK.LIST);
+                const response = await api.get(url.ARTWORK.LISTARTIST);
                 // const filteredArtWorks = selectedDate
                 //     ? response.data.filter((item) => 
                 //     format(new Date(item.release_date), "yyyy-MM-dd") === format(new Date(selectedDate), "yyyy-MM-dd"))
@@ -323,4 +323,4 @@ function ArtWorkList() {
     );
 }
 
-export default ArtWorkList;
+export default ArtWorkArtistList;

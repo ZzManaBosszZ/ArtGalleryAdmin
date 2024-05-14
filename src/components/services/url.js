@@ -14,8 +14,17 @@ const url = {
         CHARTWEEKLY: "Dashboard/revenue/weekly",
         CHARTMONTHLY: "Dashboard/revenue/monthly/{}",
         CHARTYEARLY: "Dashboard/revenue/yearly",
-        CHARTPERFORMANCE: "Dashboard/",
         LIST_OFFER_TODAY: "Dashboard/list-offer-today",
+
+        TOTAL_OFFER_ARTIST: "Dashboard/total-count-offer-artist",
+        TOTAL_ARTWORK_ARTIST_SELL: "Dashboard/total-sold-artwork-artist",
+        TOTAL_ARTWORK_ARTIST: "Dashboard/total-count-artwork-artist",
+        TOTAL_OFFER_TODAY_ARTIST: "Dashboard/total-offer-today-artist",
+        TOTAL_REVENUE_ARTIST: "Dashboard/total-revenue-artist",
+        CHART_WEEKLY_ARTIST: "Dashboard/revenue/weekly/artist",
+        CHART_MONTHLY_ARTIST: "Dashboard/revenue/monthly/artist/{}",
+        CHART_YEARLY_ARTIST: "Dashboard/revenue/yearly/artist",
+        LIST_OFFER_TODAY_ARTIST: "Dashboard/list-offer-today-artist",
     },
 
     ARTWORK: {
@@ -23,9 +32,8 @@ const url = {
         DETAIL: "/Artworks/{}",
         CREATE: "/Artworks/create",
         UPDATE: "/Artworks/edit",
-        // TRASH: "/Artworks/trash-can",
+        LISTARTIST: "Artworks/GetAllArtWorksArtist",
         DELETE: "/Artworks/delete",
-        // RESTORE: "/Artworks/restore/{}",
     },
 
     ARTIST: {
@@ -33,9 +41,7 @@ const url = {
         DETAIL: "/Artists/{}",
         CREATE: "/Artists/create",
         UPDATE: "/Artists/edit",
-        // TRASH: "/Artists/trash-can",
         DELETE: "/Artists/delete",
-        // RESTORE: "/Artists/restore/{}",
     },
 
     ART: {

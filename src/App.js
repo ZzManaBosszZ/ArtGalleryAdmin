@@ -20,6 +20,7 @@ import ClientList from "./components/pages/client";
 import OfferList from "./components/pages/artworkoffer";
 import OfferDetail from "./components/pages/artworkoffer/detail";
 import ArtistDash from "./components/pages/dashboard/artist-dashboard";
+import ArtWorkArtistList from "./components/pages/artwork/artistartwork";
 
 function App() {
     const ProtectedRoute = ({ element }) => {
@@ -63,6 +64,7 @@ function App() {
 
                 {/* Start ArtWork */}
                 <Route path="/artwork-list" element={<ProtectedRoute element={<ArtWorkList />} />} />
+                <Route path="/artwork-artist-list" element={<ProtectedRoute element={<ArtWorkArtistList />} />} />
                 <Route path="/artwork-detail/:id" element={<ProtectedRoute element={<ArtWorkDetail />} />} />
                 <Route path="/artwork-create" element={<ProtectedRoute element={<ArtWorkCreate />} />} />
                 <Route path="/artwork-edit/:id" element={<ProtectedRoute element={<ArtWorkEdit />} />} />
