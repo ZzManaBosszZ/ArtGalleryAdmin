@@ -1,17 +1,17 @@
 import { Helmet } from "react-helmet";
-import Layout from "../../layouts";
-import Breadcrumb from "../../layouts/breadcrumb";
+import Layout from "../../../layouts";
+import Breadcrumb from "../../../layouts/breadcrumb";
 import { useEffect, useState } from "react";
-import url from "../../services/url";
-import api from "../../services/api";
+import url from "../../../services/url";
+import api from "../../../services/api";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import { format } from "date-fns";
 import Swal from "sweetalert2";
-import Loading from "../../layouts/loading";
-import NotFound from "../../pages/other/not-found";
+import Loading from "../../../layouts/loading";
+import NotFound from "../../../pages/other/not-found";
 
-function ArtWorkDetail() {
+function ArtistArtWorkDetail() {
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         setLoading(true);
@@ -199,4 +199,4 @@ function ArtWorkDetail() {
         </>
     );
 }
-export default ArtWorkDetail;
+export default ArtistArtWorkDetail;

@@ -1,14 +1,14 @@
-import Layout from "../../layouts/index";
-import Breadcrumb from "../../layouts/breadcrumb";
+import Layout from "../../../layouts/index";
+import Breadcrumb from "../../../layouts/breadcrumb";
 import { Link, NavLink } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import api from "../../services/api";
-import url from "../../services/url";
+import api from "../../../services/api";
+import url from "../../../services/url";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
-import Loading from "../../layouts/loading";
-import NotFound from "../other/not-found";
+import Loading from "../../../layouts/loading";
+import NotFound from "../../other/not-found";
 function ArtWorkList() {
     const [loading, setLoading] = useState(false);
     useEffect(() => {
@@ -194,7 +194,7 @@ function ArtWorkList() {
                                     </button>
                                 </NavLink>
                             </div>
-                            <div className="col-lg-3">
+                            {/* <div className="col-lg-3">
                                 <NavLink to="/artwork-create">
                                     <button type="button" className="btn btn-rounded btn-info">
                                         <span className="btn-icon-start text-info">
@@ -203,7 +203,7 @@ function ArtWorkList() {
                                         Create New ArtWork
                                     </button>
                                 </NavLink>
-                            </div>
+                            </div> */}
 
                         </div>
                         <div className="card-body">

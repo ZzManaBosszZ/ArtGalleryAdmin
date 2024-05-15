@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import Loading from "../../../layouts/loading";
 import NotFound from "../../other/not-found";
+
 function ArtWorkArtistList() {
     const [loading, setLoading] = useState(false);
     useEffect(() => {
@@ -32,7 +33,7 @@ function ArtWorkArtistList() {
             const userToken = localStorage.getItem("access_token");
             api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
             try {
-                const response = await api.get(url.ARTWORK.LISTARTIST);
+                const response = await api.get(url.ARTWORK.LIST_ARTIST_ARTWORK);
                 // const filteredArtWorks = selectedDate
                 //     ? response.data.filter((item) => 
                 //     format(new Date(item.release_date), "yyyy-MM-dd") === format(new Date(selectedDate), "yyyy-MM-dd"))
@@ -195,7 +196,7 @@ function ArtWorkArtistList() {
                                 </NavLink>
                             </div>
                             <div className="col-lg-3">
-                                <NavLink to="/artwork-create">
+                                <NavLink to="/artwork-artist-create">
                                     <button type="button" className="btn btn-rounded btn-info">
                                         <span className="btn-icon-start text-info">
                                             <i className="fa fa-plus color-info"></i>

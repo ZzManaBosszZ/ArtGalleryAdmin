@@ -30,10 +30,12 @@ const url = {
     ARTWORK: {
         LIST: "/Artworks",
         DETAIL: "/Artworks/{}",
-        CREATE: "/Artworks/create",
         UPDATE: "/Artworks/edit",
-        LISTARTIST: "Artworks/GetAllArtWorksArtist",
         DELETE: "/Artworks/delete",
+        LIST_ARTIST_ARTWORK: "Artworks/getall",
+        CREATE_ARTIST_ARTWORK: "Artworks/create",
+        DETAIL_ARTIST_ARTWORK: "Artworks/getbyid/{}",
+        EDIT_ARTIST_ARTWORK: "Artworks/artistedit",
     },
 
     ARTIST: {

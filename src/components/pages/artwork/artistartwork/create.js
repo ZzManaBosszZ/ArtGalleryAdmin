@@ -1,15 +1,15 @@
 import { Helmet } from "react-helmet";
-import Layout from "../../layouts";
-import Breadcrumb from "../../layouts/breadcrumb";
+import Layout from "../../../layouts";
+import Breadcrumb from "../../../layouts/breadcrumb";
 import Select from "react-select";
 import { useEffect, useState } from "react";
-import url from "../../services/url";
-import api from "../../services/api";
+import url from "../../../services/url";
+import api from "../../../services/api";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import NotFound from "../../pages/other/not-found";
+import NotFound from "../../../pages/other/not-found";
 
-function ArtWorkCreate() {
+function ArtistArtWorkCreate() {
     const [formArtWork, setFormArtWork] = useState({
         name: "",
         medium: "",
@@ -159,7 +159,7 @@ function ArtWorkCreate() {
             const userToken = localStorage.getItem("access_token");
             api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
             try {
-                const response = await api.post(url.ARTWORK.CREATE, formArtWork, {
+                const response = await api.post(url.ARTWORK.CREATE_ARTIST_ARTWORK, formArtWork, {
                     headers: { "Content-Type": "multipart/form-data" },
                 });
                 if (response && response.data) {
@@ -242,7 +242,7 @@ function ArtWorkCreate() {
                 const userRole = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
                 setUserRole(userRole);
 
-                if (userRole === "User" || userRole === "Shopping Center Manager Staff") {
+                if (userRole === "User" || userRole === "Super Admin") {
                     setError(true);
                 }
             } catch (error) {
@@ -527,4 +527,4 @@ function ArtWorkCreate() {
     );
 }
 
-export default ArtWorkCreate;
+export default ArtistArtWorkCreate;

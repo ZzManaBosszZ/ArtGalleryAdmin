@@ -1,15 +1,15 @@
 import { Helmet } from "react-helmet";
-import Layout from "../../layouts";
-import Breadcrumb from "../../layouts/breadcrumb";
+import Layout from "../../../layouts";
+import Breadcrumb from "../../../layouts/breadcrumb";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useCallback, useEffect, useState, useRef } from "react";
-import api from "../../services/api";
-import url from "../../services/url";
+import api from "../../../services/api";
+import url from "../../../services/url";
 import { format } from "date-fns";
 import Swal from "sweetalert2";
-import Loading from "../../layouts/loading";
-import { getAccessToken } from "../../../utils/auth";
-function OfferDetail() {
+import Loading from "../../../layouts/loading";
+import { getAccessToken } from "../../../../utils/auth";
+function ArtistOfferDetail() {
     const { offerCode } = useParams();
     const [offerDetail, setOfferDetail] = useState([]);
     const [action, setAction] = useState('');
@@ -40,7 +40,7 @@ function OfferDetail() {
                 const response = await api.put(`${url.OFFER.UPDATE.replace("{}", offerCode)}`, { action }, {
                     headers: { "Content-Type": "multipart/form-data" },
                 });
-                if (response && response.data) {
+                if (response && response.data === 204) {
                     // console.log(response.data);
                     Swal.fire({
                         text: "Offer Approved",
@@ -50,7 +50,7 @@ function OfferDetail() {
                     });
                     setTimeout(() => {
                         navigate(`/offer-list`); //chuyển đến trang offer-list
-                    }, 3000);
+                    }, 2000);
                 } else {
                     Swal.fire({
                         text: "Offer Reject",
@@ -60,7 +60,7 @@ function OfferDetail() {
                     });
                     setTimeout(() => {
                         navigate(`/offer-list`); //chuyển đến trang offer-list
-                    }, 3000);
+                    }, 2000);
                 }
             } catch (error) {
                 
@@ -140,7 +140,7 @@ function OfferDetail() {
                                                 <th>Item</th>
                                                 <th>Description</th>
                                                 <th className="right">Offer Price</th>
-                                                <th className="right">Total</th>
+                                                <th className="right">User Offer Price</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -162,7 +162,7 @@ function OfferDetail() {
                                             <tbody>
                                                 <tr>
                                                     <td className="left"><strong>Total</strong></td>
-                                                    <td className="right"><strong>${offerDetail.offerPrice}</strong><br /></td>
+                                                    <td className="right"><strong>${offerDetail.toTal}</strong><br /></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -174,10 +174,9 @@ function OfferDetail() {
                         </div>
                     </div>
                 </div>
-                {/* )} */}
             </Layout>
         </>
     );
 }
 
-export default OfferDetail;
+export default ArtistOfferDetail;

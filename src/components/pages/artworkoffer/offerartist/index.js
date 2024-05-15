@@ -1,16 +1,15 @@
-import Layout from "../../layouts/index";
-import Breadcrumb from "../../layouts/breadcrumb";
+import Layout from "../../../layouts/index";
+import Breadcrumb from "../../../layouts/breadcrumb";
 import { Link, NavLink } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import api from "../../services/api";
-import url from "../../services/url";
+import api from "../../../services/api";
+import url from "../../../services/url";
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import Swal from "sweetalert2";
-import { toast } from "react-toastify";
-import Loading from "../../layouts/loading";
-import NotFound from "../../pages/other/not-found";
-function OfferList() {
+import Loading from "../../../layouts/loading";
+import NotFound from "../../../pages/other/not-found";
+function ArtistOfferList() {
 
     const [loading, setLoading] = useState(false);
     useEffect(() => {
@@ -226,4 +225,4 @@ function OfferList() {
     );
 }
 
-export default OfferList;
+export default ArtistOfferList;

@@ -133,6 +133,7 @@ function ClientList() {
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Phone</th>
+                                            <th>Role</th>
                                             <th>Joined</th>
                                             {/* <th></th> */}
                                         </tr>
@@ -167,6 +168,9 @@ function ClientList() {
                                                     </td>
                                                     <td className="py-2">
                                                         <a href={`tel:${item.phone}`}>{item.phone}</a>
+                                                    </td>
+                                                    <td className="py-2">
+                                                        <a >{item.role}</a>
                                                     </td>
                                                     {/* <td className="py-2 ps-5">2392 Main Avenue, Penasauka</td> */}
                                                     <td className="py-2">{format(new Date(item.createdAt), "yyyy-MM-dd")}</td>

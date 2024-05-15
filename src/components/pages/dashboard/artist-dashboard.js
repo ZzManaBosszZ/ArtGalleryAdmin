@@ -125,7 +125,7 @@ function ArtistDash() {
     const [totalOffers, setTotalOffers] = useState([]);
     const [totalOfferToday, setTotalOfferToday] = useState([]);
     const [listOfferToday, setListOfferToday] = useState([]);
-    const [totalArtWorks, setTotalArtWorks] = useState([]);
+    const [totalArtWorksByArtist, setTotalArtWorksByArtist] = useState([]);
     const [totalArtWorksSell, setTotalArtWorksSell] = useState([]);
     const [totalRevenue, setTotalRevenue] = useState([]);
     const [chartWeeklyOptions, setChartWeeklyOptions] = useState(ChartRevenueWeekly.options);
@@ -215,7 +215,7 @@ function ArtistDash() {
             api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
             try {
                 const response = await api.get(url.DASHBOARD.TOTAL_ARTWORK_ARTIST);
-                setTotalArtWorks(response.data);
+                setTotalArtWorksByArtist(response.data);
             } catch (error) {}
         };
         loadTotalArtworks();
@@ -413,7 +413,7 @@ function ArtistDash() {
                                                                     <Link to={"/artwork-list"}>
                                                                     <div className="">
                                                                         <h4 className="fs-18 font-w600 mb-1 text-break">Total ArtWork</h4>
-                                                                        <span className="fs-14">{totalArtWorks}</span>
+                                                                        <span className="fs-14">{totalArtWorksByArtist.totalArtworkByArtist}</span>
                                                                     </div>
                                                                     </Link>
                                                                 </div>
@@ -437,7 +437,7 @@ function ArtistDash() {
                                                                     </div>
                                                                     <Link to={"/artwork-list"}>
                                                                     <div className="">
-                                                                        <h4 className="fs-18 font-w600 mb-1 text-break">Total ArtWork Sold</h4>
+                                                                        <h4 className="fs-18 font-w600 mb-1 text-break"> ArtWork Sold</h4>
                                                                         <span className="fs-14">{totalArtWorksSell}</span>
                                                                     </div>
                                                                     </Link>
