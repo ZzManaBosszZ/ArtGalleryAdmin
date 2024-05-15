@@ -61,6 +61,7 @@ const url = {
     REGISTER_ARTIST: {
         LIST: "/Offers/GetOrderAllAdmin",
         DETAIL: "/Offers/get-by-id-admin",  
+        UPDATE: "",
     },
 
     AUTH: {

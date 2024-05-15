@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 import Loading from "../../layouts/loading";
 import { getAccessToken } from "../../../utils/auth";
 function RegisterArtistDetail() {
-    const { offerCode } = useParams();
+    const { id } = useParams();
     const [offerDetail, setOfferDetail] = useState([]);
     const [action, setAction] = useState('');
     const [loading, setLoading] = useState(false);
@@ -26,18 +26,18 @@ function RegisterArtistDetail() {
         };
 
         try {
-            const offerResponse = await api.get(url.OFFER.DETAIL_ARTIST_OFFER + `/${offerCode}`, config);
+            const offerResponse = await api.get(`${url.REGISTER_ARTIST.DETAIL.replace("{}", id)}`, config);
             setOfferDetail(offerResponse.data);
         } catch (error) {
             setError(true);
         }
-    }, [offerCode]);
+    }, [id]);
 
     const handleSubmit = async (action) => {
             const userToken = localStorage.getItem("access_token");
             api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
             try {
-                const response = await api.put(`${url.OFFER.UPDATE.replace("{}", offerCode)}`, { action }, {
+                const response = await api.put(`${url.REGISTER_ARTIST.UPDATE.replace("{}", id)}`, { action }, {
                     headers: { "Content-Type": "multipart/form-data" },
                 });
                 if (response && response.data === 204) {

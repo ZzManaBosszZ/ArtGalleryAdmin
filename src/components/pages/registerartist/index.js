@@ -29,7 +29,7 @@ function RegisterArtist() {
             const userToken = localStorage.getItem("access_token");
             api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
             try {
-                const offerResponse = await api.get(url.OFFER.LIST_ARTIST_OFFER);
+                const offerResponse = await api.get(url.REGISTER_ARTIST.LIST);
                 const filteredOffers = selectedDate
                     ? offerResponse.data.filter((item) => format(new Date(item.createdAt), "yyyy-MM-dd") === format(new Date(selectedDate), "yyyy-MM-dd"))
                     : offerResponse.data;
