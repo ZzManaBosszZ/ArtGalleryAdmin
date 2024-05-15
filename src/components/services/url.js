@@ -58,6 +58,11 @@ const url = {
         DETAIL_ARTIST_OFFER: "/Offers/get-by-id-artist", 
     },
 
+    REGISTER_ARTIST: {
+        LIST: "/Offers/GetOrderAllAdmin",
+        DETAIL: "/Offers/get-by-id-admin",  
+    },
+
     AUTH: {
         LOGIN: "/Auth/login",
         FORGOT_PASSWORD: "/Auth/forgot-password",

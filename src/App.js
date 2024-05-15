@@ -26,6 +26,8 @@ import ArtistArtWorkEdit from "./components/pages/artwork/artistartwork/edit";
 import ArtistArtWorkCreate from "./components/pages/artwork/artistartwork/create";
 import ArtistOfferList from "./components/pages/artworkoffer/offerartist";
 import ArtistOfferDetail from "./components/pages/artworkoffer/offerartist/detail";
+import RegisterArtist from "./components/pages/registerartist";
+import RegisterArtistDetail from "./components/pages/registerartist/detail";
 
 function App() {
     const ProtectedRoute = ({ element }) => {
@@ -84,6 +86,11 @@ function App() {
                 <Route path="/offer-artist-list" element={<ProtectedRoute element={<ArtistOfferList />} />} />
                 <Route path="/offer-detail/:offerCode" element={<ProtectedRoute element={<OfferDetail />} />} />
                 <Route path="/offer-artist-list/:offerCode" element={<ProtectedRoute element={<ArtistOfferDetail />} />} />
+                {/* End Offers */}
+
+                {/* Start Offers */}
+                <Route path="/register-artist-list" element={<ProtectedRoute element={<RegisterArtist />} />} />
+                <Route path="/register-artist-detail/:id" element={<ProtectedRoute element={<RegisterArtistDetail />} />} />
                 {/* End Offers */}
 
                 {/* Start Client */}
