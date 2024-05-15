@@ -23,7 +23,6 @@ function ArtistArtWorkCreate() {
         frame: "",
         series: "",
         price: 0,
-        artistId: [],
         schoolOfArtIds: [],
         artWorkImage_preview: null,
     });
@@ -171,7 +170,7 @@ function ArtistArtWorkCreate() {
                         confirmButtonText: "Done",
                     });
                     setTimeout(() => {
-                        navigate(`/artwork-list`); //chuyển đến trang artwork-list
+                        navigate(`/artwork-artist-list`); //chuyển đến trang artwork-list
                     }, 3000);
                 } else {
                 }
@@ -283,7 +282,7 @@ function ArtistArtWorkCreate() {
                                                     </div>
                                                 </div>
 
-                                                <div className="col-lg-6 mb-2">
+                                                {/* <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
                                                         <label className="text-label form-label">
                                                             Artist <span className="text-danger">*</span>
@@ -302,7 +301,7 @@ function ArtistArtWorkCreate() {
                                                         />
                                                         {errors.artistId && <div className="text-danger">{errors.artistId}</div>}
                                                     </div>
-                                                </div>
+                                                </div> */}
 
                                                 <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">

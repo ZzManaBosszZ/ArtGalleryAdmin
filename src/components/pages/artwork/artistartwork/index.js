@@ -158,7 +158,7 @@ function ArtWorkArtistList() {
                 const userRole = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
                 setUserRole(userRole);
 
-                if (userRole === "User" || userRole === "") {
+                if (userRole === "User" || userRole === "Super Admin") {
                     setError(true);
                 }
             } catch (error) {
@@ -273,10 +273,10 @@ function ArtWorkArtistList() {
 
                                                     <td>
                                                         <div className="d-flex">
-                                                            <Link to={`/artwork-detail/${item.id}`} className="btn btn-success shadow btn-xs sharp me-1">
+                                                            <Link to={`/artwork-artist-detail/${item.id}`} className="btn btn-success shadow btn-xs sharp me-1">
                                                                 <i className="fa fa-eye"></i>
                                                             </Link>
-                                                            <Link to={`/artwork-edit/${item.id}`} className="btn btn-primary shadow btn-xs sharp me-1">
+                                                            <Link to={`/artwork-artist-edit/${item.id}`} className="btn btn-primary shadow btn-xs sharp me-1">
                                                                 <i className="fas fa-pencil-alt"></i>
                                                             </Link>
                                                         </div>

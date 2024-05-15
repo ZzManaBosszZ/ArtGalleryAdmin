@@ -29,7 +29,7 @@ function ArtistArtWorkDetail() {
     useEffect(() => {
         const userToken = localStorage.getItem("access_token");
         api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
-        api.get(`${url.ARTWORK.DETAIL.replace("{}", id)}`)
+        api.get(`${url.ARTWORK.DETAIL_ARTIST_ARTWORK.replace("{}", id)}`)
             .then((response) => {
                 setArtWorkDetail(response.data);
             })

@@ -53,7 +53,9 @@ const url = {
     OFFER: {
         LIST: "/Offers/GetOrderAllAdmin",
         DETAIL: "/Offers/get-by-id-admin",  
-        UPDATE: "Offers/update-status-Admin/{}"
+        UPDATE: "Offers/update-status-Admin/{}",
+        LIST_ARTIST_OFFER: "Offers/GetOrderAllArtist",
+        DETAIL_ARTIST_OFFER: "/Offers/get-by-id-artist", 
     },
 
     AUTH: {

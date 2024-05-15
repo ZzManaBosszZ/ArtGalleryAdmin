@@ -26,7 +26,7 @@ function ArtistOfferDetail() {
         };
 
         try {
-            const offerResponse = await api.get(url.OFFER.DETAIL + `/${offerCode}`, config);
+            const offerResponse = await api.get(url.OFFER.DETAIL_ARTIST_OFFER + `/${offerCode}`, config);
             setOfferDetail(offerResponse.data);
         } catch (error) {
             setError(true);
