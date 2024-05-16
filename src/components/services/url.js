@@ -54,14 +54,13 @@ const url = {
         LIST: "/Offers/GetOrderAllAdmin",
         DETAIL: "/Offers/get-by-id-admin",  
         UPDATE: "Offers/update-status-Admin/{}",
-        LIST_ARTIST_OFFER: "Offers/GetOrderAllArtist",
+        LIST_ARTIST_OFFER: "Offers/GetOfferAllArtist",
         DETAIL_ARTIST_OFFER: "/Offers/get-by-id-artist", 
     },
 
     REGISTER_ARTIST: {
-        LIST: "/Offers/GetOrderAllAdmin",
-        DETAIL: "/Offers/get-by-id-admin",  
-        UPDATE: "",
+        LIST: "/Admin/request-artist",
+        UPDATE: "/Admin/accept-artist-request/{}",  
     },
 
     AUTH: {

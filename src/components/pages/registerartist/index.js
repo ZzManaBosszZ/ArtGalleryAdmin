@@ -141,16 +141,15 @@ function RegisterArtist() {
                                             <table class="table table-sm mb-0">
                                                 <thead>
                                                     <tr>
-                                                        <th class="align-middle">
+                                                        {/* <th class="align-middle">
                                                             <div class="form-check custom-checkbox">
                                                                 <input type="checkbox" class="form-check-input" id="checkAll" />
                                                                 <label class="form-check-label" for="checkAll"></label>
                                                             </div>
-                                                        </th>
-                                                        <th class="align-middle">Order</th>
-                                                        <th class="align-middle">User</th>
-                                                        {/* <th class="align-middle" style={{ minWidth: '12.5rem' }}>Ship To</th> */}
-                                                        <th class="align-middle">Amount</th>
+                                                        </th> */}
+                                                        <th class="align-middle">ID</th>
+                                                        <th class="align-middle">User Name</th>
+                                                        <th class="align-middle">Role</th>
                                                         <th class="align-middle">Date</th>
                                                         <th class="align-middle">Status</th>
                                                         <th class="no-sort"></th>

@@ -40,8 +40,7 @@ function ArtistOfferDetail() {
                 const response = await api.put(`${url.OFFER.UPDATE.replace("{}", offerCode)}`, { action }, {
                     headers: { "Content-Type": "multipart/form-data" },
                 });
-                if (response && response.data === 204) {
-                    // console.log(response.data);
+                if (response && response.status === 204) {
                     Swal.fire({
                         text: "Offer Approved",
                         icon: "success",
@@ -49,9 +48,10 @@ function ArtistOfferDetail() {
                         confirmButtonText: "Done",
                     });
                     setTimeout(() => {
-                        navigate(`/offer-list`); //chuyển đến trang offer-list
+                        navigate(`/offer-artist-list`); //chuyển đến trang offer-list
                     }, 2000);
-                } else {
+                } 
+                else {
                     Swal.fire({
                         text: "Offer Reject",
                         icon: "success",
@@ -59,7 +59,7 @@ function ArtistOfferDetail() {
                         confirmButtonText: "Done",
                     });
                     setTimeout(() => {
-                        navigate(`/offer-list`); //chuyển đến trang offer-list
+                        navigate(`/offer-artist-list`); //chuyển đến trang offer-list
                     }, 2000);
                 }
             } catch (error) {

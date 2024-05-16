@@ -111,11 +111,6 @@ function Profile() {
 
             const formData = new FormData();
 
-            // If avatarFile is present, append it to the FormData
-            //  if (avatarFile) {
-            //     formData.append("avatar", avatarFile);
-            // }
-
             for (const key in editedInfo) {
                 formData.append(key, editedInfo[key]);
             }

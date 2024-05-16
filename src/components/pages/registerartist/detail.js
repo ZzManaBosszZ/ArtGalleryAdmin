@@ -11,7 +11,7 @@ import Loading from "../../layouts/loading";
 import { getAccessToken } from "../../../utils/auth";
 function RegisterArtistDetail() {
     const { id } = useParams();
-    const [offerDetail, setOfferDetail] = useState([]);
+    const [registerDetail, setRegisterDetail] = useState([]);
     const [action, setAction] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -27,45 +27,45 @@ function RegisterArtistDetail() {
 
         try {
             const offerResponse = await api.get(`${url.REGISTER_ARTIST.DETAIL.replace("{}", id)}`, config);
-            setOfferDetail(offerResponse.data);
+            setRegisterDetail(offerResponse.data);
         } catch (error) {
             setError(true);
         }
     }, [id]);
 
     const handleSubmit = async (action) => {
-            const userToken = localStorage.getItem("access_token");
-            api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
-            try {
-                const response = await api.put(`${url.REGISTER_ARTIST.UPDATE.replace("{}", id)}`, { action }, {
-                    headers: { "Content-Type": "multipart/form-data" },
+        const userToken = localStorage.getItem("access_token");
+        api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+        try {
+            const response = await api.put(`${url.REGISTER_ARTIST.UPDATE.replace("{}", id)}`, { action }, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
+            if (response && response.status === 204) {
+                // console.log(response.data);
+                Swal.fire({
+                    text: "Accpet User to become Artist",
+                    icon: "success",
+                    confirmButtonColor: "#3085d6",
+                    confirmButtonText: "Done",
                 });
-                if (response && response.data === 204) {
-                    // console.log(response.data);
-                    Swal.fire({
-                        text: "Offer Approved",
-                        icon: "success",
-                        confirmButtonColor: "#3085d6",
-                        confirmButtonText: "Done",
-                    });
-                    setTimeout(() => {
-                        navigate(`/offer-list`); //chuyển đến trang offer-list
-                    }, 2000);
-                } else {
-                    Swal.fire({
-                        text: "Offer Reject",
-                        icon: "success",
-                        confirmButtonColor: "#3085d6",
-                        confirmButtonText: "Done",
-                    });
-                    setTimeout(() => {
-                        navigate(`/offer-list`); //chuyển đến trang offer-list
-                    }, 2000);
-                }
-            } catch (error) {
-                
-                console.error("Error creating test:", error);
-                console.error("Response data:", error.response.data);
+                setTimeout(() => {
+                    navigate(`/register-artist-list`); //chuyển đến trang register-artist-list
+                }, 2000);
+            } else {
+                Swal.fire({
+                    text: "Reject User to become Artist",
+                    icon: "warning",
+                    confirmButtonColor: "#3085d6",
+                    confirmButtonText: "Done",
+                });
+                setTimeout(() => {
+                    navigate(`/register-artist-list`); //chuyển đến trang register-artist-list
+                }, 2000);
+            }
+        } catch (error) {
+
+            console.error("Error creating test:", error);
+            console.error("Response data:", error.response.data);
 
         }
     };
@@ -103,54 +103,38 @@ function RegisterArtistDetail() {
                         </div>
                     </div>
                 ) : ( */}
+
+                <Link to="/register-artist-list" className="btn btn-rounded btn-primary">
+                    
+                    Back to Register List
+                </Link>
                 <div className="row">
                     <div className="col-lg-12">
                         <div className="card mt-3">
                             <div className="card-header">
-                                <span className="float-end"> Invoice: #{offerDetail.offerCode}</span>
-                                {/* <strong>01/01/2018</strong> */}
-                                <span className="float-end"><strong>Status:</strong>{offerDetail.status}</span>
+                                <span className="float-end"> Register ID: #{registerDetail.offerCode}</span>
                             </div>
                             <div className="card-body">
-                                <div className="row mb-5">
-                                    <div className="mt-4 col-xl-3 col-lg-3 col-md-6 col-sm-12 inv-text">
-                                        <h4>From:</h4>
-                                        <div> <strong>{ }</strong> </div>
-                                        <div>Madalinskiego 8</div>
-                                        <div>71-101 Szczecin, Poland</div>
-                                        <div>Email: info@webz.com.pl</div>
-                                        <div>Phone: +48 444 666 3333</div>
-                                    </div>
-                                    <div className="mt-4 col-xl-3 col-lg-3 col-md-6 col-sm-12 inv-text">
-                                        <h4>To:</h4>
-                                        <div> <strong>Bob Mart</strong> </div>
-                                        <div>Attn: Daniel Marek</div>
-                                        <div>43-190 Mikolow, Poland</div>
-                                        <div>Email: marek@daniel.com</div>
-                                        <div>Phone: +48 123 456 789</div>
-                                    </div>
-
-                                </div>
                                 <div className="table-responsive">
                                     <table className="table table-striped">
                                         <thead>
                                             <tr>
                                                 <th className="center">User ID</th>
+                                                <th>Image</th>
                                                 <th>User Name</th>
-                                                <th>Item</th>
                                                 <th>Description</th>
-                                                <th className="right">Offer Price</th>
-                                                <th className="right">User Offer Price</th>
+                                                <th className="right">Biography</th>
+                                                <th className="right">Role</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td className="center text-white">{offerDetail.userId}</td>
-                                                <td className="center text-white">{offerDetail.userName}</td>
-                                                <td className="left strong text-white">{offerDetail.artWorkNames}</td>
+                                                <td className="center text-white">{registerDetail.userId}</td>
+                                                <td className="center text-white">{registerDetail.userName}</td>
+                                                <td className="left strong text-white">{registerDetail.artWorkNames}</td>
                                                 <td className="left text-white">Extended License</td>
-                                                <td className="right text-white">${offerDetail.offerPrice}</td>
-                                                <td className="right text-white">${offerDetail.toTal}</td>
+                                                <td className="right text-white">{registerDetail.offerPrice}</td>
+                                                <td className="right text-white">{registerDetail.role}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -158,16 +142,16 @@ function RegisterArtistDetail() {
                                 <div className="row">
                                     <div className="col-lg-4 col-sm-5"> </div>
                                     <div className="col-lg-4 col-sm-5 ms-auto">
-                                        <table className="table table-clear">
+                                        {/* <table className="table table-clear">
                                             <tbody>
                                                 <tr>
                                                     <td className="left"><strong>Total</strong></td>
                                                     <td className="right"><strong>${offerDetail.toTal}</strong><br /></td>
                                                 </tr>
                                             </tbody>
-                                        </table>
-                                        <button type="button" className="btn btn-rounded btn-info" onClick={() => handleSubmit('accept')}><span className="btn-icon-check text-info"></span>Accept Offer</button>
-                                        <button type="button" className="btn btn-rounded btn-info1" onClick={() => handleSubmit('refuse')}><span className="btn-icon-check text-info"></span>Refuse Offer</button>
+                                        </table> */}
+                                        <button type="button" className="btn btn-rounded btn-info" onClick={() => handleSubmit('accept')}><span className="btn-icon-check text-info"></span>Accept</button>
+                                        <button type="button" className="btn btn-rounded btn-info1" onClick={() => handleSubmit('refuse')}><span className="btn-icon-check text-info"></span>Reject</button>
                                     </div>
                                 </div>
                             </div>
