@@ -125,7 +125,7 @@ function ArtistArtWorkDetail() {
                 const userRole = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
                 setUserRole(userRole);
 
-                if (userRole === "User" || userRole === "Shopping Center Manager Staff") {
+                if (userRole === "User" || userRole === "Super Admin") {
                     setError(true);
                 }
             } catch (error) {

@@ -59,7 +59,8 @@ const url = {
     },
 
     REGISTER_ARTIST: {
-        LIST: "/Admin/request-artist",
+        LIST: "/Admin/getall-request-artist",
+        DETAIL: "/Admin/get-request-artist-detail/{}", 
         UPDATE: "/Admin/accept-artist-request/{}",  
     },
 

@@ -28,6 +28,7 @@ import ArtistOfferList from "./components/pages/artworkoffer/offerartist";
 import ArtistOfferDetail from "./components/pages/artworkoffer/offerartist/detail";
 import RegisterArtist from "./components/pages/registerartist";
 import RegisterArtistDetail from "./components/pages/registerartist/detail";
+import ArtistDetail from "./components/pages/artist/detail";
 
 function App() {
     const ProtectedRoute = ({ element }) => {
@@ -65,6 +66,7 @@ function App() {
                 {/* Start Artist */}
                 <Route path="/artist-list" element={<ProtectedRoute element={<ArtistsList />} />} />
                 <Route path="/artist-create" element={<ProtectedRoute element={<ArtistCreate />} />} />
+                <Route path="/artist-detail/:id" element={<ProtectedRoute element={<ArtistDetail />} />} />
                 <Route path="/artist-edit/:id" element={<ProtectedRoute element={<ArtistEdit />} />} />
                 <Route path="/artist-delete-at" element={<ProtectedRoute element={<ArtistDeleteAt />} />} />
                 {/* End Artist */}

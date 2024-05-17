@@ -20,8 +20,7 @@ function RegisterArtist() {
     }, []);
     const [userRole, setUserRole] = useState(null);
     const [error, setError] = useState(null);
-    const [offers, setOffers] = useState([]);
-    const [offerStatus, setOfferStatus] = useState('');
+    const [requestArtists, setRequestArtists] = useState([]);
     const [selectedDate, setSelectedDate] = useState(null);
 
     useEffect(() => {
@@ -33,7 +32,7 @@ function RegisterArtist() {
                 const filteredOffers = selectedDate
                     ? offerResponse.data.filter((item) => format(new Date(item.createdAt), "yyyy-MM-dd") === format(new Date(selectedDate), "yyyy-MM-dd"))
                     : offerResponse.data;
-                setOffers(filteredOffers);
+                    setRequestArtists(filteredOffers);
             } catch (error) { }
         };
         loadOffer();
@@ -51,10 +50,10 @@ function RegisterArtist() {
     const handleNextPage = () => {
         setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
     };
-    const totalPages = Math.ceil(offers.length / offersPerPage);
+    const totalPages = Math.ceil(requestArtists.length / offersPerPage);
     const indexOfLastOffer = currentPage * offersPerPage;
     const indexOfFirstOffer = indexOfLastOffer - offersPerPage;
-    const currentOfferCode = offers.slice(indexOfFirstOffer, indexOfLastOffer);
+    const currentOfferCode = requestArtists.slice(indexOfFirstOffer, indexOfLastOffer);
 
     //search, filter
     const [searchCode, setSearchCode] = useState("");
@@ -62,7 +61,7 @@ function RegisterArtist() {
         setSearchCode(e.target.value);
     };
     const filteredCodes = currentOfferCode.filter((item) => {
-        const codeMatch = typeof item.offerCode === 'string' && item.offerCode.toLowerCase().includes(searchCode.toLowerCase());
+        const codeMatch = typeof item.id === 'string' && item.id.toLowerCase().includes(searchCode.toLowerCase());
         return codeMatch;
     });
 
@@ -120,11 +119,11 @@ function RegisterArtist() {
             ) : (
                 <>
                     <Helmet>
-                        <title>Offer List | Art Admin</title>
+                        <title>Register Artist List | Art Admin</title>
                     </Helmet>
                     {loading ? <Loading /> : ""}
                     <Layout>
-                        <Breadcrumb title="Offer List" />
+                        <Breadcrumb title="Register Artist List" />
                         <div className="row">
                             <div className="col-lg-12">
                                 <div className="card">
@@ -141,12 +140,6 @@ function RegisterArtist() {
                                             <table class="table table-sm mb-0">
                                                 <thead>
                                                     <tr>
-                                                        {/* <th class="align-middle">
-                                                            <div class="form-check custom-checkbox">
-                                                                <input type="checkbox" class="form-check-input" id="checkAll" />
-                                                                <label class="form-check-label" for="checkAll"></label>
-                                                            </div>
-                                                        </th> */}
                                                         <th class="align-middle">ID</th>
                                                         <th class="align-middle">User Name</th>
                                                         <th class="align-middle">Role</th>
@@ -156,7 +149,7 @@ function RegisterArtist() {
                                                     </tr>
                                                 </thead>
                                                 <tbody id="orders">
-                                                    {filteredCodes.map((item, index) => {
+                                                    {requestArtists.map((item, index) => {
                                                         return (
                                                             <tr className="btn-reveal-trigger" key={index}>
                                                                 <td className="py-2">
@@ -164,17 +157,17 @@ function RegisterArtist() {
                                                                 </td>
                                                                 <td className="py-2">
                                                                     <Link to="">
-                                                                        <strong>#{item.offerCode}</strong>
+                                                                        <strong>#{item.userId}</strong>
                                                                     </Link>
                                                                     <br />
-                                                                    <Link to="">by {item.userName}</Link>
+                                                                    <Link to="">by {item.nameArtist}</Link>
                                                                 </td>
-                                                                <td>{item.userName}</td>
-                                                                <td className="py-2">${item.toTal}</td>
+                                                                <td>{item.nameArtist}</td>
+                                                                {/* <td className="py-2">${item.toTal}</td> */}
                                                                 <td className="py-2">{format(new Date(item.createdAt), "yyyy-MM-dd HH:mm")}</td>
                                                                 <td className= {`badge ${getStatusColor(item.status)}`}>{getStatusText(item.status)}</td>
                                                                 <td className="py-2 text-end">
-                                                                    <Link to={`/offer-artist-list/${item.offerCode}`} className="btn btn-primary shadow btn-xs sharp me-1">
+                                                                    <Link to={`/register-artist-detail/${item.id}`} className="btn btn-primary shadow btn-xs sharp me-1">
                                                                         <i className="fa fa-eye"></i>
                                                                     </Link>
                                                                 </td>

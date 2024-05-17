@@ -37,10 +37,10 @@ function RegisterArtistDetail() {
         const userToken = localStorage.getItem("access_token");
         api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
         try {
-            const response = await api.put(`${url.REGISTER_ARTIST.UPDATE.replace("{}", id)}`, { action }, {
+            const response = await api.post(`${url.REGISTER_ARTIST.UPDATE.replace("{}", id)}`, { action }, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
-            if (response && response.status === 204) {
+            if (response && response.status === 200) {
                 // console.log(response.data);
                 Swal.fire({
                     text: "Accpet User to become Artist",
@@ -90,20 +90,6 @@ function RegisterArtistDetail() {
 
             <Layout>
                 <Breadcrumb title="Offer Detail" />
-                {/* {error ? (
-                    <div className="card">
-                        <div className="card-body">
-                            <h2>No offer history found. Please check again!</h2>
-                            <Link to="/" className="btn btn-rounded btn-primary">
-                                <span className="btn-icon-start text-primary">
-                                    <i className="fa fa-shopping-cart"></i>
-                                </span>
-                                Back to Offer
-                            </Link>
-                        </div>
-                    </div>
-                ) : ( */}
-
                 <Link to="/register-artist-list" className="btn btn-rounded btn-primary">
                     
                     Back to Register List
@@ -112,7 +98,7 @@ function RegisterArtistDetail() {
                     <div className="col-lg-12">
                         <div className="card mt-3">
                             <div className="card-header">
-                                <span className="float-end"> Register ID: #{registerDetail.offerCode}</span>
+                                <span className="float-end"> Register ID: #{registerDetail.id}</span>
                             </div>
                             <div className="card-body">
                                 <div className="table-responsive">
@@ -130,10 +116,10 @@ function RegisterArtistDetail() {
                                         <tbody>
                                             <tr>
                                                 <td className="center text-white">{registerDetail.userId}</td>
-                                                <td className="center text-white">{registerDetail.userName}</td>
-                                                <td className="left strong text-white">{registerDetail.artWorkNames}</td>
+                                                <td className="center text-white"> <img src={registerDetail.image} className="rounded-lg  image-thumb" alt="" /></td>
+                                                <td className="left strong text-white">{registerDetail.nameArtist}</td>
                                                 <td className="left text-white">Extended License</td>
-                                                <td className="right text-white">{registerDetail.offerPrice}</td>
+                                                <td className="right text-white">{registerDetail.biography}</td>
                                                 <td className="right text-white">{registerDetail.role}</td>
                                             </tr>
                                         </tbody>

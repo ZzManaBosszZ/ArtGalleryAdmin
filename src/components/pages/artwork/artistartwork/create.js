@@ -281,28 +281,7 @@ function ArtistArtWorkCreate() {
                                                         {nameExistsError && <div className="text-danger">{nameExistsError}</div>}
                                                     </div>
                                                 </div>
-
-                                                {/* <div className="col-lg-6 mb-2">
-                                                    <div className="mb-3">
-                                                        <label className="text-label form-label">
-                                                            Artist <span className="text-danger">*</span>
-                                                        </label>
-                                                        <Select
-                                                            name="artistId"
-                                                            value={artist.filter((option) => formArtWork.artistId.includes(option.value))}
-                                                            isMulti
-                                                            closeMenuOnSelect={false}
-                                                            styles={customStyle}
-                                                            onChange={(selectedOption) => {
-                                                                setFormArtWork({ ...formArtWork, artistId: selectedOption.map((option) => option.value) });
-                                                            }}
-                                                            options={artist}
-                                                            placeholder="Select artist"
-                                                        />
-                                                        {errors.artistId && <div className="text-danger">{errors.artistId}</div>}
-                                                    </div>
-                                                </div> */}
-
+                                                
                                                 <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
                                                         <label className="text-label form-label">Medium</label>

@@ -51,7 +51,7 @@ function ArtistsList() {
         setDeleteVisible(isDeleteVisible);
     };
 
-     //hiển thị danh sách artists
+    //hiển thị danh sách artists
     useEffect(() => {
         const loadArtists = async () => {
             const userToken = localStorage.getItem("access_token");
@@ -60,7 +60,7 @@ function ArtistsList() {
                 const response = await api.get(url.ARTIST.LIST);
                 setArtists(response.data);
                 setTbodyCheckboxes(Array.from({ length: response.data.length }).fill(false));
-            } catch (error) {}
+            } catch (error) { }
         };
         loadArtists();
     }, []);
@@ -253,7 +253,7 @@ function ArtistsList() {
                                                     <td>
                                                         <img src={item.image} className="rounded-lg me-2 image-thumb" alt="" />
                                                     </td>
-                                                    
+
                                                     <td>{item.name}</td>
 
                                                     <td>{item.biography}</td>
@@ -261,6 +261,9 @@ function ArtistsList() {
                                                         <div className="d-flex">
                                                             <Link to={`/artist-edit/${item.id}`} className="btn btn-primary shadow btn-xs sharp me-1">
                                                                 <i className="fas fa-pencil-alt"></i>
+                                                            </Link>
+                                                            <Link to={`/artist-detail/${item.id}`} className="btn btn-primary shadow btn-xs sharp me-1">
+                                                                <i className="fa fa-eye"></i>
                                                             </Link>
                                                         </div>
                                                     </td>
