@@ -85,7 +85,7 @@ function App() {
                 <Route path="/offer-list" element={<ProtectedRoute element={<OfferList />} />} />
                 <Route path="/offer-artist-list" element={<ProtectedRoute element={<ArtistOfferList />} />} />
                 <Route path="/offer-detail/:offerCode" element={<ProtectedRoute element={<OfferDetail />} />} />
-                <Route path="/offer-artist-list/:offerCode" element={<ProtectedRoute element={<ArtistOfferDetail />} />} />
+                <Route path="/offer-artist-detail/:offerCode" element={<ProtectedRoute element={<ArtistOfferDetail />} />} />
                 {/* End Offers */}
 
                 {/* Start Offers */}

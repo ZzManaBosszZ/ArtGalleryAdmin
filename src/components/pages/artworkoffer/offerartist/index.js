@@ -21,7 +21,6 @@ function ArtistOfferList() {
     const [userRole, setUserRole] = useState(null);
     const [error, setError] = useState(null);
     const [offers, setOffers] = useState([]);
-    const [offerStatus, setOfferStatus] = useState('');
     const [selectedDate, setSelectedDate] = useState(null);
 
     useEffect(() => {
@@ -41,7 +40,7 @@ function ArtistOfferList() {
 
     //paginate
     const [currentPage, setCurrentPage] = useState(1);
-    const offersPerPage = 8;
+    const offersPerPage = 5;
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };

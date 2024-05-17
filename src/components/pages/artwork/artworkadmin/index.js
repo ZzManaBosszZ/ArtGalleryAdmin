@@ -194,16 +194,6 @@ function ArtWorkList() {
                                     </button>
                                 </NavLink>
                             </div>
-                            {/* <div className="col-lg-3">
-                                <NavLink to="/artwork-create">
-                                    <button type="button" className="btn btn-rounded btn-info">
-                                        <span className="btn-icon-start text-info">
-                                            <i className="fa fa-plus color-info"></i>
-                                        </span>
-                                        Create New ArtWork
-                                    </button>
-                                </NavLink>
-                            </div> */}
 
                         </div>
                         <div className="card-body">

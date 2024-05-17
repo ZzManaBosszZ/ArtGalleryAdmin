@@ -42,7 +42,7 @@ function OfferList() {
 
     //paginate
     const [currentPage, setCurrentPage] = useState(1);
-    const offersPerPage = 8;
+    const offersPerPage = 5;
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
