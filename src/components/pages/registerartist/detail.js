@@ -125,21 +125,19 @@ function RegisterArtistDetail() {
                                         </tbody>
                                     </table>
                                 </div>
-                                <div className="row">
-                                    <div className="col-lg-4 col-sm-5"> </div>
-                                    <div className="col-lg-4 col-sm-5 ms-auto">
-                                        {/* <table className="table table-clear">
-                                            <tbody>
-                                                <tr>
-                                                    <td className="left"><strong>Total</strong></td>
-                                                    <td className="right"><strong>${offerDetail.toTal}</strong><br /></td>
-                                                </tr>
-                                            </tbody>
-                                        </table> */}
-                                        <button type="button" className="btn btn-rounded btn-info" onClick={() => handleSubmit('accept')}><span className="btn-icon-check text-info"></span>Accept</button>
-                                        <button type="button" className="btn btn-rounded btn-info1" onClick={() => handleSubmit('refuse')}><span className="btn-icon-check text-info"></span>Reject</button>
+                                {(registerDetail.status !== -1 && registerDetail.status !== 1) && ( // Render buttons only if statusrequest is not -1 or 1
+                                    <div className="row">
+                                        <div className="col-lg-4 col-sm-5"></div>
+                                        <div className="col-lg-4 col-sm-5 ms-auto">
+                                            <button type="button" className="btn btn-rounded btn-info" onClick={() => handleSubmit('accept')}>
+                                                <span className="btn-icon-check text-info"></span>Accept
+                                            </button>
+                                            <button type="button" className="btn btn-rounded btn-info1" onClick={() => handleSubmit('refuse')}>
+                                                <span className="btn-icon-check text-info"></span>Reject
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
+                                )}
                             </div>
                         </div>
                     </div>

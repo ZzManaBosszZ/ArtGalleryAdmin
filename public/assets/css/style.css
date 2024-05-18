@@ -670,12 +670,19 @@
         -webkit-appearance: button;
     }
 
-    button:not(:disabled),
+    button1:not(:disabled),
     [type="button"]:not(:disabled),
     [type="reset"]:not(:disabled),
     [type="submit"]:not(:disabled) {
         cursor: pointer;
         margin-right: 50px;
+    }
+
+    button:not(:disabled),
+    [type="button1"]:not(:disabled),
+    [type="reset"]:not(:disabled),
+    [type="submit"]:not(:disabled) {
+        cursor: pointer;
     }
 
     ::-moz-focus-inner {

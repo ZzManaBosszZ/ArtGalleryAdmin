@@ -219,7 +219,7 @@ function ArtistCreate() {
                                                     </div>
                                                 </div>
 
-                                                {/* <div className="col-lg-6 mb-2">
+                                                <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
                                                         <label className="text-label form-label">ArtWork</label>
                                                         <Select
@@ -236,7 +236,7 @@ function ArtistCreate() {
                                                         />
                                                         
                                                     </div>
-                                                </div> */}
+                                                </div>
 
                                                 <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
