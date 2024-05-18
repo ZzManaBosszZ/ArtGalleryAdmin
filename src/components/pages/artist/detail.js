@@ -12,7 +12,7 @@ import NotFound from "../../pages/other/not-found";
 
 function ArtistDetail() {
     const [loading, setLoading] = useState(false);
-    const {id} = useParams();
+    const { id } = useParams();
     useEffect(() => {
         setLoading(true);
         setTimeout(() => {
@@ -22,34 +22,7 @@ function ArtistDetail() {
 
     const [userRole, setUserRole] = useState(null);
     const [error, setError] = useState(null);
-    const [ArtistDetail, setArtistDetail] = useState([]);
-    const [isDeleteVisible, setDeleteVisible] = useState(false);
-    const [tbodyCheckboxes, setTbodyCheckboxes] = useState([]);
-    const [selectAll, setSelectAll] = useState(false);
-
-    //xử lý check tất cả và hiển thị thùng rác
-    const handleSelectAll = () => {
-        const updatedCheckboxes = !selectAll ? Array.from({ length: ArtistDetail.length }).fill(true) : Array.from({ length: ArtistDetail.length }).fill(false);
-        setTbodyCheckboxes(updatedCheckboxes);
-        setSelectAll(!selectAll);
-        const checkboxes = document.querySelectorAll('#orders input[type="checkbox"]');
-        checkboxes.forEach((checkbox) => {
-            checkbox.checked = !selectAll;
-        });
-        setDeleteVisible(!selectAll);
-    };
-    const handleCheckboxChange = () => {
-        const checkboxes = document.querySelectorAll('#orders input[type="checkbox"]');
-        const selectedCheckboxes = Array.from(checkboxes).filter((checkbox) => checkbox.checked);
-        setDeleteVisible(selectedCheckboxes.length > 0);
-    };
-    const handleTbodyCheckboxChange = (index) => {
-        const updatedTbodyCheckboxes = [...tbodyCheckboxes];
-        updatedTbodyCheckboxes[index] = !updatedTbodyCheckboxes[index];
-        setTbodyCheckboxes(updatedTbodyCheckboxes);
-        const isDeleteVisible = selectAll || updatedTbodyCheckboxes.some((checkbox) => checkbox);
-        setDeleteVisible(isDeleteVisible);
-    };
+    const [ArtistDetail, setArtistDetail] = useState({ artWork: [] });
 
     //hiển thị chi tiết artist
     useEffect(() => {
@@ -59,38 +32,31 @@ function ArtistDetail() {
             try {
                 const response = await api.get(`${url.ARTIST.DETAIL.replace("{}", id)}`)
                 setArtistDetail(response.data);
-                setTbodyCheckboxes(Array.from({ length: response.data.length }).fill(false));
             } catch (error) { }
         };
         loadArtist();
     }, []);
 
-    //paginate
-    // const [currentPage, setCurrentPage] = useState(1);
-    // const gallerysPerPage = 10;
-    // const handlePageChange = (page) => {
-    //     setCurrentPage(page);
-    // };
-    // const handlePrevPage = () => {
-    //     setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
-    // };
-    // const handleNextPage = () => {
-    //     setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
-    // };
-    // const totalPages = Math.ceil(ArtistDetail.length / gallerysPerPage);
+    // paginate
+    const [currentPage, setCurrentPage] = useState(1);
+    const gallerysPerPage = 6;
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
+    const handlePrevPage = () => {
+        setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+    };
+    const handleNextPage = () => {
+        setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
+    };
+    // const totalPages =  Math.ceil(ArtistDetail.artWork.length / gallerysPerPage);
     // const indexOfLastGallery = currentPage * gallerysPerPage;
     // const indexOfFirstGallery = indexOfLastGallery - gallerysPerPage;
     // const currentGallerys = ArtistDetail.slice(indexOfFirstGallery, indexOfLastGallery);
 
-    // //search, filter
-    // const [searchName, setSearchName] = useState("");
-    // const handleSearchNameChange = (e) => {
-    //     setSearchName(e.target.value);
-    // };
-    // const filteredGallerys = currentGallerys.filter((item) => {
-    //     const nameMatch = item.productName.toLowerCase().includes(searchName.toLowerCase());
-    //     return nameMatch;
-    // });
+    const totalPages = Math.ceil(ArtistDetail.artWork.length / gallerysPerPage);
+    const startIndex = (currentPage - 1) * gallerysPerPage;
+    const selectedImages = ArtistDetail.artWork.slice(startIndex, startIndex + gallerysPerPage);
 
     // kiểm tra role
     useEffect(() => {
@@ -136,58 +102,90 @@ function ArtistDetail() {
                                                     <tr>
                                                         <th scope="col">Artist Name</th>
                                                         <th scope="col">Image</th>
+                                                        {/* <th scope="col">Biography</th> */}
+                                                        <th scope="col">Description</th>
                                                         <th scope="col">Number Of Follow</th>
-                                                        <th scope="col">Biography</th>
                                                     </tr>
                                                     <tr>
                                                         <td>{ArtistDetail.name}</td>
-                                                        <td className="name-artist">{ArtistDetail.name}</td>
+                                                        <td className="name-artist"><img style={{ height: "100px", objectFit: "cover" }} src={ArtistDetail.image}></img></td>
+                                                        {/* <td>{ArtistDetail.biography}</td> */}
+                                                        <td>{ArtistDetail.description}</td>
                                                         <td>{ArtistDetail.favoriteCount}</td>
-                                                        <td>{ArtistDetail.price}</td>
-                                                        <td>{ArtistDetail.series}</td>
-                                                        <td>{ArtistDetail.rarity}</td>
-                                                        <td>{ArtistDetail.medium}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                            <h4 className="d-inline">ArtWork Image </h4>
+                                            {/* <h4 className="d-inline">ArtWork Image </h4>
                                             <div className="post-details">
-                                                <img src={ArtistDetail.artWorkImage} alt="image image" style={{ height: "250px", objectFit: "cover" }} className="img-fluid mt-4 mb-4 w-100" />
-                                            </div>
+                                                <img src={ArtistDetail.artWork.artWorkImage} alt="image image" style={{ height: "250px", objectFit: "cover" }} className="img-fluid mt-4 mb-4 w-100" />
+                                            </div> */}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        {/* <div className="card-footer">
-                            <div className="row">
-                                <div className="col-lg-5"></div>
-                                <div className="col-lg-4"></div>
-                                <div className="col-lg-3 text-end">
-                                    <nav>
-                                        <ul className="pagination pagination-gutter pagination-primary no-bg">
-                                            <li className={`page-item page-indicator ${currentPage === 1 ? "disabled" : ""}`}>
-                                                <a className="page-link" href="javascript:void(0)" onClick={handlePrevPage}>
-                                                    <i className="la la-angle-left"></i>
-                                                </a>
-                                            </li>
-                                            {Array.from({ length: totalPages }).map((_, index) => (
-                                                <li key={index} className={`page-item ${currentPage === index + 1 ? "active" : ""}`}>
-                                                    <a className="page-link" href="javascript:void(0)" onClick={() => handlePageChange(index + 1)}>
-                                                        {index + 1}
-                                                    </a>
-                                                </li>
-                                            ))}
-                                            <li className={`page-item page-indicator ${currentPage === totalPages ? "disabled" : ""}`}>
-                                                <a className="page-link" href="javascript:void(0)" onClick={handleNextPage}>
-                                                    <i className="la la-angle-right"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </nav>
+
+                        <div className="col-xl">
+                            <div className="card">
+                                <div className="card-body">
+                                    <div className="row" style={{ marginTop: "20px" }}>
+                                        <div className="col-xl-12">
+                                            <h4 className="d-inline">ArtWork Image </h4>
+                                            <div className="post-details">
+                                                <div className="row">
+                                                    {selectedImages.length > 0 ? (
+                                                        selectedImages.map((image, index) => (
+                                                            <div className="col-md-4 mb-4" key={index}>
+                                                                <Link to={`/artwork-detail/${image.artWorkId}`}>
+                                                                    <img src={image.artWorkImage} alt={`ArtWork Image ${index + 1}`} className="img-fluid art-work-image" />
+                                                                </Link>
+                                                            </div>
+                                                        ))
+                                                    ) : (
+                                                        <p>Loading images...</p>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="card-footer">
+                                    <div className="row">
+                                        <div className="col-lg-5"></div>
+                                        <div className="col-lg-4"></div>
+                                        <div className="col-lg-3 text-end">
+                                            <nav>
+                                                <ul className="pagination pagination-gutter pagination-primary no-bg">
+                                                    <li className={`page-item page-indicator ${currentPage === 1 ? "disabled" : ""}`}>
+                                                        <a className="page-link" href="javascript:void(0)" onClick={handlePrevPage}>
+                                                            <i className="la la-angle-left"></i>
+                                                        </a>
+                                                    </li>
+                                                    {Array.from({ length: totalPages }).map((_, index) => (
+                                                        <li key={index} className={`page-item ${currentPage === index + 1 ? "active" : ""}`}>
+                                                            <a className="page-link" href="javascript:void(0)" onClick={() => handlePageChange(index + 1)}>
+                                                                {index + 1}
+                                                            </a>
+                                                        </li>
+                                                    ))}
+                                                    <li className={`page-item page-indicator ${currentPage === totalPages ? "disabled" : ""}`}>
+                                                        <a className="page-link" href="javascript:void(0)" onClick={handleNextPage}>
+                                                            <i className="la la-angle-right"></i>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div> */}
+                        </div>
+
+
+
+
+
                     </Layout>
                 </>
             )}

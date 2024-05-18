@@ -39384,3 +39384,9 @@
         color: black;
         /* Màu chữ đen */
     }
+
+    .art-work-image {
+        height: 250px;
+        object-fit: cover;
+        width: 100%;
+    }
