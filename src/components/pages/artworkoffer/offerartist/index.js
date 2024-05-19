@@ -174,7 +174,7 @@ function ArtistOfferList() {
                                                                 <td className="py-2">{format(new Date(item.createdAt), "yyyy-MM-dd HH:mm")}</td>
                                                                 <td className= {`badge ${getStatusColor(item.status)}`}>{getStatusText(item.status)}</td>
                                                                 <td className="py-2 text-end">
-                                                                    <Link to={`/offer-artist-list/${item.offerCode}`} className="btn btn-primary shadow btn-xs sharp me-1">
+                                                                    <Link to={`/offer-artist-detail/${item.offerCode}`} className="btn btn-primary shadow btn-xs sharp me-1">
                                                                         <i className="fa fa-eye"></i>
                                                                     </Link>
                                                                 </td>

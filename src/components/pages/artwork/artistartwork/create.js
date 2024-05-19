@@ -49,7 +49,7 @@ function ArtistArtWorkCreate() {
 
     const customStyles = {
         // Thêm các thuộc tính CSS tùy chỉnh tại đây
-        
+
         color: 'black',
         // và các thuộc tính khác nếu cần
     };
@@ -190,7 +190,7 @@ function ArtistArtWorkCreate() {
                         confirmButtonColor: "#3085d6",
                         confirmButtonText: "Done",
                     });
-                    
+
                 }
                 // console.error("Error creating test:", error);
                 // console.error("Response data:", error.response.data);
@@ -281,7 +281,7 @@ function ArtistArtWorkCreate() {
                                                         {nameExistsError && <div className="text-danger">{nameExistsError}</div>}
                                                     </div>
                                                 </div>
-                                                
+
                                                 <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
                                                         <label className="text-label form-label">Medium</label>
@@ -294,10 +294,13 @@ function ArtistArtWorkCreate() {
                                                             onChange={handleChange}
                                                         >
                                                             <option value="">Select Medium</option>
-                                                            <option value="A">A</option>
-                                                            <option value="B">B</option>
-                                                            <option value="C">C</option>
-                                                            <option value="D">D</option>
+                                                            <option value="OIL">OIL</option>
+                                                            <option value="ACRYLIC">ACRYLIC</option>
+                                                            <option value="WATERCOLOR">WATERCOLOR</option>
+                                                            <option value="MIXED MEDIA">MIXED MEDIA</option>
+                                                            <option value="PHOTOGRAPHY">PHOTOGRAPHY</option>
+                                                            <option value="CHARCOAL SKETCHES">CHARCOAL SKETCHES</option>
+                                                            <option value="GRAPHIC ART">GRAPHIC ART</option>
                                                         </select>
                                                         {errors.medium && <div className="text-danger">{errors.medium}</div>}
                                                     </div>
@@ -306,7 +309,7 @@ function ArtistArtWorkCreate() {
                                                 <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
                                                         <label className="text-label form-label">
-                                                        Materials <span className="text-danger">*</span>
+                                                            Materials <span className="text-danger">*</span>
                                                         </label>
                                                         <input type="text" name="materials" onChange={handleChange} className="form-control" placeholder="Please enter Materials" />
                                                         {errors.materials && <div className="text-danger">{errors.materials}</div>}
@@ -335,10 +338,10 @@ function ArtistArtWorkCreate() {
                                                             onChange={handleChange}
                                                         >
                                                             <option value="">Select Condition</option>
-                                                            <option value="A">A</option>
-                                                            <option value="B">B</option>
-                                                            <option value="C">C</option>
-                                                            <option value="D">D</option>
+                                                            <option value="Excellent Condition">Excellent Condition</option>
+                                                            <option value="Very Good Condition">Very Good Condition</option>
+                                                            <option value="Good Condition">Good Condition</option>
+                                                            <option value="Fair Condition">Fair Condition</option>
                                                         </select>
                                                         {errors.condition && <div className="text-danger">{errors.condition}</div>}
                                                     </div>
@@ -356,10 +359,10 @@ function ArtistArtWorkCreate() {
                                                             onChange={handleChange}
                                                         >
                                                             <option value="">Select Signature</option>
-                                                            <option value="A">A</option>
-                                                            <option value="B">B</option>
-                                                            <option value="C">C</option>
-                                                            <option value="D">D</option>
+                                                            <option value="Hand-signed by artist, Signature on back">Hand-signed by artist, Signature on back</option>
+                                                            <option value="Hand-signed by artist, Signed in pencil">Hand-signed by artist, Signed in pencil</option>
+                                                            <option value="On certificate of authenticity">On certificate of authenticity.</option>
+                                                            <option value="Hand-signed by artist, Signed on the Front side">Hand-signed by artist, Signed on the Front side</option>
                                                         </select>
                                                         {errors.signature && <div className="text-danger">{errors.signature}</div>}
                                                     </div>
@@ -377,10 +380,10 @@ function ArtistArtWorkCreate() {
                                                             onChange={handleChange}
                                                         >
                                                             <option value="">Select Rarity</option>
-                                                            <option value="A">A</option>
-                                                            <option value="B">B</option>
-                                                            <option value="C">C</option>
-                                                            <option value="D">D</option>
+                                                            <option value="Unique">Unique</option>
+                                                            <option value="Limited edition">Limited edition</option>
+                                                            <option value="Open edition">Open edition</option>
+                                                            <option value="Unknown edition">Unknown edition</option>
                                                         </select>
                                                         {errors.rarity && <div className="text-danger">{errors.rarity}</div>}
                                                     </div>
@@ -398,10 +401,9 @@ function ArtistArtWorkCreate() {
                                                             onChange={handleChange}
                                                         >
                                                             <option value="">Select Certificate</option>
-                                                            <option value="A">A</option>
-                                                            <option value="B">B</option>
-                                                            <option value="C">C</option>
-                                                            <option value="D">D</option>
+                                                            <option value="Included (issued by gallery)">Included (issued by gallery)</option>
+                                                            <option value="Included (issued by authorized authenticating body)">Included (issued by authorized authenticating body)</option>
+                                                            <option value="Not Included">Not Included</option>
                                                         </select>
                                                         {errors.certificateOfAuthenticity && <div className="text-danger">{errors.certificateOfAuthenticity}</div>}
                                                     </div>
@@ -418,11 +420,9 @@ function ArtistArtWorkCreate() {
                                                             value={formArtWork.frame}
                                                             onChange={handleChange}
                                                         >
-                                                            <option value="">Select Frame</option>  
-                                                            <option value="A">A</option>
-                                                            <option value="B">B</option>
-                                                            <option value="C">C</option>
-                                                            <option value="D">D</option>
+                                                            <option value="">Select Frame</option>
+                                                            <option value="Included">Included</option>
+                                                            <option value="Not included">Not included</option>
                                                         </select>
                                                         {errors.frame && <div className="text-danger">{errors.frame}</div>}
                                                     </div>
@@ -477,7 +477,7 @@ function ArtistArtWorkCreate() {
                                                         <input type="file" name="artWorkImage" onChange={handleChange} className="form-control" accept=".jpg, .png, .etc" />
                                                         {errors.artWorkImage && <div className="text-danger">{errors.artWorkImage}</div>}
                                                     </div>
-                                                </div>                                        
+                                                </div>
 
                                                 <div className="col-lg-2 mb-2">
                                                     <div className="mb-3">

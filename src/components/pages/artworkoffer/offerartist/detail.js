@@ -34,38 +34,38 @@ function ArtistOfferDetail() {
     }, [offerCode]);
 
     const handleSubmit = async (action) => {
-            const userToken = localStorage.getItem("access_token");
-            api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
-            try {
-                const response = await api.put(`${url.OFFER.UPDATE.replace("{}", offerCode)}`, { action }, {
-                    headers: { "Content-Type": "multipart/form-data" },
+        const userToken = localStorage.getItem("access_token");
+        api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+        try {
+            const response = await api.put(`${url.OFFER.UPDATE.replace("{}", offerCode)}`, { action }, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
+            if (response && response.status === 204) {
+                Swal.fire({
+                    text: "Offer Approved",
+                    icon: "success",
+                    confirmButtonColor: "#3085d6",
+                    confirmButtonText: "Done",
                 });
-                if (response && response.status === 204) {
-                    Swal.fire({
-                        text: "Offer Approved",
-                        icon: "success",
-                        confirmButtonColor: "#3085d6",
-                        confirmButtonText: "Done",
-                    });
-                    setTimeout(() => {
-                        navigate(`/offer-artist-list`); //chuyển đến trang offer-list
-                    }, 2000);
-                } 
-                else {
-                    Swal.fire({
-                        text: "Offer Reject",
-                        icon: "success",
-                        confirmButtonColor: "#3085d6",
-                        confirmButtonText: "Done",
-                    });
-                    setTimeout(() => {
-                        navigate(`/offer-artist-list`); //chuyển đến trang offer-list
-                    }, 2000);
-                }
-            } catch (error) {
-                
-                console.error("Error creating test:", error);
-                console.error("Response data:", error.response.data);
+                setTimeout(() => {
+                    navigate(`/offer-artist-list`); //chuyển đến trang offer-list
+                }, 2000);
+            }
+            else {
+                Swal.fire({
+                    text: "Offer Reject",
+                    icon: "success",
+                    confirmButtonColor: "#3085d6",
+                    confirmButtonText: "Done",
+                });
+                setTimeout(() => {
+                    navigate(`/offer-artist-list`); //chuyển đến trang offer-list
+                }, 2000);
+            }
+        } catch (error) {
+
+            console.error("Error creating test:", error);
+            console.error("Response data:", error.response.data);
 
         }
     };
@@ -166,8 +166,23 @@ function ArtistOfferDetail() {
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        <button type="button" className="btn btn-rounded btn-info" onClick={() => handleSubmit('accept')}><span className="btn-icon-check text-info"></span>Accept Offer</button>
-                                        <button type="button" className="btn btn-rounded btn-info1" onClick={() => handleSubmit('refuse')}><span className="btn-icon-check text-info"></span>Refuse Offer</button>
+                                        {(offerDetail.status !== -1 && offerDetail.status !== 1) && (
+                                            <div>
+                                                <button type="button" className="btn btn-rounded btn-info" onClick={() => handleSubmit('accept')}><span className="btn-icon-check text-info"></span>Accept Offer</button>
+                                                <button type="button" className="btn btn-rounded btn-info1" onClick={() => handleSubmit('refuse')}><span className="btn-icon-check text-info"></span>Refuse Offer</button>
+                                            </div>
+                                        )}
+                                        {offerDetail.isPaid === 0 && offerDetail.isPaid !== 1 && (
+                                            <div>
+                                                <h4>Awaiting payment...</h4>
+                                            </div>
+                                        )}
+
+                                        {offerDetail.isPaid === 1 && (
+                                            <div>
+                                                <h4>The Offer #{offerDetail.offerCode} has been paid</h4>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>

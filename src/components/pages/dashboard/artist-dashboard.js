@@ -673,7 +673,7 @@ function ArtistDash() {
                                                             <thead>
                                                                 <tr>
                                                                     <th className="align-middle">
-                                                                        <strong>Booking</strong>
+                                                                        <strong>Offer</strong>
                                                                     </th>
                                                                     <th className="align-middle pe-7">
                                                                         <strong>ArtWork</strong>
