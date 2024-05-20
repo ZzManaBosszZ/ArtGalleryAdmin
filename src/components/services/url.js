@@ -61,7 +61,7 @@ const url = {
 
     REGISTER_ARTIST: {
         LIST: "/Admin/getall-request-artist",
-        DETAIL: "/Admin/get-request-artist-detail/{}", 
+        DETAIL: "/Admin/get-request-artist/{}", 
         UPDATE: "/Admin/accept-artist-request/{}",  
     },
 

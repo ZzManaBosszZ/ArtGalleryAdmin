@@ -43,7 +43,7 @@ function RegisterArtistDetail() {
             if (response && response.status === 200) {
                 // console.log(response.data);
                 Swal.fire({
-                    text: "Accpet User to become Artist",
+                    text: "Action Complete",
                     icon: "success",
                     confirmButtonColor: "#3085d6",
                     confirmButtonText: "Done",
@@ -116,7 +116,7 @@ function RegisterArtistDetail() {
                                         <tbody>
                                             <tr>
                                                 <td className="center text-white">{registerDetail.userId}</td>
-                                                <td className="center text-white"> <img src={registerDetail.image} className="rounded-lg  image-thumb" alt="" /></td>
+                                                <td className="center text-white"> <img src={registerDetail.image} className="rounded-lg  image-thumb"/></td>
                                                 <td className="left strong text-white">{registerDetail.nameArtist}</td>
                                                 <td className="left text-white">Extended License</td>
                                                 <td className="right text-white">{registerDetail.biography}</td>
@@ -132,7 +132,7 @@ function RegisterArtistDetail() {
                                             <button type="button" className="btn btn-rounded btn-info" onClick={() => handleSubmit('accept')}>
                                                 <span className="btn-icon-check text-info"></span>Accept
                                             </button>
-                                            <button type="button" className="btn btn-rounded btn-info1" onClick={() => handleSubmit('refuse')}>
+                                            <button type="button" className="btn btn-rounded btn-info1" onClick={() => handleSubmit('reject')}>
                                                 <span className="btn-icon-check text-info"></span>Reject
                                             </button>
                                         </div>

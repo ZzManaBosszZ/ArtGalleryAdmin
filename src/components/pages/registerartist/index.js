@@ -160,10 +160,9 @@ function RegisterArtist() {
                                                                         <strong>#{item.userId}</strong>
                                                                     </Link>
                                                                     <br />
-                                                                    <Link to="">by {item.nameArtist}</Link>
+                                                                    <Link to="">by {item.userName}</Link>
                                                                 </td>
                                                                 <td>{item.nameArtist}</td>
-                                                                {/* <td className="py-2">${item.toTal}</td> */}
                                                                 <td className="py-2">{format(new Date(item.createdAt), "yyyy-MM-dd HH:mm")}</td>
                                                                 <td className= {`badge ${getStatusColor(item.status)}`}>{getStatusText(item.status)}</td>
                                                                 <td className="py-2 text-end">
