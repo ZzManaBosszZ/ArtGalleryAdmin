@@ -118,7 +118,7 @@ function ArtWorkList() {
 
     //paginate
     const [currentPage, setCurrentPage] = useState(1);
-    const artworksPerPage = 10;
+    const artworksPerPage = 5;
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };

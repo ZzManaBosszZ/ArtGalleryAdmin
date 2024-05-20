@@ -23,6 +23,7 @@ function ArtWorkCreate() {
         frame: "",
         series: "",
         price: 0,
+        artistId: [],
         schoolOfArtIds: [],
         artWorkImage_preview: null,
     });
@@ -158,7 +159,7 @@ function ArtWorkCreate() {
             const userToken = localStorage.getItem("access_token");
             api.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
             try {
-                const response = await api.post(url.ARTWORK.CREATE_ARTIST_ARTWORK, formArtWork, {
+                const response = await api.post(url.ARTWORK.CREATE, formArtWork, {
                     headers: { "Content-Type": "multipart/form-data" },
                 });
                 if (response && response.data) {
@@ -170,7 +171,7 @@ function ArtWorkCreate() {
                         confirmButtonText: "Done",
                     });
                     setTimeout(() => {
-                        navigate(`/artwork-artist-list`); //chuyển đến trang artwork-list
+                        navigate(`/artwork-list`); //chuyển đến trang artwork-list
                     }, 3000);
                 } else {
                 }
@@ -241,7 +242,7 @@ function ArtWorkCreate() {
                 const userRole = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
                 setUserRole(userRole);
 
-                if (userRole === "User" || userRole === "Super Admin") {
+                if (userRole === "User" || userRole === "Shopping Center Manager Staff") {
                     setError(true);
                 }
             } catch (error) {
@@ -284,6 +285,27 @@ function ArtWorkCreate() {
 
                                                 <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
+                                                        <label className="text-label form-label">
+                                                            Artist <span className="text-danger">*</span>
+                                                        </label>
+                                                        <Select
+                                                            name="artistId"
+                                                            value={artist.filter((option) => formArtWork.artistId.includes(option.value))}
+                                                            isMulti
+                                                            closeMenuOnSelect={false}
+                                                            styles={customStyle}
+                                                            onChange={(selectedOption) => {
+                                                                setFormArtWork({ ...formArtWork, artistId: selectedOption.map((option) => option.value) });
+                                                            }}
+                                                            options={artist}
+                                                            placeholder="Select artist"
+                                                        />
+                                                        {errors.artistId && <div className="text-danger">{errors.artistId}</div>}
+                                                    </div>
+                                                </div>
+
+                                                <div className="col-lg-6 mb-2">
+                                                    <div className="mb-3">
                                                         <label className="text-label form-label">Medium</label>
                                                         <select
                                                             class="form-control"
@@ -294,13 +316,13 @@ function ArtWorkCreate() {
                                                             onChange={handleChange}
                                                         >
                                                             <option value="">Select Medium</option>
-                                                            <option value="OIL">Painting</option>
-                                                            <option value="ACRYLIC">Works on Paper</option>
-                                                            <option value="WATERCOLOR">Sculpture</option>
-                                                            <option value="MIXED MEDIA">Mixed Media</option>
-                                                            <option value="PHOTOGRAPHY">Photography</option>
-                                                            <option value="CHARCOAL SKETCHES">Ceramics</option>
-                                                            <option value="GRAPHIC ART">Graphic Art</option>
+                                                            <option value="Painting">Painting</option>
+                                                            <option value="Works on Paper">Works on Paper</option>
+                                                            <option value="Sculpture">Sculpture</option>
+                                                            <option value="Mixed Media">Mixed Media</option>
+                                                            <option value="Photography">Photography</option>
+                                                            <option value="Ceramics">Ceramics</option>
+                                                            <option value="Graphic Art">Graphic Art</option>
                                                         </select>
                                                         {errors.medium && <div className="text-danger">{errors.medium}</div>}
                                                     </div>
