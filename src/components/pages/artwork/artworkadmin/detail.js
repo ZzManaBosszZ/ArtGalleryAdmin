@@ -242,7 +242,7 @@ function ArtWorkDetail() {
                                                                 <td className="py-2">${item.toTal}</td>
                                                                 <td className="py-2">{format(new Date(item.createdAt), "yyyy-MM-dd HH:mm")}</td>
                                                                 <td className="py-2 text-end">
-                                                                    <Link to={`/offer-artist-list/${item.offercode}`} className="btn btn-primary shadow btn-xs sharp me-1">
+                                                                    <Link to={`/offer-detail/${item.offercode}`} className="btn btn-primary shadow btn-xs sharp me-1">
                                                                         <i className="fa fa-eye"></i>
                                                                     </Link>
                                                                 </td>
