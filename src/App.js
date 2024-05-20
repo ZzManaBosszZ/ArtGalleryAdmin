@@ -3,9 +3,7 @@ import Login from "./components/pages/auth/login";
 import ForgotPassword from "./components/pages/auth/forgot-password";
 import NotFound from "./components/pages/other/not-found";
 import ArtWorkList from "./components/pages/artwork/artworkadmin";
-import ArtWorkCreate from "./components/pages/artwork/artistartwork/create";
 import ArtWorkEdit from "./components/pages/artwork/artworkadmin/edit";
-import ArtWorkDeleteAt from "./components/pages/artwork/artworkadmin/delete-at";
 import ArtWorkDetail from "./components/pages/artwork/artworkadmin/detail";
 import Profile from "./components/pages/auth/profile";
 import ResetPassword from "./components/pages/auth/reset-password";
@@ -29,6 +27,7 @@ import ArtistOfferDetail from "./components/pages/artworkoffer/offerartist/detai
 import RegisterArtist from "./components/pages/registerartist";
 import RegisterArtistDetail from "./components/pages/registerartist/detail";
 import ArtistDetail from "./components/pages/artist/detail";
+import ArtWorkCreate from "./components/pages/artwork/artworkadmin/create";
 
 function App() {
     const ProtectedRoute = ({ element }) => {
@@ -74,13 +73,12 @@ function App() {
                 {/* Start ArtWork */}
                 <Route path="/artwork-list" element={<ProtectedRoute element={<ArtWorkList />} />} />
                 <Route path="/artwork-detail/:id" element={<ProtectedRoute element={<ArtWorkDetail />} />} />
-                <Route path="/artwork-create" element={<ProtectedRoute element={<ArtWorkCreate />} />} />
+                <Route path="/artwork-create-admin" element={<ProtectedRoute element={<ArtWorkCreate />} />} />
                 <Route path="/artwork-edit/:id" element={<ProtectedRoute element={<ArtWorkEdit />} />} />
                 <Route path="/artwork-artist-create" element={<ProtectedRoute element={<ArtistArtWorkCreate />} />} />
                 <Route path="/artwork-artist-list" element={<ProtectedRoute element={<ArtWorkArtistList />} />} />
                 <Route path="/artwork-artist-detail/:id" element={<ProtectedRoute element={<ArtistArtWorkDetail />} />} />
                 <Route path="/artwork-artist-edit/:id" element={<ProtectedRoute element={<ArtistArtWorkEdit />} />} />
-                {/* <Route path="/artwork-delete-at" element={<ProtectedRoute element={<ArtWorkDeleteAt />} />} /> */}
                 {/* End ArtWork */}
 
                 {/* Start Offers */}

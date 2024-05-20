@@ -219,7 +219,7 @@ function ArtistCreate() {
                                                     </div>
                                                 </div>
 
-                                                <div className="col-lg-6 mb-2">
+                                                {/* <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
                                                         <label className="text-label form-label">ArtWork</label>
                                                         <Select
@@ -236,7 +236,7 @@ function ArtistCreate() {
                                                         />
                                                         
                                                     </div>
-                                                </div>
+                                                </div> */}
 
                                                 <div className="col-lg-6 mb-2">
                                                     <div className="mb-3">
@@ -262,7 +262,7 @@ function ArtistCreate() {
                                                         <label className="text-label form-label">
                                                             Image <span className="text-danger">*</span>
                                                         </label>
-                                                        <input type="file" name="imagePath" onChange={handleChange} className="form-control" accept=".jpg, .png, .etc" />
+                                                        <input type="file" name="imagePath" onChange={handleChange} className="form-control" accept=".jpg, .png, jpeg, .etc" />
                                                         {errors.imagePath && <div className="text-danger">{errors.imagePath}</div>}
                                                     </div>
                                                 </div>

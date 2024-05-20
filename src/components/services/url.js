@@ -28,6 +28,7 @@ const url = {
     },
 
     ARTWORK: {
+        CREATE: "/Artworks/createadmin",
         LIST: "/Artworks",
         DETAIL: "/Artworks/{}",
         UPDATE: "/Artworks/edit",

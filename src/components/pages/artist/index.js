@@ -118,7 +118,7 @@ function ArtistsList() {
 
     //paginate
     const [currentPage, setCurrentPage] = useState(1);
-    const artistsPerPage = 10;
+    const artistsPerPage = 4;
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };

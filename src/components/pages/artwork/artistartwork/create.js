@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import NotFound from "../../../pages/other/not-found";
 
-function ArtistArtWorkCreate() {
+function  ArtistArtWorkCreate() {
     const [formArtWork, setFormArtWork] = useState({
         name: "",
         medium: "",
@@ -294,13 +294,13 @@ function ArtistArtWorkCreate() {
                                                             onChange={handleChange}
                                                         >
                                                             <option value="">Select Medium</option>
-                                                            <option value="OIL">OIL</option>
-                                                            <option value="ACRYLIC">ACRYLIC</option>
-                                                            <option value="WATERCOLOR">WATERCOLOR</option>
-                                                            <option value="MIXED MEDIA">MIXED MEDIA</option>
-                                                            <option value="PHOTOGRAPHY">PHOTOGRAPHY</option>
-                                                            <option value="CHARCOAL SKETCHES">CHARCOAL SKETCHES</option>
-                                                            <option value="GRAPHIC ART">GRAPHIC ART</option>
+                                                            <option value="OIL">Painting</option>
+                                                            <option value="ACRYLIC">Works on Paper</option>
+                                                            <option value="WATERCOLOR">Sculpture</option>
+                                                            <option value="MIXED MEDIA">Mixed Media</option>
+                                                            <option value="PHOTOGRAPHY">Photography</option>
+                                                            <option value="CHARCOAL SKETCHES">Ceramics</option>
+                                                            <option value="GRAPHIC ART">Graphic Art</option>
                                                         </select>
                                                         {errors.medium && <div className="text-danger">{errors.medium}</div>}
                                                     </div>
