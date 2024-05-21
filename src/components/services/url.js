@@ -32,7 +32,7 @@ const url = {
         LIST: "/Artworks",
         DETAIL: "/Artworks/{}",
         UPDATE: "/Artworks/edit",
-        DELETE: "/Artworks/delete",
+        // DELETE: "/Artworks/delete",
         LIST_ARTIST_ARTWORK: "Artworks/getall",
         CREATE_ARTIST_ARTWORK: "Artworks/create",
         DETAIL_ARTIST_ARTWORK: "Artworks/getbyid/{}",
@@ -44,7 +44,7 @@ const url = {
         DETAIL: "/Artists/{}",
         CREATE: "/Artists/create",
         UPDATE: "/Artists/edit",
-        DELETE: "/Artists/delete",
+        // DELETE: "/Artists/delete",
     },
 
     ART: {

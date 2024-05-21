@@ -150,6 +150,8 @@ function ArtistDetail() {
                                     </div>
                                 </div>
 
+                                
+
                                 <div className="card-footer">
                                     <div className="row">
                                         <div className="col-lg-5"></div>
@@ -182,6 +184,32 @@ function ArtistDetail() {
                             </div>
                         </div>
 
+
+                        <div className="col-xl">
+                            <div className="card">
+                                <div className="card-body">
+                                    <div className="row" style={{ marginTop: "20px" }}>
+                                        <div className="col-xl-12">
+                                            <h4 className="d-inline">ArtWork Sold</h4>
+                                            <table className="table mt-4 mb-4">
+                                                <tbody>
+                                                    <tr>
+                                                        <th scope="col">Artist Name</th>
+                                                        <th scope="col">Image</th>
+                                                        <th scope="col">Amount</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{ArtistDetail.name}</td>
+                                                        <td className="name-artist"><img style={{ height: "100px", objectFit: "cover" }} src={ArtistDetail.image}></img></td>
+                                                        <td>{ArtistDetail.toTal}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
 
 
