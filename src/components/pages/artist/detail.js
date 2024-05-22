@@ -22,7 +22,15 @@ function ArtistDetail() {
 
     const [userRole, setUserRole] = useState(null);
     const [error, setError] = useState(null);
-    const [ArtistDetail, setArtistDetail] = useState({ artWork: [] });
+    const [ArtistDetail, setArtistDetail] = useState({ artWork: [], offers: [] });
+
+    const paidArtWorks = ArtistDetail.artWork &&
+        ArtistDetail.artWork.map(artwork => ({
+            ...artwork,
+            paidOffers: artwork.offers.filter(offer => offer.isPaid === 1)
+        })).filter(artwork => artwork.paidOffers.length > 0);
+
+    const isAnyOfferPaid = paidArtWorks && paidArtWorks.length > 0;
 
     //hiển thị chi tiết artist
     useEffect(() => {
@@ -150,7 +158,7 @@ function ArtistDetail() {
                                     </div>
                                 </div>
 
-                                
+
 
                                 <div className="card-footer">
                                     <div className="row">
@@ -192,18 +200,36 @@ function ArtistDetail() {
                                         <div className="col-xl-12">
                                             <h4 className="d-inline">ArtWork Sold</h4>
                                             <table className="table mt-4 mb-4">
-                                                <tbody>
-                                                    <tr>
-                                                        <th scope="col">Artist Name</th>
-                                                        <th scope="col">Image</th>
-                                                        <th scope="col">Amount</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>{ArtistDetail.name}</td>
-                                                        <td className="name-artist"><img style={{ height: "100px", objectFit: "cover" }} src={ArtistDetail.image}></img></td>
-                                                        <td>{ArtistDetail.toTal}</td>
-                                                    </tr>
-                                                </tbody>
+                                                {isAnyOfferPaid ? (
+                                                    <tbody>
+                                                        <tr>
+                                                            <th scope="col">Artist Name</th>
+                                                            <th scope="col">ArtWork Name</th>
+                                                            <th scope="col">ArtWork Image</th>
+                                                            <th scope="col">Amount</th>
+                                                        </tr>
+                                                        {paidArtWorks.map(artwork => (
+                                                            artwork.paidOffers.map((offer, index) => (
+                                                                <tr key={`${artwork.id}-${index}`}>
+                                                                    <td>{ArtistDetail.name}</td>
+                                                                    <td>{artwork.name}</td>
+                                                                    <td className="name-artist">
+                                                                        <img
+                                                                            style={{ height: "100px", objectFit: "cover" }}
+                                                                            src={artwork.artWorkImage}
+                                                                            alt={artwork.name}
+                                                                        />
+                                                                    </td>
+                                                                    <td>${offer.toTal}</td>
+                                                                </tr>
+                                                            ))
+                                                        ))}
+                                                    </tbody>
+                                                ) : (
+                                                    <tbody>
+                                                        <p>No ArtWork Sell</p>
+                                                    </tbody>
+                                                )}
                                             </table>
                                         </div>
                                     </div>
